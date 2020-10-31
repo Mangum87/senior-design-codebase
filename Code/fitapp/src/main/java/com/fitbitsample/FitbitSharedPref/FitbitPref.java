@@ -2,13 +2,13 @@ package com.fitbitsample.FitbitSharedPref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-/*
-    This preference saves all the desired information retrieved from calling
-    fitbit API in the cache memory of the phone which can be accessed at
-    any point in the application, so the data retrieved from fitbit can
-    be accessed and sent to aws as well.
- */
 
+/**
+ * This preference saves all the desired information retrieved from calling
+ * fitbit API in the cache memory of the phone which can be accessed at
+ * any point in the application, so the data retrieved from fitbit can
+ * be accessed and sent to aws as well.
+ */
 public class FitbitPref {
 
     private static final String SHARED_PREF_NAME = "my_shared_pref";

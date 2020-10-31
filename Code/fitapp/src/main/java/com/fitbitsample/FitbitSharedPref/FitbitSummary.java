@@ -1,9 +1,9 @@
 package com.fitbitsample.FitbitSharedPref;
 
-/*
-    Saves the summarize data from fitbit website,
-    each time GetActivityModel is triggered the running total of the data
-    gets saved in the preference and updates the local cache
+/**
+ * Saves the summarize data from fitbit website,
+ * each time GetActivityModel is triggered the running total of the data
+ * gets saved in the preference and updates the local cache
  */
 public class FitbitSummary {
     private Integer activeScore, activityCalories, caloriesBMR, caloriesOut, fairlyActiveMinutes, lightlyActiveMinutes, marginalCalories, sedentaryMinutes, steps, veryActiveMinutes;

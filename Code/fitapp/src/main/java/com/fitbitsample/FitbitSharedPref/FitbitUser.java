@@ -1,8 +1,8 @@
 package com.fitbitsample.FitbitSharedPref;
-/*
-    Saves the data from fitbit website,
-    each time GetUserModel is triggered the data
-    gets saved in the preference and updates the local cache
+/**
+ * Saves the data from fitbit website,
+ * each time GetUserModel is triggered the data
+ * gets saved in the preference and updates the local cache
  */
 public class FitbitUser {
     private String dateOfBirth, fullName, gender, height, weight, age;

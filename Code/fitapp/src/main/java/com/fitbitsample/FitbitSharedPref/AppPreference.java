@@ -5,11 +5,10 @@ import android.content.SharedPreferences;
 
 import com.securepreferences.SecurePreferences;
 
-/*
-    Application Preference to save the instances of previous authorization
-    using strings and booleans
+/**
+ * Application Preference to save the instances of previous authorization
+ * using strings and booleans
  */
-
 public class AppPreference {
     private static AppPreference appPreference;
     private SharedPreferences mSecurePrefs;
