@@ -7,7 +7,9 @@ import com.fitbitsample.FitbitSharedPref.AppPreference;
 
 import io.paperdb.Paper;
 
-public class FitBitApplication extends MultiDexApplication {
+
+public class FitBitApplication extends MultiDexApplication
+{
     private static FitBitApplication application;
 
     @Override

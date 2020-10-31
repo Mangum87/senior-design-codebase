@@ -1,11 +1,11 @@
 package com.fitbitsample.FitbitActivity;
-/*
-    Save authorization token, check if authorized, save refresh tokens(refresh token needs
-    to be implemented)
+
+
+/**
+ * Define string constants for API calls and key/value pairs.
  */
-
-public class PrefConstants {
-
+public class PrefConstants
+{
     public static final String ACCESS_TOKEN = "accessToken";
     public static final String REFRESH_TOKEN = "refreshToken";
     public static final String HAVE_AUTHORIZATION = "accessTokenExists";
@@ -18,4 +18,5 @@ public class PrefConstants {
     public static final String FULL_AUTHORIZATION= "fullAuthorizationToken";
     public static final String TOKEN_TYPE ="tokenType";
     public static final String START_LOG = "start_log";
+    public static final String EXPIRE_TIME = "expire_time";
 }
