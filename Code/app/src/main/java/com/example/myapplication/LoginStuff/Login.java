@@ -18,6 +18,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Code used to handle logging in a user.
+ */
 public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private TextView Register;
@@ -43,6 +46,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         */
 
     }
+
+
+    /**
+     * Try to log user in.
+     */
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -64,6 +72,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
+
         /*
          Pass email and password entered by the user.Call LoginResponse that
          you can get from RetrofitClient
@@ -73,9 +82,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         //To learn about public interface Call <T>
         //https://square.github.io/retrofit/2.x/retrofit/retrofit2/Call.html
+        // Execute an asynchronous call
         call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response)
+            {
                    if(response.isSuccessful()) {
                        // body will return a loginResponse
                        LoginResponse loginResponse = response.body();
@@ -117,7 +128,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-
             }
         });
     }

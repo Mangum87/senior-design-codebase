@@ -2,23 +2,38 @@ package com.example.myapplication.LoginStuff;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-/*
-Define base url of our API.
-endpoint=http://ec2-54-214-218-104.us-west-2.compute.amazonaws.com/auth/login
-Retrofit Singleton Client is used to handle many parallel api request.
+
+/**
+ * This class creates the means to connect to the AWS
+ * instance that FitBit data is uploaded to.<p />
+ * Get the instance of this class to make API calls to
+ * the server. Uses Gson library to prepare calls and responses.<p />
+ * Define base url of our API.
+ * endpoint=http://ec2-52-15-232-241.us-east-2.compute.amazonaws.com:5000/
+ * Retrofit Singleton Client is used to handle many parallel api request.
  */
-public class RetrofitClient {
-    private static final String BASE_URL = "http://ec2-54-214-218-104.us-west-2.compute.amazonaws.com/";
+public class RetrofitClient
+{
+    /**
+     * The base url for all calls to be added to for AWS.
+     */
+    private static final String BASE_URL = "http://ec2-52-15-232-241.us-east-2.compute.amazonaws.com:5000/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
     //create private constructor and initialize the Retrofit object
     private RetrofitClient() {
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-}
+    }
+
+    /**
+     * Returns the instance of this class.
+     * If one does not exist, one will be made
+     * before returning. Is thread safe.
+     * @return RetrofitClient instance
+     */
     public static synchronized RetrofitClient getInstance() {
         if (mInstance == null) {
             mInstance = new RetrofitClient();
@@ -26,7 +41,12 @@ public class RetrofitClient {
         return mInstance;
     }
 
-    public Api getApi() {
+    /**
+     * Create connection to the API calls.
+     * @return API object
+     */
+    public Api getApi()
+    {
         return retrofit.create(Api.class);
     }
 }
