@@ -19,6 +19,7 @@ import androidx.browser.customtabs.CustomTabsSession;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 
+import com.fitbitsample.FitbitActivity.AppConstants;
 import com.fitbitsample.R;
 import com.fitbitsample.FitbitActivity.MainActivity;
 import com.fitbitsample.FitbitActivity.PrefConstants;
@@ -80,7 +81,7 @@ public class LogintoFitbitFragment extends MainFragment {
                 if (!haveToken) {
                     String url = "https://www.fitbit.com/oauth2/authorize?" +
                             "response_type=code" +
-                            "&client_id=22BVT2" +
+                            "&client_id=" + AppConstants.CLIENT_ID +
                             "&expires_in=604800" +
                             "&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight" +
                             "&redirect_uri=fit://logincallback" +

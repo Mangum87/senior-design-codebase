@@ -13,7 +13,7 @@ public class MainFragment extends Fragment {
     public Context context;
     public Resources resources;
 
-    private static final int PERMISSION_REQUEST_CODE = 27 << 1;
+    private static final int PERMISSION_REQUEST_CODE = 27 << 1; // Why not use 54 and no shift?
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -97,7 +97,7 @@ public class MainFragment extends Fragment {
     public void onDestroy() {
         destroy();
         super.onDestroy();
-        System.gc();
+        System.gc(); // Why force garbage collection?
         Runtime.getRuntime().gc();
     }
 

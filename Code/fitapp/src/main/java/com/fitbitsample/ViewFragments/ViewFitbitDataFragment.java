@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import com.fitbitsample.FitbitDataType.OAuthResponse;
+import com.fitbitsample.FitbitSharedPref.AppPreference;
+import com.fitbitsample.GetFitbitData.RefreshTokenModel;
 import com.fitbitsample.R;
 import com.fitbitsample.FitbitActivity.FitbitDataFormat;
 import com.fitbitsample.FitbitActivity.MainActivity;
@@ -58,13 +61,41 @@ public class ViewFitbitDataFragment extends MainFragment {
     }
 
 
-    public void resume() {
-        if (getUserVisibleHint()) {
-            ((MainActivity) context).setTitle(getString(R.string.dashboard));
-            getUserProfile();
-            getActivityInfo();
-            getHeartRate();
+    public void resume()
+    {
+        if (getUserVisibleHint())
+        {
+            // Get saved OAuth response
+            OAuthResponse response = PaperDB.getInstance().get().read(PaperConstants.OAUTH_RESPONSE);
+
+            // Check if needs updating
+            if(response != null && response.isTokenExpired())
+            {
+                RefreshTokenModel refresh = new RefreshTokenModel(2);
+                refresh.run(context, null).getData().observe(this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(@Nullable Integer i)
+                    {
+                        if(i != null && i == 0) // 0 posted on success
+                            getData(); // Token refreshed
+                    }
+                });
+            }
+            else // No update needed
+                getData();
         }
+    }
+
+
+    /**
+     * Polls FitBit API for user data.
+     */
+    private void getData()
+    {
+        ((MainActivity) context).setTitle(getString(R.string.dashboard));
+        getUserProfile();
+        getActivityInfo();
+        getHeartRate();
     }
 
     private void getUserProfile() {
@@ -111,6 +142,8 @@ public class ViewFitbitDataFragment extends MainFragment {
             }
         });
     }
+
+
 
     private void updateUi() {
         UserInfo userInfo = PaperDB.getInstance().get().read(PaperConstants.PROFILE, null);
