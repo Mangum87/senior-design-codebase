@@ -1,6 +1,12 @@
 package com.fitbitsample;
 
-public class PaperConstants {
+
+/**
+ * Defines string constants to act as the keys
+ * in the PaperDB instance.
+ */
+public class PaperConstants
+{
     public static final String USER = "user";
     public static final String PROFILE = "profile";
     public static final String DEVICES = "devices";
