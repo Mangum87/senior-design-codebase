@@ -3,11 +3,9 @@ package com.fitbitsample.FitbitApiHandling;
 import android.content.Context;
 
 import retrofit2.Call;
-/*
-    This class helps retro service client api calling and utilizes NetworkListener
+/**
+ * This class helps retro service client api calling and utilizes NetworkListener
  */
-
-
 public class RestCall<T> {
 
     private Context context;

@@ -17,11 +17,10 @@ import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-/*
-    This class does the network handling
-    required for fitbit integration and API calling
+/**
+ * This class does the network handling
+ * required for fitbit integration and API calling
  */
-
 class NetworkHandler<T> {
     private Context context;
     private Call<T> call;
@@ -31,7 +30,7 @@ class NetworkHandler<T> {
     private int currentRetryCount = 0;
     private int renewRetryCount = 0;
     private boolean progressBar = true;
-    private Integer[] acceptCodes = {200, 201, 204};
+    private Integer[] acceptCodes = {200, 201, 204}; // Server callback codes
 
     private NetworkHandler() {
     }
@@ -56,6 +55,10 @@ class NetworkHandler<T> {
         return this;
     }
 
+    /**
+     * Execute an asynchronous call with given listener.
+     * @param networkListener Listener for callback
+     */
     void execute(NetworkListener<T> networkListener) {
         currentRetryCount = 0;
         this.networkListener = networkListener;
@@ -65,24 +68,31 @@ class NetworkHandler<T> {
     }
 
     private void enqueue() {
-        if (!isAlive()) {
+        if (!isAlive()) // Make sure call is still good
+        {
             return;
         }
+        // Make call
         call.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
-                for (String name : response.headers().names()) {
+                for (String name : response.headers().names())
+                {
                 }
-                if (isAlive() && networkListener != null) {
-                    if (Arrays.asList(acceptCodes).contains(response.code())) {
+                if (isAlive() && networkListener != null)
+                {
+                    if (Arrays.asList(acceptCodes).contains(response.code()))
+                    {
                         Map<String, String> headers = new HashMap<>();
-                        if (response.headers() != null) {
-                            for (String name : response.headers().names()) {
+                        if (response.headers() != null)
+                        {
+                            for (String name : response.headers().names()) // Save headers
+                            {
                                 headers.put(name, response.headers().get(name));
                             }
                         }
-                        networkListener.success(response.body());
-                        networkListener.headers(headers);
+                        networkListener.success(response.body()); // Send response
+                        networkListener.headers(headers); // Send headers
                     }
                     logResponse(response);
                 }

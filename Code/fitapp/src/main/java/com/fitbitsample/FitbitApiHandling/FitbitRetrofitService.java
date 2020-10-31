@@ -25,7 +25,9 @@ import static com.fitbitsample.FitbitActivity.PrefConstants.AUTHORIZATION;
 import static com.fitbitsample.FitbitActivity.PrefConstants.CONTENT_TYPE;
 
 
-
+/**
+ * Handles the multi-connection networking for FitBit data.
+ */
 public class FitbitRetrofitService {
     public static final String BASE_URL = "https://api.fitbit.com/";
     private static final long CONNECT_TIMEOUT = 5000;
