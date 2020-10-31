@@ -10,8 +10,9 @@ import androidx.lifecycle.OnLifecycleEvent;
 import com.fitbitsample.FitbitApiHandling.RestCall;
 import com.fitbitsample.FitbitApiHandling.FitbitAPIcalls;
 import com.fitbitsample.FitbitApiHandling.FitbitRetrofitService;
-/*
-    This class handles Fitbit API calls, sessions, and any generated error code.
+
+/**
+ * This class handles Fitbit API calls, sessions, and any generated error code.
  */
 abstract class BaseAndroidViewModel<LiveData, Response, Request, Base> implements LifecycleObserver {
     RestCall<Response> restCall;

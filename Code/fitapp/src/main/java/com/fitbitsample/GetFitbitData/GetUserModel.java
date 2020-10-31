@@ -14,13 +14,14 @@ import com.fitbitsample.FitbitSharedPref.AppPreference;
 import com.fitbitsample.FitbitDataType.UserInfo;
 
 import java.util.Map;
-/*
-    This class makes the fitbit API call to get the User information.
-    The application saves the information in both PaperDB and Sharedpreference,
-    Shared preference can let you access the data any where in the application while
-    Paper DB can be utilized within the module.
- */
 
+
+/**
+ * This class makes the fitbit API call to get the User information.
+ * The application saves the information in both PaperDB and Sharedpreference,
+ * Shared preference can let you access the data any where in the application while
+ * Paper DB can be utilized within the module.
+ */
 public class GetUserModel extends BaseAndroidViewModel<Integer, UserInfo, Void, GetUserModel> {
     private String dateOfBirth, fullName, gender, height, weight, age;
     public GetUserModel(int errorCode) {

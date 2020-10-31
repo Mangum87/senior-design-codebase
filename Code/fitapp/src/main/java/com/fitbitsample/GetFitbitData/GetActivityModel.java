@@ -16,14 +16,15 @@ import com.fitbitsample.FitbitDataType.Distance;
 
 import java.util.List;
 import java.util.Map;
-/*
-    This class makes the fitbit API call to get the activities summary of the entire day and running total of the day
-    when the API is called.
-    The application saves the information in both PaperDB and Sharedpreference,
-    Shared preference can let you access the data any where in the application while
-    Paper DB can be utilized within the module.
- */
 
+
+/**
+ * This class makes the fitbit API call to get the activities summary of the entire day and running total of the day
+ * when the API is called.
+ * The application saves the information in both PaperDB and Sharedpreference,
+ * Shared preference can let you access the data any where in the application while
+ * Paper DB can be utilized within the module.
+ */
 public class GetActivityModel extends BaseAndroidViewModel<Integer, ActivityInfo, String, GetActivityModel> {
     private Integer activeScore, activityCalories, caloriesBMR, caloriesOut, fairlyActiveMinutes, lightlyActiveMinutes, marginalCalories, sedentaryMinutes, steps, veryActiveMinutes;
     private String distance, total, tracker, loggedActivities, veryActive, moderatelyActive, lightlyActive, sedentaryActive;
