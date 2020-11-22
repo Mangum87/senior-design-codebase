@@ -49,7 +49,7 @@ public class amazonS3main extends AppCompatActivity {
     public void main(Context context) throws Exception {
 
         //bucket name of the S3 bucket created
-        final String bucketName = "mobiledevt";
+        final String bucketName = "mobilebucket";
 
         //name of the file to be uploaded
         final String keyName = "Date_"+date+"_User_id_"+user.getUser_id()+"_fitbitdata.csv";
@@ -57,10 +57,9 @@ public class amazonS3main extends AppCompatActivity {
         // Initialize the Amazon Cognito credentials provider
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 context,
-                "us-east-1:913d729e-fc5f-42cf-8057-572795207284", // Identity pool ID
-                Regions.US_EAST_1 // Region
+                "us-east-2:2dcdd80c-a010-4d3f-96ad-ba76adcc266e", // Identity pool ID
+                Regions.US_EAST_2 // Region
         );
-
         //method call to write fitbit data to file
         writedatatofile(bucketName,keyName,credentialsProvider,context);
 
