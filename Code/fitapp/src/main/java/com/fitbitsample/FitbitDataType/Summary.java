@@ -3,8 +3,8 @@ package com.fitbitsample.FitbitDataType;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-/*
-    Creating a viewing adapter class for parsing gson file of activities summary received from Fitbit API call
+/**
+ * Creating a viewing adapter class for parsing gson file of activities summary received from Fitbit API call
  */
 
 public class Summary {
@@ -42,6 +42,29 @@ public class Summary {
     @SerializedName("veryActiveMinutes")
     @Expose
     private Integer veryActiveMinutes;
+    @SerializedName("floors")
+    @Expose
+    private Integer floors;
+    @SerializedName("elevation")
+    @Expose
+    private Double elevation;
+
+
+    public Integer getFloors() {
+        return floors;
+    }
+
+    public void setFloors(Integer floors) {
+        this.floors = floors;
+    }
+
+    public Double getElevation() {
+        return elevation;
+    }
+
+    public void setElevation(Double elevation) {
+        this.elevation = elevation;
+    }
 
     public Integer getActiveScore() {
         return activeScore;
@@ -145,6 +168,8 @@ public class Summary {
                 ", \nsedentaryMinutes=" + sedentaryMinutes +
                 ", \nsteps=" + steps +
                 ", \nveryActiveMinutes=" + veryActiveMinutes +
-                '}';
+                ", \nfloors: " + floors +
+                ", \nelevation: " + elevation +
+                "}";
     }
 }

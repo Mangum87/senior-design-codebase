@@ -2,8 +2,8 @@ package com.fitbitsample.FitbitDataType;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-/*
-    Creating a viewing adapter class for parsing gson file of heartratezone received from Fitbit API call
+/**
+ * Creating a viewing adapter class for parsing gson file of heartratezone received from Fitbit API call
  */
 
 public class HeartRateZone {
