@@ -9,8 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
+import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
-import com.fitbitsample.FitbitSharedPref.AppPreference;
+import com.fitbitsample.FitbitDataType.SleepData.Sleep;
+import com.fitbitsample.GetFitbitData.GetDevicesModel;
+import com.fitbitsample.GetFitbitData.GetSleepModel;
 import com.fitbitsample.GetFitbitData.RefreshTokenModel;
 import com.fitbitsample.R;
 import com.fitbitsample.FitbitActivity.FitbitDataFormat;
@@ -96,7 +99,64 @@ public class ViewFitbitDataFragment extends MainFragment {
         getUserProfile();
         getActivityInfo();
         getHeartRate();
+        getSleep();
+        //getDevice();
     }
+
+
+    /**
+     * Calls FitBit to get sleep data for current day.
+     */
+    private void getSleep()
+    {
+        GetSleepModel model = new GetSleepModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        // Run the call and listen to code update
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Sleep data was successful");
+                    updateSleep();
+                }
+                else
+                {
+                    Trace.i("Sleep data failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Calls FitBit to get the currently logged in user's device information.
+     */
+    private void getDevice()
+    {
+        GetDevicesModel model = new GetDevicesModel(1);
+
+        model.run(context, null).getData().observe(this, new Observer<Integer>()
+        {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Device data was sucessfully collected");
+                    updateDevice();
+                }
+                else
+                {
+                    Trace.i("Device data was not sucessfully collected");
+                    Trace.i("Device return: " + i.toString());
+                }
+            }
+        });
+    }
+
 
     private void getUserProfile() {
         GetUserModel getUserModel = new GetUserModel(1);
@@ -143,6 +203,28 @@ public class ViewFitbitDataFragment extends MainFragment {
         });
     }
 
+
+    /**
+     * Read what was saved in PaperDB and update the dashboard.
+     */
+    private void updateSleep()
+    {
+        Sleep sleep = PaperDB.getInstance().get().read(PaperConstants.SLEEP, null);
+        if (sleep != null) {
+            dashboardBinding.setSleep(sleep.toString());
+        }
+    }
+
+
+    private void updateDevice()
+    {
+        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
+
+        if(d != null)
+        {
+            dashboardBinding.setDevice(d.toString());
+        }
+    }
 
 
     private void updateUi() {
