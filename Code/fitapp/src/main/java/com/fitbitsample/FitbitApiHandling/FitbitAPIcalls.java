@@ -1,8 +1,10 @@
 package com.fitbitsample.FitbitApiHandling;
 
+import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.ActivityInfo;
+import com.fitbitsample.FitbitDataType.SleepData.Sleep;
 import com.fitbitsample.FitbitDataType.UserInfo;
 
 import retrofit2.Call;
@@ -66,8 +68,27 @@ public interface FitbitAPIcalls
      * @param userId User ID code
      * @param date Date of activity
      * @param period Time period
-     * @return
+     * @return Call for range of heart dates
      */
     @GET("1/user/{userId}/activities/heart/date/{date}/{period}.json")
     Call<HeartRate> getHrByRange(@Path("userId") String userId, @Path("date") String date, @Path("period") String period);
+
+
+
+    /**
+     * Gets the user's sleep patterns for given day of user.
+     * @param date Date of sleep
+     * @return Call for sleep activity
+     */
+    @GET("1.2/user/{userId}/sleep/date/{date}.json")
+    Call<Sleep> getSleep(@Path("userId") String id, @Path("date") String date);
+
+
+    /**
+     * Gets the user's device information.
+     * @param id User ID
+     * @return Call for device activity
+     */
+    @GET("1/user/{userId}/devices.json")
+    Call<Device> getDevices(@Path("userId") String id);
 }
