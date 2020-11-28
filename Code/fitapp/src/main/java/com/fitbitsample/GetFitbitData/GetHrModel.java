@@ -2,8 +2,10 @@ package com.fitbitsample.GetFitbitData;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fitbitsample.FitbitActivity.PrefConstants;
+import com.fitbitsample.FitbitDataType.HeartRateZone;
 import com.fitbitsample.PaperConstants;
 import com.fitbitsample.PaperDB;
 import com.fitbitsample.FitbitSharedPref.FitbitPref;
@@ -13,6 +15,7 @@ import com.fitbitsample.FitbitApiHandling.RestCall;
 import com.fitbitsample.FitbitSharedPref.AppPreference;
 import com.fitbitsample.FitbitDataType.HeartRate;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -37,8 +40,25 @@ public class GetHrModel extends BaseAndroidViewModel<Integer, HeartRate, String[
             public void success(HeartRate heartRate) {
                 if (heartRate != null) {
                     Log.i("Hr:", heartRate.toString());
-                    //The shared preference is used to push the data in S3 bucket so, removing all the comma's, tab, and new line while saving the heart data in shared preference
-                    FitbitPref.getInstance(context).saveHeartData(new HeartRateInfo(heartRate.toString().replaceAll("[\\n\\t ]", "").replace(",","|")));
+
+                    // Save the heart rate info to new object
+                    HeartRateInfo info = new HeartRateInfo(heartRate.getActivitiesHeart().get(0).getValue().getRestingHeartRate());
+                    List<HeartRateZone> zones = heartRate.getActivitiesHeart().get(0).getValue().getHeartRateZones();
+                    HeartRateZone z = zones.get(0);
+                    info.setRange(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
+
+                    z = zones.get(1);
+                    info.setFat(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
+
+                    z = zones.get(2);
+                    info.setCardio(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
+
+                    z = zones.get(3);
+                    info.setPeak(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
+
+
+                    // Save object to PaperDB
+                    FitbitPref.getInstance(context).saveHeartData(info);
                     PaperDB.getInstance().write(PaperConstants.HEART_RATE, heartRate);
                     data.postValue(0);
                 } else {
