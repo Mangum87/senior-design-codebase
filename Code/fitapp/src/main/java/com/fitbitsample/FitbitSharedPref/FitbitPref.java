@@ -3,6 +3,9 @@ package com.fitbitsample.FitbitSharedPref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fitbitsample.FitbitDataType.Device;
+import com.fitbitsample.FitbitDataType.SleepData.Sleep;
+
 /**
  * This preference saves all the desired information retrieved from calling
  * fitbit API in the cache memory of the phone which can be accessed at
@@ -101,20 +104,134 @@ public class FitbitPref {
         );
     }
     //saves all the heartdata in one giant string
-    public void saveHeartData(HeartRateInfo heartRateInfo) {
+    public void saveHeartData(HeartRateInfo info) {
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("heartdata",heartRateInfo.getHeartdata());
+
+        editor.putInt("restingHeartRate", info.getRestingRate());
+
+        editor.putInt("rangeCalorie", info.getRangeCalorie());
+        editor.putInt("rangeMin", info.getRangeMin());
+        editor.putInt("rangeMax", info.getRangeMax());
+        editor.putInt("rangeMinute", info.getRangeMinutes());
+
+        editor.putInt("fatCalorie", info.getFatCalorie());
+        editor.putInt("fatMin", info.getFatMin());
+        editor.putInt("fatMax", info.getFatMax());
+        editor.putInt("fatMinute", info.getFatMinutes());
+
+        editor.putInt("cardioCalorie", info.getCardioCalorie());
+        editor.putInt("cardioMin", info.getCardioMin());
+        editor.putInt("cardioMax", info.getCardioMax());
+        editor.putInt("cardioMinute", info.getCardioMinutes());
+
+        editor.putInt("peakCalorie", info.getPeakCalorie());
+        editor.putInt("peakMin", info.getPeakMin());
+        editor.putInt("peakMax", info.getPeakMax());
+        editor.putInt("peakMinute", info.getPeakMinutes());
+
         editor.apply();
     }
     //retrieve the heart data
     public HeartRateInfo getHeartdata() {
-        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new HeartRateInfo(
-                sharedPreferences.getString("heartdata",null)
-        );
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        HeartRateInfo info  = new HeartRateInfo(pref.getInt("restingHeartRate", 0));
+
+        info.setRange(pref.getInt("rangeCalorie", 0), pref.getInt("rangeMin", 0), pref.getInt("rangeMax", 0), pref.getInt("rangeMinute", 0));
+        info.setFat(pref.getInt("fatCalorie", 0), pref.getInt("fatMin", 0), pref.getInt("fatMax", 0), pref.getInt("fatMinute", 0));
+        info.setCardio(pref.getInt("cardioCalorie", 0), pref.getInt("cardioMin", 0), pref.getInt("cardioMax", 0), pref.getInt("cardioMinute", 0));
+        info.setPeak(pref.getInt("peakCalorie", 0), pref.getInt("peakMin", 0), pref.getInt("peakMax", 0), pref.getInt("peakMinute", 0));
+
+        return info;
     }
 
 
+    /**
+     * Save the sleep data from FitBit call to SharedPreferences.
+     * @param sleep Fitbit return data
+     */
+    public void setSleepData(Sleep sleep)
+    {
+        // Get SharedPreferences instance and set to edit
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        /*editor.putString("dateOfSleep", sleep.getDatetime());
+        editor.putInt("duration", sleep.getDuration());
+        editor.putInt("efficiency", sleep.getEfficiency());
+        editor.putInt("totalMinutesAsleep", sleep.getTotalMinutesAsleep());
+        editor.putInt("totalTimeInBed", sleep.getTotalTimeInBed());*/
+
+
+        editor.putString("dateOfSleep", sleep.getSleep().get(0).getDateOfSleep());
+        editor.putInt("duration", sleep.getSleep().get(0).getDuration());
+        editor.putInt("efficiency", sleep.getSleep().get(0).getEfficiency());
+        editor.putInt("totalMinutesAsleep", sleep.getSummary().getTotalMinutesAsleep());
+
+        editor.apply(); // Save changes
+    }
+
+
+    /**
+     * Retuns the sleep data stored in SharedPreferences.
+     * @return Sleep object
+     */
+    public SleepInfo getSleepData()
+    {
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        //Sleep s = new Sleep();
+        /*s.setDatetime(pref.getString("dateOfSleep", null));
+        s.setDuration(pref.getInt("duration", 0));
+        s.setEfficiency(pref.getInt("efficiency", 0));
+        s.setTotalMinutesAsleep(pref.getInt("totalMinutesAsleep", 0));
+        s.setTotalTimeInBed(pref.getInt("totalTimeInBed", 0));*/
+
+        String date = pref.getString("dateOfSleep", "");
+        int duration = pref.getInt("duration", 0);
+        int efficiency = pref.getInt("efficiency", 0);
+        int total = pref.getInt("totalMinutesAsleep", 0);
+
+        return new SleepInfo(date, duration, efficiency, total);
+    }
+
+
+    /**
+     * Save single device data to SharedPreferences.
+     * @param device
+     */
+    public void setDeviceData(Device device)
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("battery", device.getBattery());
+        editor.putString("deviceVersion", device.getVersion());
+        editor.putString("lastSyncTime", device.getLastSync());
+        editor.putString("id", device.getID());
+        editor.putString("type", device.getType());
+
+        editor.apply(); // Save changes made
+    }
+
+
+    /**
+     * Returns a single device of the user.
+     * @return Single device
+     */
+    public Device getDevice()
+    {
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Device d = new Device();
+
+        d.setBattery(pref.getString("battery", null));
+        d.setVersion(pref.getString("deviceVersion", null));
+        d.setID(pref.getString("id", null));
+        d.setLastSync(pref.getString("lastSyncTime", null));
+        d.setType(pref.getString("type", null));
+
+
+        return d;
+    }
 }
