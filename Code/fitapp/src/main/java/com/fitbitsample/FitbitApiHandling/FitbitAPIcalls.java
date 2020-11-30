@@ -2,6 +2,8 @@ package com.fitbitsample.FitbitApiHandling;
 
 import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyStep;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.ActivityInfo;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
@@ -91,4 +93,24 @@ public interface FitbitAPIcalls
      */
     @GET("1/user/{userId}/devices.json")
     Call<Device> getDevices(@Path("userId") String id);
+
+
+    /**
+     * Gets one day calories in 15 min increments.
+     * @param id User ID
+     * @param date Date to retrieve
+     * @return Call for calorie activity
+     */
+    @GET("1/user/{id}/activities/calories/date/{date}/1d/15min.json")
+    Call<HourlyCalorie> getHourlyCalorie(@Path("id") String id, @Path("date") String date);
+
+
+    /**
+     * Gets one day steps in 15 min increments.
+     * @param id User ID
+     * @param date Date to retrieve
+     * @return Call for step activity
+     */
+    @GET("1/user/{id}/activities/steps/date/{date}/1d/15min.json")
+    Call<HourlyStep> getHourlyStep(@Path("id") String id, @Path("date") String date);
 }
