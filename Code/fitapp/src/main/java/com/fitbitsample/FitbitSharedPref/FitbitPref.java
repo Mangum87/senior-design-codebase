@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.fitbitsample.FitbitDataType.Device;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
 
 /**
@@ -194,6 +195,54 @@ public class FitbitPref {
         int total = pref.getInt("totalMinutesAsleep", 0);
 
         return new SleepInfo(date, duration, efficiency, total);
+    }
+
+
+    /**
+     * Saves the time/value pairs for all 15 minute increments of calories burned.
+     * @param cal Filled API response
+     */
+    public void setCalorieData(HourlyCalorie cal)
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "calories";
+        int size = cal.getActivitiesCaloriesIntraday().getDataset().size(); // Size of data set
+        for(int i = 0; i < size; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. calories0, calories1, ..., calories96
+            editor.putInt(base + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i - 1).getValue());
+        }
+
+
+        // Fill rest with blank data
+        // 96 is from 15 min increments * 24 hours
+        for(int i = size; i < 96; i++)
+        {
+            editor.putInt(base + i, 0);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Returns an array of 96 int elements for the calorie data.
+     * @return int array
+     */
+    public int[] getCalorieData()
+    {
+        int[] vals = new int[96];
+        String base = "calories"; // Base name
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        for(int i = 0; i < 96; i++)
+        {
+            vals[i] = pref.getInt(base + i, 0); // Defaults to zero
+        }
+
+        return vals;
     }
 
 
