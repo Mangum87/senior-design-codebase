@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer;
 import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
-import com.fitbitsample.GetFitbitData.GetDevicesModel;
+//import com.fitbitsample.GetFitbitData.GetDevicesModel;
 import com.fitbitsample.GetFitbitData.GetSleepModel;
 import com.fitbitsample.GetFitbitData.RefreshTokenModel;
 import com.fitbitsample.R;
@@ -134,6 +134,8 @@ public class ViewFitbitDataFragment extends MainFragment {
     /**
      * Calls FitBit to get the currently logged in user's device information.
      */
+
+    /*
     private void getDevice()
     {
         GetDevicesModel model = new GetDevicesModel(1);
@@ -156,6 +158,7 @@ public class ViewFitbitDataFragment extends MainFragment {
             }
         });
     }
+    */
 
 
     private void getUserProfile() {
@@ -216,6 +219,7 @@ public class ViewFitbitDataFragment extends MainFragment {
     }
 
 
+    /*
     private void updateDevice()
     {
         Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
@@ -225,6 +229,7 @@ public class ViewFitbitDataFragment extends MainFragment {
             dashboardBinding.setDevice(d.toString());
         }
     }
+    */
 
 
     private void updateUi() {
