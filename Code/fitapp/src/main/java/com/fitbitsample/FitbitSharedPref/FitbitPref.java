@@ -158,6 +158,9 @@ public class FitbitPref {
      */
     public void setSleepData(Sleep sleep)
     {
+        if(sleep.getSleep().size() < 1)
+            return;
+
         // Get SharedPreferences instance and set to edit
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
