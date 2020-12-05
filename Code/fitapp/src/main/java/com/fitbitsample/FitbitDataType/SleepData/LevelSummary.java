@@ -17,7 +17,7 @@ public class LevelSummary
     @SerializedName("wake")
     @Expose
     private SummaryData wake;
-    @SerializedName("asleep")
+    /*@SerializedName("asleep")
     @Expose
     private ShortSummary asleep;
     @SerializedName("awake")
@@ -25,7 +25,7 @@ public class LevelSummary
     private ShortSummary awake;
     @SerializedName("restless")
     @Expose
-    private ShortSummary restless;
+    private ShortSummary restless;*/
 
     public SummaryData getDeep() {
         return deep;
@@ -59,7 +59,7 @@ public class LevelSummary
         this.wake = wake;
     }
 
-    public ShortSummary getAsleep() {
+    /*public ShortSummary getAsleep() {
         return asleep;
     }
 
@@ -81,17 +81,23 @@ public class LevelSummary
 
     public void setRestless(ShortSummary restless) {
         this.restless = restless;
-    }
+    }*/
 
     @Override
     public String toString()
     {
-        return "deep: {\n" + deep + "\n},\n" +
+        /*return "deep: {\n" + deep + "\n},\n" +
                 "light: {\n" + light + "\n},\n" +
                 "rem: {\n" + rem + "\n},\n" +
                 "wake: {\n" + wake + "\n},\n" +
                 "asleep: {\n" + asleep + "\n},\n" +
                 "awake: {\n" + awake + "\n},\n" +
-                "restless: {\n" + restless + "\n}";
+                "restless: {\n" + restless + "\n}";*/
+
+
+        return "deep: {\n" + deep + "\n},\n" +
+                "light: {\n" + light + "\n},\n" +
+                "rem: {\n" + rem + "\n},\n" +
+                "wake: {\n" + wake + "\n}";
     }
 }

@@ -14,9 +14,10 @@ public class Sleep
         @SerializedName("sleep")
         @Expose
         private List<SleepData> sleep = null;
-        @SerializedName("summary")
+
+        /*@SerializedName("summary")
         @Expose
-        private SleepSummary summary;
+        private SleepSummary summary;*/
 
         public List<SleepData> getSleep() {
             return sleep;
@@ -26,19 +27,21 @@ public class Sleep
             this.sleep = sleep;
         }
 
-        public SleepSummary getSummary() {
+        /*public SleepSummary getSummary() {
             return summary;
         }
 
         public void setSummary(SleepSummary summary) {
             this.summary = summary;
-        }
+        }*/
 
         @Override
         public String toString()
         {
-            return "sleep:[\n{\n" + sleep.get(0).toString() + "\n}," +
+            /*return "sleep:[\n{\n" + sleep.get(0).toString() + "\n}," +
                     "\n],\nsummary: {\n" +
-                    summary.toString() + "\n}\n}";
+                    summary.toString() + "\n}\n}";*/
+
+            return "sleep:[\n{\n" + sleep.get(0).toString() + "\n}]";
         }
 }

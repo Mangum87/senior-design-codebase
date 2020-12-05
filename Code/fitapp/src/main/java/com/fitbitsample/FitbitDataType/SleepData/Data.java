@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Data
 {
-    @SerializedName("datetime")
+    /*@SerializedName("datetime")
     @Expose
-    private String datetime;
+    private String datetime;*/
     @SerializedName("level")
     @Expose
     private String level;
@@ -18,12 +18,19 @@ public class Data
     @Expose
     private String dateTime;
 
-    public String getDatetime() {
+    /*public String getDatetime() {
         return datetime;
     }
 
     public void setDatetime(String datetime) {
         this.datetime = datetime;
+    }*/
+
+    public Data(String level, int seconds, String time)
+    {
+        this.level = level;
+        this.seconds = seconds;
+        this.dateTime = time;
     }
 
     public String getLevel() {
@@ -53,8 +60,13 @@ public class Data
     @Override
     public String toString()
     {
-        return "datetime: " + datetime + ",\n" +
+        /*return "datetime: " + datetime + ",\n" +
                 "level: " + level + ",\n" +
+                "seconds: " + seconds + ",\n" +
+                "dateTime: " + dateTime;*/
+
+
+        return "level: " + level + ",\n" +
                 "seconds: " + seconds + ",\n" +
                 "dateTime: " + dateTime;
     }

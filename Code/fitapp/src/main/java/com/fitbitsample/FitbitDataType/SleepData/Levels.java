@@ -13,9 +13,9 @@ public class Levels
     @SerializedName("data")
     @Expose
     private List<Data> data = null;
-    @SerializedName("shortData")
+    /*@SerializedName("shortData")
     @Expose
-    private List<ShortData> shortData = null;
+    private List<ShortData> shortData = null;*/
 
     public LevelSummary getSummary() {
         return summary;
@@ -33,13 +33,13 @@ public class Levels
         this.data = data;
     }
 
-    public List<ShortData> getShortData() {
+    /*public List<ShortData> getShortData() {
         return shortData;
     }
 
     public void setShortData(List<ShortData> shortData) {
         this.shortData = shortData;
-    }
+    }*/
 
     @Override
     public String toString()
@@ -61,7 +61,7 @@ public class Levels
         build.append("\n],\n");
 
         // Short data elements
-        build.append("shortData: [\n");
+        /*build.append("shortData: [\n");
         if(shortData != null) // Build cell for each item in list
         {
             for(ShortData d : shortData) // Build cell for each item in list
@@ -71,7 +71,7 @@ public class Levels
                 build.append("\n},");
             }
         }
-        build.append("\n]");
+        build.append("\n]");*/
 
         return build.toString();
     }
