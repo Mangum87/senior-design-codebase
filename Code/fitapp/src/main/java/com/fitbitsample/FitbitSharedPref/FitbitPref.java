@@ -5,7 +5,10 @@ import android.content.SharedPreferences;
 
 import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
+import com.fitbitsample.FitbitDataType.SleepData.Data;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
+
+import java.util.List;
 
 /**
  * This preference saves all the desired information retrieved from calling
@@ -159,17 +162,44 @@ public class FitbitPref {
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
-        /*editor.putString("dateOfSleep", sleep.getDatetime());
-        editor.putInt("duration", sleep.getDuration());
-        editor.putInt("efficiency", sleep.getEfficiency());
-        editor.putInt("totalMinutesAsleep", sleep.getTotalMinutesAsleep());
-        editor.putInt("totalTimeInBed", sleep.getTotalTimeInBed());*/
-
-
+        // Meta data
         editor.putString("dateOfSleep", sleep.getSleep().get(0).getDateOfSleep());
         editor.putInt("duration", sleep.getSleep().get(0).getDuration());
         editor.putInt("efficiency", sleep.getSleep().get(0).getEfficiency());
-        editor.putInt("totalMinutesAsleep", sleep.getSummary().getTotalMinutesAsleep());
+        editor.putInt("minutesAsleep", sleep.getSleep().get(0).getMinutesAsleep());
+        editor.putInt("minutesAwake", sleep.getSleep().get(0).getMinutesAwake());
+        editor.putInt("minutesToFallAsleep", sleep.getSleep().get(0).getMinutesToFallAsleep());
+        editor.putString("startTime", sleep.getSleep().get(0).getStartTime().substring(11)); // 2017-04-01T23:58:30.000
+
+        // Summary data
+        editor.putInt("deepCount", sleep.getSleep().get(0).getLevels().getSummary().getDeep().getCount());
+        editor.putInt("deepAvg", sleep.getSleep().get(0).getLevels().getSummary().getDeep().getThirtyDayAvgMinutes());
+        editor.putInt("deepMinutes", sleep.getSleep().get(0).getLevels().getSummary().getDeep().getMinutes());
+
+        editor.putInt("lightCount", sleep.getSleep().get(0).getLevels().getSummary().getLight().getCount());
+        editor.putInt("lightAvg", sleep.getSleep().get(0).getLevels().getSummary().getLight().getThirtyDayAvgMinutes());
+        editor.putInt("lightMinutes", sleep.getSleep().get(0).getLevels().getSummary().getLight().getMinutes());
+
+        editor.putInt("remCount", sleep.getSleep().get(0).getLevels().getSummary().getRem().getCount());
+        editor.putInt("remAvg", sleep.getSleep().get(0).getLevels().getSummary().getRem().getThirtyDayAvgMinutes());
+        editor.putInt("remMinutes", sleep.getSleep().get(0).getLevels().getSummary().getRem().getMinutes());
+
+        editor.putInt("wakeCount", sleep.getSleep().get(0).getLevels().getSummary().getWake().getCount());
+        editor.putInt("wakeAvg", sleep.getSleep().get(0).getLevels().getSummary().getWake().getThirtyDayAvgMinutes());
+        editor.putInt("wakeMinutes", sleep.getSleep().get(0).getLevels().getSummary().getWake().getMinutes());
+
+        // List of state changes
+        String base = "sleepState";
+        List<Data> data = sleep.getSleep().get(0).getLevels().getData(); // Get state data
+        int max = data.size(); // Size of list
+        editor.putInt("dataSize", max);
+
+        for(int i = 0; i < max; i++)
+        {
+            editor.putString(base + "Level" + i, data.get(i).getLevel());
+            editor.putInt(base + "Seconds" + i, data.get(i).getSeconds());
+            editor.putString(base + "Time" + i, data.get(i).getDateTime().substring(11)); // 2017-04-02T00:16:30.000
+        }
 
         editor.apply(); // Save changes
     }
@@ -182,19 +212,49 @@ public class FitbitPref {
     public SleepInfo getSleepData()
     {
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        //Sleep s = new Sleep();
-        /*s.setDatetime(pref.getString("dateOfSleep", null));
+        SleepInfo s = new SleepInfo();
+
+        s.setDate(pref.getString("dateOfSleep", "N/A"));
         s.setDuration(pref.getInt("duration", 0));
         s.setEfficiency(pref.getInt("efficiency", 0));
-        s.setTotalMinutesAsleep(pref.getInt("totalMinutesAsleep", 0));
-        s.setTotalTimeInBed(pref.getInt("totalTimeInBed", 0));*/
+        s.setMinutesAsleep(pref.getInt("minutesAsleep", 0));
+        s.setMinutesAwake(pref.getInt("minutesAwake", 0));
+        s.setMinuteToFallAsleep(pref.getInt("minutesToFallAsleep", 0));
+        s.setTime(pref.getString("startTime", "N/A"));
 
-        String date = pref.getString("dateOfSleep", "");
-        int duration = pref.getInt("duration", 0);
-        int efficiency = pref.getInt("efficiency", 0);
-        int total = pref.getInt("totalMinutesAsleep", 0);
+        s.setDeepAvg(pref.getInt("deepAvg", 0));
+        s.setDeepCount(pref.getInt("deepCount", 0));
+        s.setDeepMinutes(pref.getInt("deepMinutes", 0));
 
-        return new SleepInfo(date, duration, efficiency, total);
+        s.setLightAvg(pref.getInt("lightAvg", 0));
+        s.setLightCount(pref.getInt("lightCount", 0));
+        s.setLightMinutes(pref.getInt("lightMinutes", 0));
+
+        s.setRemAvg(pref.getInt("remAvg", 0));
+        s.setRemCount(pref.getInt("remCount", 0));
+        s.setRemMinutes(pref.getInt("remMinutes", 0));
+
+        s.setWakeAvg(pref.getInt("wakeAvg", 0));
+        s.setWakeCount(pref.getInt("wakeCount", 0));
+        s.setWakeMinutes(pref.getInt("wakeMinutes", 0));
+
+
+        String base = "sleepState";
+        int max = pref.getInt("dataSize", 0);
+
+        // Vars to fill
+        String level, time;
+        int sec;
+        for(int i = 0; i < max; i++)
+        {
+            level = pref.getString(base + "Level" + i, "N/A");
+            time = pref.getString(base + "Time" + i, "N/A");
+            sec = pref.getInt(base + "Seconds" + i, 0);
+
+            s.addData(level, sec, time);
+        }
+
+        return s;
     }
 
 
