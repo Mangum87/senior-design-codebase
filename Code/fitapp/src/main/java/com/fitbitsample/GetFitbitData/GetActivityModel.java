@@ -2,6 +2,7 @@ package com.fitbitsample.GetFitbitData;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fitbitsample.FitbitActivity.PrefConstants;
 import com.fitbitsample.PaperConstants;
