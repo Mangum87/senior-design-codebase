@@ -168,7 +168,7 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(',');
             newdata.append(sleepInfo.getEfficiency());
             newdata.append(',');
-            newdata.append(sleepInfo.getTotalMinutes());
+            newdata.append(sleepInfo.getMinutesAsleep());
             newdata.append(',');
             newdata.append(heartRateInfo.getRestingRate());
             newdata.append(',');
