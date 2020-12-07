@@ -34,7 +34,7 @@ public class GetDevicesModel extends BaseAndroidViewModel<Integer, Device, Void,
                     Log.i("Device: ", response.toString());
 
                     // Save to local DB
-                    PaperDB.getInstance().write(PaperConstants.DEVICE, response);
+//                    PaperDB.getInstance().write(PaperConstants.DEVICE, response);
                     data.postValue(0); // Send success code to observer
                 } else {
                     data.postValue(errorCode);

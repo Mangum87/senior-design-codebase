@@ -1,10 +1,9 @@
 package com.example.myapplication.LoginStuff;
 
-
-/**
- * Create a LoginResponse Class to store the Response upon successful Login.
- * Check documentation with the heading POSTMAN RESPONSE to view the response from
- * the server.
+/*
+ Create a LoginResponse Class to store the Response upon successfull Login.
+ Check documentation with the heading POSTMAN RESPONSE to view the response from
+ the server.
  */
 public class LoginResponse {
     /*

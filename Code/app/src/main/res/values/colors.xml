@@ -8,4 +8,15 @@
     <color name="colorB">#7B1FA2</color>
     <color name="colorC">#03A9F4</color>
     <color name="colorD">#FF44C2CA</color>
+    <color name="colorE">#286361</color>
+    <color name= "colorF">#38978F</color>
+    <color name="registrationBackground">#157E72</color>
+    <color name="black">#131313</color>
+    <color name= "red">#F44336</color>
+    <color name= "light_blue">#ff44caac</color>
+    <color name= "light_green">#53B3AB</color>
+    <color name= "signup_text_bg">#E1D3F1F4</color>
+    <color name= "white">#ffffff</color>
+    <color name= "lightGrey">#ced4d6</color>
+    <color name= "mycolor">#329336</color>
     </resources>

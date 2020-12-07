@@ -1,9 +1,9 @@
 package com.example.myapplication.LoginStuff;
 
-/**
- * Create a User class to store the User information that is received upon successful
- * login. These are all the User attributes used during costumer registration.
- * Check documentation with the heading POSTMAN RESPONSE to view the response.
+/*
+Create a User class to store the User information that is received upon successfull
+login. These are all the User attributes used during costumer registration.
+Check documentation with the heading POSTMAN RESPONSE to view the response.
  */
 public class User {
 //Creating constructor, getter and setter
@@ -29,6 +29,7 @@ public class User {
         this.profile_pic = profile_pic;
         this.user_id = user_id;
     }
+
 
     public String getAddress() {
         return address;

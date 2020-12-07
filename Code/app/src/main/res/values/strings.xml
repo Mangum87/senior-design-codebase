@@ -13,12 +13,19 @@
     <string name="phone_number_login_text">Continue with Phone number</string>
     <string name="continue_with_google_login">Continue with Google</string>
     <string name="continue_with_facebook_login">Continue with Facebook</string>
-    <string name="get_started">Get Started</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="register_title">REGISTER</string>
     <string name="email">Email: </string>
     <string name="phone">Phone: </string>
     <string name="street">Street: </string>
     <string name="city">City: </string>
     <string name="zip">Zip: </string>
+    <string name="heartbeat_rate">--</string>
+    <string name="calories_burnt">--</string>
+    <string name="sleep_hours">--</string>
+    <string name="weight_lb">--</string>
+    <string name="current_date">--</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

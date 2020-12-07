@@ -146,7 +146,7 @@ public class ViewFitbitDataFragment extends MainFragment {
                 if(i != null && i == 0)
                 {
                     Trace.i("Device data was sucessfully collected");
-                    updateDevice();
+                    //updateDevice();
                 }
                 else
                 {
@@ -216,15 +216,15 @@ public class ViewFitbitDataFragment extends MainFragment {
     }
 
 
-    private void updateDevice()
-    {
-        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
-
-        if(d != null)
-        {
-            dashboardBinding.setDevice(d.toString());
-        }
-    }
+//    private void updateDevice()
+//    {
+//        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
+//
+//        if(d != null)
+//        {
+//            dashboardBinding.setDevice(d.toString());
+//        }
+//    }
 
 
     private void updateUi() {

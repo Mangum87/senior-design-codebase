@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/heartRateDialogContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Heart Rate Info"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:background="@color/light_green">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:text="What does the Color Mean?"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="14sp">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp"
+        android:text="Red: Low Heart Rate"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/black"
+        android:textSize="14sp">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
+        android:text="Green: Average Heart Rate"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/black"
+        android:textSize="14sp">
+    </TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:text="Blue: High Heart Rate"
+        android:fontFamily="@font/quicksand_medium"
+        android:textColor="@color/black"
+        android:textSize="14sp">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_marginLeft="10dp"
+        android:text="What should my heart rate be?"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="14sp">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="As per the American Heart Association (AHA), if you are an adult, your heart rate should be in the range of 60 to 100 beats per minute. And if your age is between 6 and 15 years, your heart rate should be anywhere between 70 and 100 per minute."
+        android:textColor="@color/black"
+        android:textSize="14sp">
+    </TextView>
+
+
+</RelativeLayout>
