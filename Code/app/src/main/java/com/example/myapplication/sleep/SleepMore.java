@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.chart.LineChartActivity;
 import com.example.myapplication.homescreen;
 import com.github.mikephil.charting.charts.LineChart;
 
@@ -23,8 +22,8 @@ public class SleepMore extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.sleep_more_help).setOnClickListener(this);
         LineChart lineChart = findViewById(R.id.line_chart2);
 
-        LineChartActivity lineChartActivity = new LineChartActivity();
-        lineChartActivity.plot_lineChart(lineChart);
+//        LineChartActivity lineChartActivity = new LineChartActivity();
+//        lineChartActivity.plot_lineChart(lineChart);
     }
 
     private void show_homeScreen(){

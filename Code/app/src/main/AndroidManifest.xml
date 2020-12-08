@@ -18,10 +18,10 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".heartRate.HeartRateMore"
-            android:theme="@style/Theme3" />
+            android:theme="@style/Theme5" />
         <activity
             android:name=".sleep.SleepMore"
-            android:theme="@style/Theme3" />
+            android:theme="@style/Theme5" />
         <activity android:name="com.fitbitsample.FitbitActivity.MainActivity" />
         <activity android:name=".SignOut" />
         <activity android:name=".FitBitActivity" />

@@ -6,75 +6,77 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background= "@color/lightGrey"
-    tools:context=".chart.LineChartActivity">
+    tools:context=".sleep.SleepMore">
 
-    <TextView
-        android:id="@+id/sleepScreenTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sleepTitleBox"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/colorF"
-        android:fontFamily="@font/quicksand"
-        android:gravity="center_horizontal"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="Sleep"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent">
-    </TextView>
+        android:layout_height="34dp"
+        android:background="@color/registrationBackground">
 
-    <TextView
-        android:clickable="true"
-        android:id="@+id/sleep_more_arrow_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_arrow_back"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        android:fontFamily="@font/quicksand_medium">
-    </TextView>
+        <TextView
+            android:id="@+id/sleepScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand"
+            android:text="Sleep"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/sleep_more_help"
-        android:clickable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_help"
-        android:layout_marginLeft="385dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        android:fontFamily="@font/quicksand_medium">
-    </TextView>
+        <TextView
+            android:id="@+id/sleep_more_arrow_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_arrow_back"
+            android:fontFamily="@font/quicksand_medium"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sleepScreenTitle"
+            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sleep_more_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_help"
+            android:fontFamily="@font/quicksand_medium"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.894"
+            app:layout_constraintStart_toEndOf="@+id/sleepScreenTitle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/sleepScreenTitle">
+        android:layout_below="@+id/sleepTitleBox">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="1dp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:cardCornerRadius="10dp"
-                android:background="@color/black">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/line_chart2"
-                    android:background="@drawable/signup_background"
+                    android:background="@drawable/sleep_graph_background"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="160dp"/>
 
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

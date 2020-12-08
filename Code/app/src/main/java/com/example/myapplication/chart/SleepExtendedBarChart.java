@@ -1,35 +1,23 @@
 package com.example.myapplication.chart;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
-import android.os.Bundle;
-import android.provider.CalendarContract;
 
-import com.example.myapplication.R;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class BarChartActivity {
+public class SleepExtendedBarChart {
 
     //TODO: need to pass the data received from the server
-    public void plot_barGraph(BarChart b) {
-        //Toast.makeText(BarChartActivity.this, "Inside Barchart", Toast.LENGTH_LONG).show();
+    public void plotSleepExtendedBarChart(BarChart b) {
         BarChart barChart;
         float barWidth, barSpace, groupSpace;
         barWidth = 0.6f;
@@ -37,19 +25,19 @@ public class BarChartActivity {
         groupSpace = 0.5f;
 
         barChart = b;
-        //barChart.getDescription().setText(String.valueOf(R.string.current_date)); //Todo: need to solve this
-        //barChart.getDescription().setTextColor(Color.BLACK);
-        barChart.setPinchZoom(false);
+        barChart.getDescription().setTextColor(Color.BLACK);
+
+        barChart.setPinchZoom(false); //disable the zooming feature of graph
         barChart.setScaleEnabled(false);
         barChart.setDrawBarShadow(false);
-        barChart.setDrawGridBackground(false);
+        barChart.setDrawGridBackground(false); // removes grid from the background
 
-        int[] data = {86, 0, 85, 79, 76, 76, 77};
+        int[] data = {86, 0, 85, 79, 76, 76, 77}; //this the arraylist of data to be plotted
 
         //labels for xAxis
         ArrayList<String> xVals = new ArrayList<>();
         xVals.add(""); //this is to allign the xlabels according to bar
-        xVals.add("S");
+        xVals.add("S\n2012");
         xVals.add("M");
         xVals.add("T");
         xVals.add("W");
@@ -59,22 +47,27 @@ public class BarChartActivity {
 
         //set value for yaxis
         ArrayList<BarEntry> yVals = new ArrayList();
-        int a = 1;
-        for (int i = 0; i < data.length; i++) {
+        int a = 1; //counter for the number of barlines
 
+        //adds all data to be plotted into the yvals array
+        for (int i = 0; i < data.length; i++) {
             yVals.add(new BarEntry(a, data[i]));
             a++;
         }
 
         BarDataSet barDataSet = new BarDataSet(yVals, "");
 
+        //array list for custom color for the graph
         ArrayList colors = new ArrayList();
 
-        //color customization of bar graph
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //  purpose: color customization of bar graph                                                                                                   ////
+        //  note: graph was not using the color from values->colors and limited color on Color library so had to individually assign and parse color    ////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         int red = Color.parseColor("#f06262");
         int green = Color.parseColor("#2dc437");
 
-        //customize the color for the graph
+        //setting what color which bar needs to be and adding is to colors array
         for (int i = 0; i < yVals.size(); i++) {
             if (yVals.get(i).getY() < 80) {
                 colors.add(red);
@@ -107,12 +100,12 @@ public class BarChartActivity {
         barChart.setData(barData);
         barChart.getBarData().setBarWidth(barWidth);
         barChart.getXAxis().setAxisMinimum(0);
-        barChart.getXAxis().setAxisMaximum(0 + barChart.getBarData().getGroupWidth(groupSpace, barSpace) * 7);
-        barChart.animateY(1000);
-        barChart.getDescription().setEnabled(true);
+        barChart.getXAxis().setAxisMaximum(0 + barChart.getBarData().getGroupWidth(groupSpace, barSpace) * 7); // to set the space between the bars so that xlabels allign with graph
+        barChart.animateY(1000); // animates the yaxis graph while plotting
+        barChart.getDescription().setEnabled(false);
         barChart.getLegend().setEnabled(false);
 
-        //X-axis
+        //X-axis customization
         XAxis xAxis = barChart.getXAxis();
         xAxis.setLabelCount(7);
         xAxis.setGranularity(1f);
@@ -126,7 +119,7 @@ public class BarChartActivity {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
 
-        //Y-axis
+        //Y-axis customization
         barChart.getAxisRight().setEnabled(false);
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setTextColor(Color.BLACK);
@@ -139,4 +132,3 @@ public class BarChartActivity {
         barChart.invalidate();
     }
 }
-

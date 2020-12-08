@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.LoginStuff.Login;
+
 public class Welcomescreen extends AppCompatActivity {
 
     private Button login;
@@ -37,13 +39,13 @@ public class Welcomescreen extends AppCompatActivity {
     }
 
     //If the User is already logged in, take use straight to homescreen
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
-            Intent intent = new Intent(this, homescreen.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+//            Intent intent = new Intent(this, homescreen.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+//        }
+//    }
 }

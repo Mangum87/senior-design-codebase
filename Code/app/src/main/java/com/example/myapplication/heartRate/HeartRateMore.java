@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.chart.BarChartActivity;
 import com.example.myapplication.dialog.HeartRateMoreDialog;
 import com.example.myapplication.homescreen;
-import com.example.myapplication.sleep.SleepMore;
 import com.github.mikephil.charting.charts.BarChart;
 
 public class HeartRateMore extends AppCompatActivity implements View.OnClickListener {
@@ -25,8 +22,8 @@ public class HeartRateMore extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.hr_more_help).setOnClickListener(this);
         BarChart barChart  = findViewById(R.id.bar_chart2);
 
-        BarChartActivity barChartActivity = new BarChartActivity();
-        barChartActivity.plot_barGraph(barChart);
+//        BarChartActivity barChartActivity = new BarChartActivity();
+//        barChartActivity.plotH(barChart);
     }
 
     private void show_homeScreen(){

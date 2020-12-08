@@ -1,28 +1,21 @@
 package com.example.myapplication.chart;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
-import android.os.Bundle;
 
-import com.example.myapplication.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.renderer.YAxisRenderer;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class LineChartActivity{
+public class HeartRateExtendedLineChart {
 
     //TODO: need to pass the data received from the server
-    public void plot_lineChart(LineChart l){
+    public void plotHeartRateExtendedLineChart(LineChart l){
 
         LineChart lineChart = l;
         l.setPinchZoom(false);

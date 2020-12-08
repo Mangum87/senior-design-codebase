@@ -36,4 +36,11 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@color/colorE</item>
     </style>
+
+    <!--to match with sleep more screen graph color -->
+    <style name="Theme5" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/registrationBackground</item>
+    </style>
 </resources>
