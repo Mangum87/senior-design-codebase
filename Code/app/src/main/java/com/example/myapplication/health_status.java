@@ -33,6 +33,7 @@ public class health_status extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_health_status);
 
         //initialize button navigation
         bottomNavigation = findViewById(R.id.bottom_navigation);

@@ -210,7 +210,7 @@ public class ViewFitbitDataFragment extends MainFragment {
     private void updateSleep()
     {
         Sleep sleep = PaperDB.getInstance().get().read(PaperConstants.SLEEP, null);
-        if (sleep != null) {
+        if (sleep != null && sleep.getSleep().size()>0) {
             dashboardBinding.setSleep(sleep.toString());
         }
     }

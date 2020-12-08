@@ -228,6 +228,7 @@ public class amazonS3main extends AppCompatActivity {
                 keyName, //this is the path and name
                 new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv") //path to the file locally
         );
+        System.out.println("Upload Done");
     }
 
 }

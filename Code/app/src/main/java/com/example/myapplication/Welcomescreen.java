@@ -26,7 +26,9 @@ public class Welcomescreen extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Welcomescreen.this, com.example.myapplication.LoginStuff.Login.class));
+                //startActivity(new Intent(Welcomescreen.this, com.example.myapplication.LoginStuff.Login.class));
+                Intent intent= new Intent(Welcomescreen.this,homescreen.class);
+                startActivity(intent);
             }
         });
 
@@ -38,14 +40,15 @@ public class Welcomescreen extends AppCompatActivity {
         });
     }
 
-    //If the User is already logged in, take use straight to homescreen
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(SharedPrefManager.getInstance(this).isLoggedIn()){
-//            Intent intent = new Intent(this, homescreen.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//            startActivity(intent);
-//        }
-//    }
+//     commented to go to dashboard without login
+//    If the User is already logged in, take use straight to homescreen
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            Intent intent = new Intent(this, homescreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+    }
 }

@@ -31,6 +31,7 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_homescreen);
 
         //initialize chart
@@ -172,7 +173,7 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
                 break;
         }
     }
-
+// commented to go to dashboard without login
     @Override
     protected void onStart() {
         super.onStart();
