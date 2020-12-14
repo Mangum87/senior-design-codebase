@@ -64,6 +64,7 @@ public class amazonS3main extends AppCompatActivity {
         );
         //method call to write fitbit data to file
         writedatatofile(bucketName, keyName, credentialsProvider, context);
+        writesleepdatatofile(bucketName, keyName, credentialsProvider, context);
 
     }
 
@@ -73,7 +74,7 @@ public class amazonS3main extends AppCompatActivity {
         @param: keyName, type String : name of the file to upload
         @param: credentialsProvider, type CognitoCachingCredentialsProvider
         @param: context, type context
-        function: write data to file in .csv format and upload to S3 bucket
+        function: write summary data to file in .csv format and upload to S3 bucket
      */
     private void writedatatofile(String bucketName, String keyName, CognitoCachingCredentialsProvider credentialsProvider, Context context) {
         try {
@@ -150,6 +151,36 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append("max");
             newdata.append(',');
             newdata.append("minutes");
+            newdata.append(',');
+            newdata.append("deepCount");
+            newdata.append(',');
+            newdata.append("deepMinutes");
+            newdata.append(',');
+            newdata.append("deepAvg");
+            newdata.append(',');
+            newdata.append("lightCount");
+            newdata.append(',');
+            newdata.append("lightMinutes");
+            newdata.append(',');
+            newdata.append("lightAvg");
+            newdata.append(',');
+            newdata.append("remCount");
+            newdata.append(',');
+            newdata.append("remMinutes");
+            newdata.append(',');
+            newdata.append("remAvg");
+            newdata.append(',');
+            newdata.append("wakeCount");
+            newdata.append(',');
+            newdata.append("wakeMinutes");
+            newdata.append(',');
+            newdata.append("wakeAvg");
+            newdata.append(',');
+            newdata.append("minutesAwake");
+            newdata.append(',');
+            newdata.append("timeToSleep");
+            newdata.append(',');
+            newdata.append("startTime");
             newdata.append('\n');
 
             newdata.append(user.getUser_id());
@@ -203,6 +234,36 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(heartRateInfo.getPeakMax());
             newdata.append(',');
             newdata.append(heartRateInfo.getPeakMinutes());
+            newdata.append(',');
+            newdata.append(sleepInfo.getDeepCount());
+            newdata.append(',');
+            newdata.append(sleepInfo.getDeepMinutes());
+            newdata.append(',');
+            newdata.append(sleepInfo.getDeepAvg());
+            newdata.append(',');
+            newdata.append(sleepInfo.getLightCount());
+            newdata.append(',');
+            newdata.append(sleepInfo.getLightMinutes());
+            newdata.append(',');
+            newdata.append(sleepInfo.getLightAvg());
+            newdata.append(',');
+            newdata.append(sleepInfo.getRemCount());
+            newdata.append(',');
+            newdata.append(sleepInfo.getRemMinutes());
+            newdata.append(',');
+            newdata.append(sleepInfo.getRemAvg());
+            newdata.append(',');
+            newdata.append(sleepInfo.getWakeCount());
+            newdata.append(',');
+            newdata.append(sleepInfo.getWakeMinutes());
+            newdata.append(',');
+            newdata.append(sleepInfo.getWakeAvg());
+            newdata.append(',');
+            newdata.append(sleepInfo.getMinutesAwake());
+            newdata.append(',');
+            newdata.append(sleepInfo.getMinuteToFallAsleep());
+            newdata.append(',');
+            newdata.append(sleepInfo.getTime());
             newdata.append('\n');
 
             writer.write(newdata.toString());
@@ -227,6 +288,73 @@ public class amazonS3main extends AppCompatActivity {
                 bucketName,//this is the bucket name on S3
                 keyName, //this is the path and name
                 new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv") //path to the file locally
+        );
+        System.out.println("Upload Done");
+    }
+
+    /*
+        method: writesleepdatatofile()
+        @param: bucketName, type String
+        @param: keyName, type String : name of the file to upload
+        @param: credentialsProvider, type CognitoCachingCredentialsProvider
+        @param: context, type context
+        function: write sleep data to file in .csv format and upload to S3 bucket
+     */
+    private void writesleepdatatofile(String bucketName, String keyName, CognitoCachingCredentialsProvider credentialsProvider, Context context) {
+        try {
+            File file = new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_sleepdata.csv");
+
+            //OutputStream writer = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/fitdata.csv");
+            FileWriter writer = new FileWriter(file.getAbsoluteFile());
+            //BufferedWriter bw = new BufferedWriter(fw);
+
+            FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
+            LoginResponse loginResponse = SharedPrefManager.getInstance(this).getLoginResponse();
+            User user = SharedPrefManager.getInstance(this).getUser();
+            HeartRateInfo heartRateInfo = FitbitPref.getInstance(this).getHeartdata();
+            SleepInfo sleepInfo = FitbitPref.getInstance(this).getSleepData();
+
+            StringBuilder newdata = new StringBuilder();
+
+            newdata.append("level");
+            newdata.append(',');
+            newdata.append("seconds");
+            newdata.append(',');
+            newdata.append("time");
+            newdata.append('\n');
+
+            for(int i = 0; i < sleepInfo.getData().size(); i++)
+            {
+                newdata.append(sleepInfo.getData().get(i).getLevel());
+                newdata.append(",");
+                newdata.append(sleepInfo.getData().get(i).getSeconds());
+                newdata.append(",");
+                newdata.append(sleepInfo.getData().get(i).getDateTime());
+                newdata.append('\n');
+            }
+
+            writer.write(newdata.toString());
+            writer.close();
+            //Toast.makeText(this,"Done",Toast.LENGTH_LONG).show();
+
+            System.out.println("complete");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            //Toast.makeText(this,"Not Done",Toast.LENGTH_LONG).show();
+        }
+
+        //create S3 client
+        AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
+
+        //pass the s3 client to Transfer Utility
+        TransferUtility transferUtility = new TransferUtility(s3, context);
+
+        //Upload file to S3 bucket
+        TransferObserver observer = transferUtility.upload(
+                bucketName,//this is the bucket name on S3
+                keyName, //this is the path and name
+                new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_sleepdata.csv") //path to the file locally
         );
         System.out.println("Upload Done");
     }
