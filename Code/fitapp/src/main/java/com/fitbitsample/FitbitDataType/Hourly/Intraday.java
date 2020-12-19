@@ -7,9 +7,13 @@ import java.util.List;
 
 public class Intraday
 {
+    /**
+     * Uses CalorieDataset because tags are
+     * named the same, just not all are used.
+     */
     @SerializedName("dataset")
     @Expose
-    private List<HourlyDataset> dataset = null;
+    private List<Dataset> dataset = null;
 
     @SerializedName("datasetInterval")
     @Expose
@@ -19,11 +23,11 @@ public class Intraday
     @Expose
     private String datasetType;
 
-    public List<HourlyDataset> getDataset() {
+    public List<Dataset> getDataset() {
         return dataset;
     }
 
-    public void setDataset(List<HourlyDataset> dataset) {
+    public void setDataset(List<Dataset> dataset) {
         this.dataset = dataset;
     }
 

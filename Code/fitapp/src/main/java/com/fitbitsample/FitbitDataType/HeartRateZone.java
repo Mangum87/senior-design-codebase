@@ -10,7 +10,7 @@ public class HeartRateZone {
 
     @SerializedName("caloriesOut")
     @Expose
-    private Integer caloriesOut;
+    private Float caloriesOut;
     @SerializedName("max")
     @Expose
     private Integer max;
@@ -24,11 +24,11 @@ public class HeartRateZone {
     @Expose
     private String name;
 
-    public Integer getCaloriesOut() {
+    public Float getCaloriesOut() {
         return caloriesOut;
     }
 
-    public void setCaloriesOut(Integer caloriesOut) {
+    public void setCaloriesOut(Float caloriesOut) {
         this.caloriesOut = caloriesOut;
     }
 
