@@ -1,40 +1,34 @@
 package com.fitbitsample.GetFitbitData;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.fitbitsample.FitbitActivity.PrefConstants;
 import com.fitbitsample.FitbitApiHandling.NetworkListener;
 import com.fitbitsample.FitbitApiHandling.RestCall;
-import com.fitbitsample.FitbitDataType.Device;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyDistance;
 import com.fitbitsample.FitbitSharedPref.AppPreference;
 import com.fitbitsample.FitbitSharedPref.FitbitPref;
-import com.fitbitsample.PaperConstants;
-import com.fitbitsample.PaperDB;
+
 import java.util.Map;
 
-public class GetDevicesModel extends BaseAndroidViewModel<Integer, Device, Void, GetDevicesModel>
+public class DistanceModel extends BaseAndroidViewModel<Integer, HourlyDistance, String, DistanceModel>
 {
-    public GetDevicesModel(int errorCode) {
+    public DistanceModel(int errorCode) {
         super(true, errorCode);
     }
 
+
     @Override
-    public GetDevicesModel run(final Context context, Void v)
+    public DistanceModel run(final Context context, final String date)
     {
         restCall = new RestCall<>(context, true);
-
-        restCall.execute(fitbitAPIcalls.getDevices(AppPreference.getInstance().getString(PrefConstants.USER_ID)), new NetworkListener<Device>() {
+        restCall.execute(fitbitAPIcalls.getHourlyDistance(AppPreference.getInstance().getString(PrefConstants.USER_ID), date), new NetworkListener<HourlyDistance>() {
             @Override
-            public void success(Device response) {
+            public void success(HourlyDistance response) {
                 if (response != null)
                 {
                     // Save to SharedPreferences instance
-                    FitbitPref.getInstance(context).setDeviceData(response);
-                    Log.i("Device: ", response.toString());
-
-                    // Save to local DB
-                    PaperDB.getInstance().write(PaperConstants.DEVICE, response);
+                    FitbitPref.getInstance(context).saveDistanceData(response);
                     data.postValue(0); // Send success code to observer
                 } else {
                     data.postValue(errorCode);
@@ -50,6 +44,7 @@ public class GetDevicesModel extends BaseAndroidViewModel<Integer, Device, Void,
                 data.postValue(errorCode);
             }
         });
+
         return this;
     }
 }

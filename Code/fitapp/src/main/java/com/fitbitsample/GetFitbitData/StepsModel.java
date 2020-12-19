@@ -1,40 +1,36 @@
 package com.fitbitsample.GetFitbitData;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.fitbitsample.FitbitActivity.PrefConstants;
 import com.fitbitsample.FitbitApiHandling.NetworkListener;
 import com.fitbitsample.FitbitApiHandling.RestCall;
-import com.fitbitsample.FitbitDataType.Device;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyStep;
 import com.fitbitsample.FitbitSharedPref.AppPreference;
 import com.fitbitsample.FitbitSharedPref.FitbitPref;
-import com.fitbitsample.PaperConstants;
-import com.fitbitsample.PaperDB;
+
 import java.util.Map;
 
-public class GetDevicesModel extends BaseAndroidViewModel<Integer, Device, Void, GetDevicesModel>
+public class StepsModel extends BaseAndroidViewModel<Integer, HourlyStep, String, StepsModel>
 {
-    public GetDevicesModel(int errorCode) {
+    public StepsModel(int errorCode) {
         super(true, errorCode);
     }
 
+
     @Override
-    public GetDevicesModel run(final Context context, Void v)
+    public StepsModel run(final Context context, final String date)
     {
         restCall = new RestCall<>(context, true);
 
-        restCall.execute(fitbitAPIcalls.getDevices(AppPreference.getInstance().getString(PrefConstants.USER_ID)), new NetworkListener<Device>() {
+        restCall.execute(fitbitAPIcalls.getHourlyStep(AppPreference.getInstance().getString(PrefConstants.USER_ID), date), new NetworkListener<HourlyStep>() {
             @Override
-            public void success(Device response) {
+            public void success(HourlyStep response) {
                 if (response != null)
                 {
                     // Save to SharedPreferences instance
-                    FitbitPref.getInstance(context).setDeviceData(response);
-                    Log.i("Device: ", response.toString());
-
-                    // Save to local DB
-                    PaperDB.getInstance().write(PaperConstants.DEVICE, response);
+                    FitbitPref.getInstance(context).setStepData(response);
                     data.postValue(0); // Send success code to observer
                 } else {
                     data.postValue(errorCode);

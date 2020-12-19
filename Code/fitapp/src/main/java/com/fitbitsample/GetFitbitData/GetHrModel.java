@@ -41,24 +41,8 @@ public class GetHrModel extends BaseAndroidViewModel<Integer, HeartRate, String[
                 if (heartRate != null) {
                     Log.i("Hr:", heartRate.toString());
 
-                    // Save the heart rate info to new object
-                    HeartRateInfo info = new HeartRateInfo(heartRate.getActivitiesHeart().get(0).getValue().getRestingHeartRate());
-                    List<HeartRateZone> zones = heartRate.getActivitiesHeart().get(0).getValue().getHeartRateZones();
-                    HeartRateZone z = zones.get(0);
-                    info.setRange(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
-
-                    z = zones.get(1);
-                    info.setFat(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
-
-                    z = zones.get(2);
-                    info.setCardio(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
-
-                    z = zones.get(3);
-                    info.setPeak(z.getCaloriesOut(), z.getMin(), z.getMax(), z.getMinutes());
-
-
                     // Save object to PaperDB
-                    FitbitPref.getInstance(context).saveHeartData(info);
+                    FitbitPref.getInstance(context).saveHeartData(heartRate);
                     PaperDB.getInstance().write(PaperConstants.HEART_RATE, heartRate);
                     data.postValue(0);
                 } else {
