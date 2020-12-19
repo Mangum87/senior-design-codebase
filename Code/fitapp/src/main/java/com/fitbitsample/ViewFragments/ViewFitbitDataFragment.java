@@ -12,9 +12,15 @@ import androidx.lifecycle.Observer;
 import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
+import com.fitbitsample.GetFitbitData.CaloriesModel;
+import com.fitbitsample.GetFitbitData.DistanceModel;
+import com.fitbitsample.GetFitbitData.ElevationModel;
+import com.fitbitsample.GetFitbitData.FloorModel;
 import com.fitbitsample.GetFitbitData.GetDevicesModel;
 import com.fitbitsample.GetFitbitData.GetSleepModel;
+import com.fitbitsample.GetFitbitData.HeartModel;
 import com.fitbitsample.GetFitbitData.RefreshTokenModel;
+import com.fitbitsample.GetFitbitData.StepsModel;
 import com.fitbitsample.R;
 import com.fitbitsample.FitbitActivity.FitbitDataFormat;
 import com.fitbitsample.FitbitActivity.MainActivity;
@@ -98,9 +104,174 @@ public class ViewFitbitDataFragment extends MainFragment {
         ((MainActivity) context).setTitle(getString(R.string.dashboard));
         getUserProfile();
         getActivityInfo();
-        getHeartRate();
+        //getHeartRate();
         getSleep();
-        //getDevice();
+        getDevice();
+        getIntraday();
+    }
+
+
+    /**
+     * Collect the various intraday data.
+     */
+    private void getIntraday()
+    {
+        getCalorie();
+        getStep();
+        getHeart();
+        getDistance();
+        getFloors();
+        getElevation();
+    }
+
+
+    /**
+     * Get the intraday elevation data.
+     */
+    private void getElevation()
+    {
+        ElevationModel model = new ElevationModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Elevation collected");
+                }
+                else
+                {
+                    Trace.i("Elevation failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Get the intraday floors data.
+     */
+    private void getFloors()
+    {
+        FloorModel model = new FloorModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Floors collected");
+                }
+                else
+                {
+                    Trace.i("Floors failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Collect the intraday distance.
+     */
+    private void getDistance()
+    {
+        DistanceModel model = new DistanceModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Distance collected");
+                }
+                else
+                {
+                    Trace.i("Distance failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Collect the intraday heart data.
+     */
+    private void getHeart()
+    {
+        HeartModel model = new HeartModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Heart collected");
+                }
+                else
+                {
+                    Trace.i("Heart failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Collect the step data.
+     */
+    private void getStep()
+    {
+        StepsModel model = new StepsModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Steps collected");
+                }
+                else
+                {
+                    Trace.i("Steps failed");
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Collect the calorie data.
+     */
+    private void getCalorie()
+    {
+        CaloriesModel model = new CaloriesModel(1);
+        String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        model.run(context, date).getData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer i)
+            {
+                if(i != null && i == 0)
+                {
+                    Trace.i("Calories collected");
+                }
+                else
+                {
+                    Trace.i("Calories failed");
+                }
+            }
+        });
     }
 
 
@@ -146,7 +317,7 @@ public class ViewFitbitDataFragment extends MainFragment {
                 if(i != null && i == 0)
                 {
                     Trace.i("Device data was sucessfully collected");
-                    //updateDevice();
+                    updateDevice();
                 }
                 else
                 {
@@ -210,21 +381,21 @@ public class ViewFitbitDataFragment extends MainFragment {
     private void updateSleep()
     {
         Sleep sleep = PaperDB.getInstance().get().read(PaperConstants.SLEEP, null);
-        if (sleep != null && sleep.getSleep().size()>0) {
+        if (sleep != null && sleep.getSleep().size() > 0) {
             dashboardBinding.setSleep(sleep.toString());
         }
     }
 
 
-//    private void updateDevice()
-//    {
-//        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
-//
-//        if(d != null)
-//        {
-//            dashboardBinding.setDevice(d.toString());
-//        }
-//    }
+    private void updateDevice()
+    {
+        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
+
+        if(d != null)
+        {
+            dashboardBinding.setDevice(d.toString());
+        }
+    }
 
 
     private void updateUi() {
