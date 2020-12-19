@@ -2,12 +2,21 @@ package com.fitbitsample.FitbitSharedPref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.DataSetObservable;
 
 import com.fitbitsample.FitbitDataType.Device;
+import com.fitbitsample.FitbitDataType.HeartRate;
+import com.fitbitsample.FitbitDataType.HeartRateZone;
+import com.fitbitsample.FitbitDataType.Hourly.Dataset;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyDistance;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyElevation;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyFloor;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyStep;
 import com.fitbitsample.FitbitDataType.SleepData.Data;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,49 +116,327 @@ public class FitbitPref {
                 sharedPreferences.getString("sedentaryActive",null)
         );
     }
-    //saves all the heartdata in one giant string
-    public void saveHeartData(HeartRateInfo info) {
+
+
+
+    /**
+     * Save the intraday elevation data.
+     * @param e Elevation data
+     */
+    public void saveElevationData(HourlyElevation e)
+    {
+        if(e.getActivitiesElevationIntraday().getDataset().size() < 1)
+            return;
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putInt("restingHeartRate", info.getRestingRate());
+        String base = "elevation";
+        int size = e.getActivitiesElevationIntraday().getDataset().size(); // Size of data set
+        for(int i = 0; i < size; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. floors0, floors1, ..., floors96
+            editor.putFloat(base + "Value" + i, e.getActivitiesElevationIntraday().getDataset().get(i).getValue());
+            editor.putString(base + "Time" + i, e.getActivitiesElevationIntraday().getDataset().get(i).getTime());
+        }
 
-        editor.putInt("rangeCalorie", info.getRangeCalorie());
-        editor.putInt("rangeMin", info.getRangeMin());
-        editor.putInt("rangeMax", info.getRangeMax());
-        editor.putInt("rangeMinute", info.getRangeMinutes());
 
-        editor.putInt("fatCalorie", info.getFatCalorie());
-        editor.putInt("fatMin", info.getFatMin());
-        editor.putInt("fatMax", info.getFatMax());
-        editor.putInt("fatMinute", info.getFatMinutes());
-
-        editor.putInt("cardioCalorie", info.getCardioCalorie());
-        editor.putInt("cardioMin", info.getCardioMin());
-        editor.putInt("cardioMax", info.getCardioMax());
-        editor.putInt("cardioMinute", info.getCardioMinutes());
-
-        editor.putInt("peakCalorie", info.getPeakCalorie());
-        editor.putInt("peakMin", info.getPeakMin());
-        editor.putInt("peakMax", info.getPeakMax());
-        editor.putInt("peakMinute", info.getPeakMinutes());
+        // Fill rest with blank data
+        // 96 is from 15 min increments * 24 hours
+        for(int i = size; i < 96; i++)
+        {
+            editor.putFloat(base + i, 0.0f);
+        }
 
         editor.apply();
     }
-    //retrieve the heart data
+
+
+    /**
+     * Get the intraday elevation data.
+     * @return ArrayList of Time, Value data
+     */
+    public ArrayList<Dataset> getElevationData()
+    {
+        ArrayList<Dataset> list = new ArrayList(96);
+        String base = "elevation"; // Base name
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        for(int i = 0; i < 96; i++)
+        {
+            Dataset d = new Dataset();
+            d.setValue(pref.getFloat(base + "Value" + i, 0.0f)); // Defaults to zero
+            d.setTime(pref.getString(base + "Time" + i, "N/A"));
+
+            list.add(d);
+        }
+
+        return list;
+    }
+
+
+    /**
+     * Save the intraday floors data.
+     * @param f Floors data
+     */
+    public void saveFloorsData(HourlyFloor f)
+    {
+        if(f.getActivitiesFloorsIntraday().getDataset().size() < 1)
+            return;
+
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "floors";
+        int size = f.getActivitiesFloorsIntraday().getDataset().size(); // Size of data set
+        for(int i = 0; i < size; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. floors0, floors1, ..., floors96
+            editor.putFloat(base + "Value" + i, f.getActivitiesFloorsIntraday().getDataset().get(i).getValue());
+            editor.putString(base + "Time" + i, f.getActivitiesFloorsIntraday().getDataset().get(i).getTime());
+        }
+
+
+        // Fill rest with blank data
+        // 96 is from 15 min increments * 24 hours
+        for(int i = size; i < 96; i++)
+        {
+            editor.putFloat(base + i, 0.0f);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Get the intraday floors data.
+     * @return ArrayList of Time, Value data
+     */
+    public ArrayList<Dataset> getFloorsData()
+    {
+        ArrayList<Dataset> list = new ArrayList(96);
+        String base = "floors"; // Base name
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        for(int i = 0; i < 96; i++)
+        {
+            Dataset d = new Dataset();
+            d.setValue(pref.getFloat(base + "Value" + i, 0.0f)); // Defaults to zero
+            d.setTime(pref.getString(base + "Time" + i, "N/A"));
+
+            list.add(d);
+        }
+
+        return list;
+    }
+
+
+    /**
+     * Save the intraday distance data from FitBit.
+     * @param d Distance data
+     */
+    public void saveDistanceData(HourlyDistance d)
+    {
+        if(d.getActivitiesDistanceIntraday().getDataset().size() < 1)
+            return;
+
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "distance";
+        int size = d.getActivitiesDistanceIntraday().getDataset().size(); // Size of data set
+        for(int i = 0; i < size; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. distance0, distance1, ..., distance96
+            editor.putFloat(base + "Value" + i, d.getActivitiesDistanceIntraday().getDataset().get(i).getValue());
+            editor.putString(base + "Time" + i, d.getActivitiesDistanceIntraday().getDataset().get(i).getTime());
+        }
+
+
+        // Fill rest with blank data
+        // 96 is from 15 min increments * 24 hours
+        for(int i = size; i < 96; i++)
+        {
+            editor.putFloat(base + i, 0.0f);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Gets the intraday distance data.
+     * @return ArrayList of Time, Value data
+     */
+    public ArrayList<Dataset> getDistanceData()
+    {
+        ArrayList<Dataset> list = new ArrayList(96);
+        String base = "distance"; // Base name
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        for(int i = 0; i < 96; i++)
+        {
+            Dataset d = new Dataset();
+            d.setValue(pref.getFloat(base + "Value" + i, 0.0f)); // Defaults to zero
+            d.setTime(pref.getString(base + "Time" + i, "N/A"));
+
+            list.add(d);
+        }
+
+        return list;
+    }
+
+
+    /**
+     * Save the heart rate information including intraday data
+     * if it exists.
+     */
+    public void saveHeartData(HeartRate info)
+    {
+        if(info.getActivitiesHeart().size() < 1)
+            return;
+
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("restingHeartRate", info.getActivitiesHeart().get(0).getValue().getRestingHeartRate());
+
+        List<HeartRateZone> zone = info.getActivitiesHeart().get(0).getValue().getHeartRateZones(); // All heart zones
+        editor.putFloat("rangeCalorie", zone.get(0).getCaloriesOut());
+        editor.putInt("rangeMin", zone.get(0).getMin());
+        editor.putInt("rangeMax", zone.get(0).getMax());
+        editor.putInt("rangeMinute", zone.get(0).getMinutes());
+
+        editor.putFloat("fatCalorie", zone.get(1).getCaloriesOut());
+        editor.putInt("fatMin", zone.get(1).getMin());
+        editor.putInt("fatMax", zone.get(1).getMax());
+        editor.putInt("fatMinute", zone.get(1).getMinutes());
+
+        editor.putFloat("cardioCalorie", zone.get(2).getCaloriesOut());
+        editor.putInt("cardioMin", zone.get(2).getMin());
+        editor.putInt("cardioMax", zone.get(2).getMax());
+        editor.putInt("cardioMinute", zone.get(2).getMinutes());
+
+        editor.putFloat("peakCalorie", zone.get(3).getCaloriesOut());
+        editor.putInt("peakMin", zone.get(3).getMin());
+        editor.putInt("peakMax", zone.get(3).getMax());
+        editor.putInt("peakMinute", zone.get(3).getMinutes());
+
+        // Save intraday if it exists
+        if(info.getActivitiesHeartIntraday().getDataset().size() > 0)
+        {
+            String base = "heart";
+            int size = info.getActivitiesHeartIntraday().getDataset().size();
+            List<Dataset> set = info.getActivitiesHeartIntraday().getDataset();
+            editor.putInt(base + "Size", size);
+
+            // Set vals
+            // Keys: heartTime0, heartTime1, ..., heartTimeSize
+            for(int i = 0; i < size; i++)
+            {
+                editor.putString(base + "Time" + i, set.get(i).getTime());
+                editor.putFloat(base + "Value" + i, set.get(i).getValue());
+            }
+
+            // Set rest of list to 0
+            for(int i = size; i < 96; i++)
+            {
+                editor.putString(base + "Time" + i, "N/A");
+                editor.putFloat(base + "Value" + i, 0.0f);
+            }
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * retrieve the heart data
+     */
     public HeartRateInfo getHeartdata() {
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         HeartRateInfo info  = new HeartRateInfo(pref.getInt("restingHeartRate", 0));
 
-        info.setRange(pref.getInt("rangeCalorie", 0), pref.getInt("rangeMin", 0), pref.getInt("rangeMax", 0), pref.getInt("rangeMinute", 0));
-        info.setFat(pref.getInt("fatCalorie", 0), pref.getInt("fatMin", 0), pref.getInt("fatMax", 0), pref.getInt("fatMinute", 0));
-        info.setCardio(pref.getInt("cardioCalorie", 0), pref.getInt("cardioMin", 0), pref.getInt("cardioMax", 0), pref.getInt("cardioMinute", 0));
-        info.setPeak(pref.getInt("peakCalorie", 0), pref.getInt("peakMin", 0), pref.getInt("peakMax", 0), pref.getInt("peakMinute", 0));
+        info.setRange(pref.getFloat("rangeCalorie", 0), pref.getInt("rangeMin", 0), pref.getInt("rangeMax", 0), pref.getInt("rangeMinute", 0));
+        info.setFat(pref.getFloat("fatCalorie", 0), pref.getInt("fatMin", 0), pref.getInt("fatMax", 0), pref.getInt("fatMinute", 0));
+        info.setCardio(pref.getFloat("cardioCalorie", 0), pref.getInt("cardioMin", 0), pref.getInt("cardioMax", 0), pref.getInt("cardioMinute", 0));
+        info.setPeak(pref.getFloat("peakCalorie", 0), pref.getInt("peakMin", 0), pref.getInt("peakMax", 0), pref.getInt("peakMinute", 0));
+
+
+        String base = "heart";
+        int size = pref.getInt(base + "Size", 0);
+
+        for(int i = 0; i < size; i++)
+        {
+            Dataset set = new Dataset();
+            set.setTime(pref.getString(base + "Time" + i, "N/A"));
+            set.setValue(pref.getFloat(base + "Value" + i, 0.0f));
+            info.addSet(set);
+        }
 
         return info;
     }
+
+
+    /**
+     * Save the intraday step activity.
+     * @param step Intraday steps to save
+     */
+    public void setStepData(HourlyStep step)
+    {
+        if(step.getActivitiesStepsIntraday().getDataset().size() < 1)
+            return;
+
+        // Get SharedPreferences instance and set to edit
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+
+        String base = "steps";
+        int size = step.getActivitiesStepsIntraday().getDataset().size(); // Size of data set
+        for(int i = 0; i < size; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. steps0, steps1, ..., steps96
+            editor.putFloat(base + "Value" + i, step.getActivitiesStepsIntraday().getDataset().get(i).getValue());
+            editor.putString(base + "Time" + i, step.getActivitiesStepsIntraday().getDataset().get(i).getTime());
+        }
+
+
+        // Fill rest with blank data
+        // 96 is from 15 min increments * 24 hours
+        for(int i = size; i < 96; i++)
+        {
+            editor.putFloat(base + i, 0.0f);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Returns a list of 96 elements for the step data.<br />
+     * Data: Time and Value
+     * @return list of intraday data
+     */
+    public ArrayList<Dataset> getStepData()
+    {
+        ArrayList<Dataset> list = new ArrayList(96);
+        String base = "steps"; // Base name
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        for(int i = 0; i < 96; i++)
+        {
+            Dataset d = new Dataset();
+            d.setValue(pref.getFloat(base + "Value" + i, 0.0f)); // Defaults to zero
+            d.setTime(pref.getString(base + "Time" + i, "N/A"));
+
+            list.add(d);
+        }
+
+        return list;
+    }
+
 
 
     /**
@@ -267,6 +554,9 @@ public class FitbitPref {
      */
     public void setCalorieData(HourlyCalorie cal)
     {
+        if(cal.getActivitiesCaloriesIntraday().getDataset().size() < 1)
+            return;
+
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -275,7 +565,10 @@ public class FitbitPref {
         for(int i = 0; i < size; i++) // Set response data
         {
             // Base + i is calorie column. i.e. calories0, calories1, ..., calories96
-            editor.putInt(base + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i - 1).getValue());
+            editor.putFloat(base + "Value" + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i).getValue());
+            editor.putInt(base + "Level" + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i).getLevel());
+            editor.putString(base + "Time" + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i).getTime());
+            editor.putInt(base + "Mets" + i, cal.getActivitiesCaloriesIntraday().getDataset().get(i).getMets());
         }
 
 
@@ -283,7 +576,7 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putInt(base + i, 0);
+            editor.putFloat(base + i, 0.0f);
         }
 
         editor.apply();
@@ -291,21 +584,28 @@ public class FitbitPref {
 
 
     /**
-     * Returns an array of 96 int elements for the calorie data.
-     * @return int array
+     * Returns a list of 96 elements for the calorie data.<br />
+     * Data: Time, Level, Mets, and Value
+     * @return list of intraday data
      */
-    public int[] getCalorieData()
+    public ArrayList<Dataset> getCalorieData()
     {
-        int[] vals = new int[96];
+        ArrayList<Dataset> list = new ArrayList(96);
         String base = "calories"; // Base name
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         for(int i = 0; i < 96; i++)
         {
-            vals[i] = pref.getInt(base + i, 0); // Defaults to zero
+            Dataset d = new Dataset();
+            d.setValue(pref.getFloat(base + "Value" + i, 0.0f)); // Defaults to zero
+            d.setLevel(pref.getInt(base + "Level" + i, 0));
+            d.setMets(pref.getInt(base + "Mets" + i, 0));
+            d.setTime(pref.getString(base + "Time" + i, "N/A"));
+
+            list.add(d);
         }
 
-        return vals;
+        return list;
     }
 
 
