@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * <ul>
  * <li>Calorie: Level, Value, Time, Mets</li>
  * <li>Step: Time, Value</li>
- * <li>Heart: Time, Value</li>
+ * <li>Heart, Floors, Elevation, and Distance: Time, Value</li>
  * </ul>
  */
 public class Dataset
