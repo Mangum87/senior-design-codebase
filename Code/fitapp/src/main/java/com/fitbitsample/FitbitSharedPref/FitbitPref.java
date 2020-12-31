@@ -2,7 +2,6 @@ package com.fitbitsample.FitbitSharedPref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.DataSetObservable;
 
 import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
@@ -69,7 +68,12 @@ public class FitbitPref {
                 sharedPreferences.getString("age",null)
         );
     }
-    //saves the fitbit summary data
+
+
+    /**
+     * Saves the fitbit summary data
+     * @param fitbitSummary
+     */
     public void saveFitbitSummary(FitbitSummary fitbitSummary) {
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -93,7 +97,12 @@ public class FitbitPref {
         editor.putString("sedentaryActive",fitbitSummary.getSedentaryActive());
         editor.apply();
     }
-    //retrieve the fitbit summary data
+
+
+    /**
+     * Retrieve the fitbit summary data
+     * @return
+     */
     public FitbitSummary getfitbitSummary() {
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new FitbitSummary(
@@ -126,7 +135,10 @@ public class FitbitPref {
     public void saveElevationData(HourlyElevation e)
     {
         if(e.getActivitiesElevationIntraday().getDataset().size() < 1)
+        {
+            setElevationZeros();
             return;
+        }
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -135,7 +147,7 @@ public class FitbitPref {
         int size = e.getActivitiesElevationIntraday().getDataset().size(); // Size of data set
         for(int i = 0; i < size; i++) // Set response data
         {
-            // Base + i is calorie column. i.e. floors0, floors1, ..., floors96
+            // Base + i is calorie column. i.e. elevation0, elevation1, ..., elevation96
             editor.putFloat(base + "Value" + i, e.getActivitiesElevationIntraday().getDataset().get(i).getValue());
             editor.putString(base + "Time" + i, e.getActivitiesElevationIntraday().getDataset().get(i).getTime());
         }
@@ -145,7 +157,27 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putFloat(base + i, 0.0f);
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Sets the values to zero or default strings.
+     */
+    private void setElevationZeros()
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "elevation";
+        for(int i = 0; i < 96; i++)
+        {
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
         }
 
         editor.apply();
@@ -182,7 +214,10 @@ public class FitbitPref {
     public void saveFloorsData(HourlyFloor f)
     {
         if(f.getActivitiesFloorsIntraday().getDataset().size() < 1)
+        {
+            setFloorsZeros();
             return;
+        }
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -201,7 +236,27 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putFloat(base + i, 0.0f);
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Sets the values to zero or default strings.
+     */
+    private void setFloorsZeros()
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "floors";
+        for(int i = 0; i < 96; i++)
+        {
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
         }
 
         editor.apply();
@@ -238,7 +293,10 @@ public class FitbitPref {
     public void saveDistanceData(HourlyDistance d)
     {
         if(d.getActivitiesDistanceIntraday().getDataset().size() < 1)
+        {
+            setDistanceZeros();
             return;
+        }
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -257,7 +315,27 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putFloat(base + i, 0.0f);
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Sets the values to zero or default strings.
+     */
+    private void setDistanceZeros()
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "distance";
+        for(int i = 0; i < 96; i++) // Set response data
+        {
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
         }
 
         editor.apply();
@@ -293,8 +371,11 @@ public class FitbitPref {
      */
     public void saveHeartData(HeartRate info)
     {
-        if(info.getActivitiesHeart().size() < 1)
+        if(info.getActivitiesHeart().size() < 1 || info.getActivitiesHeartIntraday().getDataset().size() < 1)
+        {
+            setHeartZeros();
             return;
+        }
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -351,6 +432,50 @@ public class FitbitPref {
 
 
     /**
+     * Sets the values to zeros and default strings.
+     */
+    private void setHeartZeros()
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+        editor.putInt("restingHeartRate", 0);
+
+        editor.putFloat("rangeCalorie", 0.0f);
+        editor.putInt("rangeMin", 0);
+        editor.putInt("rangeMax", 0);
+        editor.putInt("rangeMinute", 0);
+
+        editor.putFloat("fatCalorie", 0.0f);
+        editor.putInt("fatMin", 0);
+        editor.putInt("fatMax", 0);
+        editor.putInt("fatMinute", 0);
+
+        editor.putFloat("cardioCalorie", 0.0f);
+        editor.putInt("cardioMin", 0);
+        editor.putInt("cardioMax", 0);
+        editor.putInt("cardioMinute", 0);
+
+        editor.putFloat("peakCalorie", 0.0f);
+        editor.putInt("peakMin", 0);
+        editor.putInt("peakMax", 0);
+        editor.putInt("peakMinute", 0);
+
+        String base = "heart";
+        editor.putInt(base + "Size", 0);
+
+        for(int i = 0; i < 96; i++)
+        {
+            editor.putString(base + "Time" + i, "N/A");
+            editor.putFloat(base + "Value" + i, 0.0f);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
      * retrieve the heart data
      */
     public HeartRateInfo getHeartdata() {
@@ -386,7 +511,10 @@ public class FitbitPref {
     public void setStepData(HourlyStep step)
     {
         if(step.getActivitiesStepsIntraday().getDataset().size() < 1)
+        {
+            setStepZeros();
             return;
+        }
 
         // Get SharedPreferences instance and set to edit
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -411,6 +539,24 @@ public class FitbitPref {
         }
 
         editor.apply();
+    }
+
+
+    /**
+     * Sets steps values to zero or default strings.
+     */
+    private void setStepZeros()
+    {
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        String base = "steps";
+        for(int i = 0; i < 96; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. steps0, steps1, ..., steps96
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putString(base + "Time" + i, "N/A");
+        }
     }
 
 
@@ -445,12 +591,17 @@ public class FitbitPref {
      */
     public void setSleepData(Sleep sleep)
     {
-        if(sleep.getSleep().size() < 1)
+        if(sleep.getSleep().size() < 1) // Set sleep states to zeros
+        {
+            setSleepZeros();
             return;
+        }
+
 
         // Get SharedPreferences instance and set to edit
         SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
+
 
         // Meta data
         editor.putString("dateOfSleep", sleep.getSleep().get(0).getDateOfSleep());
@@ -490,6 +641,59 @@ public class FitbitPref {
             editor.putInt(base + "Seconds" + i, data.get(i).getSeconds());
             editor.putString(base + "Time" + i, data.get(i).getDateTime().substring(11)); // 2017-04-02T00:16:30.000
         }
+
+        editor.apply(); // Save changes
+    }
+
+
+    /**
+     * Sets the sleep data to zeros or default strings.
+     */
+    private void setSleepZeros()
+    {
+        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+
+        // Meta data
+        editor.putString("dateOfSleep", "N/A");
+        editor.putInt("duration", 0);
+        editor.putInt("efficiency", 0);
+        editor.putInt("minutesAsleep", 0);
+        editor.putInt("minutesAwake", 0);
+        editor.putInt("minutesToFallAsleep", 0);
+        editor.putString("startTime", "N/A"); // 2017-04-01T23:58:30.000
+
+        // Summary data
+        editor.putInt("deepCount", 0);
+        editor.putInt("deepAvg", 0);
+        editor.putInt("deepMinutes", 0);
+
+        editor.putInt("lightCount", 0);
+        editor.putInt("lightAvg", 0);
+        editor.putInt("lightMinutes", 0);
+
+        editor.putInt("remCount", 0);
+        editor.putInt("remAvg", 0);
+        editor.putInt("remMinutes", 0);
+
+        editor.putInt("wakeCount", 0);
+        editor.putInt("wakeAvg", 0);
+        editor.putInt("wakeMinutes", 0);
+
+
+        // List of state changes
+        String base = "sleepState";
+        int max = pref.getInt("dataSize", 0); // Get last saved value or 0
+        editor.putInt("dataSize", 0);
+
+        for(int i = 0; i < max; i++)
+        {
+            editor.putString(base + "Level" + i, "N/A");
+            editor.putInt(base + "Seconds" + i, 0);
+            editor.putString(base + "Time" + i, "N/A"); // 2017-04-02T00:16:30.000
+        }
+
 
         editor.apply(); // Save changes
     }
@@ -555,7 +759,10 @@ public class FitbitPref {
     public void setCalorieData(HourlyCalorie cal)
     {
         if(cal.getActivitiesCaloriesIntraday().getDataset().size() < 1)
+        {
+            setCalorieZeros();
             return;
+        }
 
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -577,6 +784,28 @@ public class FitbitPref {
         for(int i = size; i < 96; i++)
         {
             editor.putFloat(base + i, 0.0f);
+        }
+
+        editor.apply();
+    }
+
+
+    /**
+     * Set the calorie data to zeros and default strings.
+     */
+    private void setCalorieZeros()
+    {
+        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        String base = "calories";
+        for(int i = 0; i < 96; i++) // Set response data
+        {
+            // Base + i is calorie column. i.e. calories0, calories1, ..., calories96
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putInt(base + "Level" + i, 0);
+            editor.putString(base + "Time" + i, "N/A");
+            editor.putInt(base + "Mets" + i, 0);
         }
 
         editor.apply();
