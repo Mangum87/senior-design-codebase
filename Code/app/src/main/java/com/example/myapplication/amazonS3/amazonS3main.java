@@ -15,6 +15,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.myapplication.LoginStuff.LoginResponse;
 import com.example.myapplication.SharedPrefManager;
 import com.example.myapplication.LoginStuff.User;
+import com.fitbitsample.FitbitDataType.Hourly.Dataset;
 import com.fitbitsample.FitbitSharedPref.FitbitPref;
 import com.fitbitsample.FitbitSharedPref.FitbitSummary;
 import com.fitbitsample.FitbitSharedPref.HeartRateInfo;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -64,6 +66,7 @@ public class amazonS3main extends AppCompatActivity {
         );
         //method call to write fitbit data to file
         writedatatofile(bucketName, keyName, credentialsProvider, context);
+        writehourlydatatofile(bucketName, keyName, credentialsProvider, context);
         writesleepdatatofile(bucketName, keyName, credentialsProvider, context);
 
     }
@@ -84,9 +87,9 @@ public class amazonS3main extends AppCompatActivity {
             FileWriter writer = new FileWriter(file.getAbsoluteFile());
             //BufferedWriter bw = new BufferedWriter(fw);
 
-            FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
             LoginResponse loginResponse = SharedPrefManager.getInstance(this).getLoginResponse();
             User user = SharedPrefManager.getInstance(this).getUser();
+            FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
             HeartRateInfo heartRateInfo = FitbitPref.getInstance(this).getHeartdata();
             SleepInfo sleepInfo = FitbitPref.getInstance(this).getSleepData();
 
@@ -293,6 +296,155 @@ public class amazonS3main extends AppCompatActivity {
     }
 
     /*
+        method: writehourlydatatofile()
+        @param: bucketName, type String
+        @param: keyName, type String : name of the file to upload
+        @param: credentialsProvider, type CognitoCachingCredentialsProvider
+        @param: context, type context
+        function: write intraday data to file in .csv format and upload to S3 bucket
+     */
+    private void writehourlydatatofile(String bucketName, String keyName, CognitoCachingCredentialsProvider credentialsProvider, Context context) {
+        try {
+            File file = new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_hourlydata.csv");
+
+            //OutputStream writer = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/fitdata.csv");
+            FileWriter writer = new FileWriter(file.getAbsoluteFile());
+            //BufferedWriter bw = new BufferedWriter(fw);
+
+            LoginResponse loginResponse = SharedPrefManager.getInstance(this).getLoginResponse();
+            User user = SharedPrefManager.getInstance(this).getUser();
+            FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
+
+            ArrayList<Dataset> calorieHourly = FitbitPref.getInstance(this).getCalorieData();
+            ArrayList<Dataset> stepHourly = FitbitPref.getInstance(this).getStepData();
+            ArrayList<Dataset> distanceHourly = FitbitPref.getInstance(this).getDistanceData();
+            ArrayList<Dataset> floorsHourly = FitbitPref.getInstance(this).getFloorsData();
+            ArrayList<Dataset> elevationHourly = FitbitPref.getInstance(this).getElevationData();
+
+            StringBuilder newdata = new StringBuilder();
+
+            newdata.append("calories");
+            newdata.append(',');
+            newdata.append("caloriesLevel");
+            newdata.append(',');
+            newdata.append("caloriesMets");
+            newdata.append(',');
+
+            newdata.append("steps");
+            newdata.append(',');
+            newdata.append("distance");
+            newdata.append(',');
+            newdata.append("floors");
+            newdata.append(',');
+            newdata.append("elevation");
+            newdata.append(',');
+
+            newdata.append("minutesSedentary");
+            newdata.append(',');
+            newdata.append("minutesLightlyActive");
+            newdata.append(',');
+            newdata.append("minutesFairlyActive");
+            newdata.append(',');
+            newdata.append("minutesVeryActive");
+            newdata.append(',');
+
+            newdata.append("activityCalories");
+            newdata.append(',');
+            newdata.append("caloriesBMR");
+            newdata.append('\n');
+
+            int countSedentary = 0;
+            int countLightly = 0;
+            int countFairly = 0;
+            int countVery = 0;
+
+            for(int i = 0; i < 96; i++)
+            {
+                int calLevel =calorieHourly.get(i).getLevel();
+
+                if(calLevel == 1)
+                {
+                    countSedentary++;
+                }
+
+                else if(calLevel == 2)
+                {
+                    countLightly++;
+                }
+
+                else if(calLevel == 3)
+                {
+                    countFairly++;
+                }
+
+                else if(calLevel == 4)
+                {
+                    countVery++;
+                }
+            }
+
+            for(int i = 0; i < 96; i++)
+            {
+                newdata.append(calorieHourly.get(i).getValue());
+                newdata.append(",");
+                newdata.append(calorieHourly.get(i).getLevel());
+                newdata.append(",");
+                newdata.append(calorieHourly.get(i).getMets());
+                newdata.append(",");
+                newdata.append(stepHourly.get(i).getValue());
+                newdata.append(",");
+                newdata.append(distanceHourly.get(i).getValue());
+                newdata.append(",");
+                newdata.append(floorsHourly.get(i).getValue());
+                newdata.append(",");
+                newdata.append(elevationHourly.get(i).getValue());
+
+                if(i == 0)
+                {
+                    newdata.append(",");
+                    newdata.append(countSedentary);
+                    newdata.append(",");
+                    newdata.append(countLightly);
+                    newdata.append(",");
+                    newdata.append(countFairly);
+                    newdata.append(",");
+                    newdata.append(countVery);
+                    newdata.append(",");
+                    newdata.append(fitbitSummary.getActivityCalories());
+                    newdata.append(",");
+                    newdata.append(fitbitSummary.getCaloriesBMR());
+                }
+
+                newdata.append('\n');
+            }
+
+            writer.write(newdata.toString());
+            writer.close();
+            //Toast.makeText(this,"Done",Toast.LENGTH_LONG).show();
+
+            System.out.println("complete");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            //Toast.makeText(this,"Not Done",Toast.LENGTH_LONG).show();
+        }
+
+        //create S3 client
+        AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
+
+        //pass the s3 client to Transfer Utility
+        TransferUtility transferUtility = new TransferUtility(s3, context);
+
+        //Upload file to S3 bucket
+        TransferObserver observer = transferUtility.upload(
+                bucketName,//this is the bucket name on S3
+                keyName, //this is the path and name
+                new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_hourlydata.csv") //path to the file locally
+        );
+        System.out.println("Upload Done");
+    }
+
+    /*
         method: writesleepdatatofile()
         @param: bucketName, type String
         @param: keyName, type String : name of the file to upload
@@ -308,10 +460,8 @@ public class amazonS3main extends AppCompatActivity {
             FileWriter writer = new FileWriter(file.getAbsoluteFile());
             //BufferedWriter bw = new BufferedWriter(fw);
 
-            FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
             LoginResponse loginResponse = SharedPrefManager.getInstance(this).getLoginResponse();
             User user = SharedPrefManager.getInstance(this).getUser();
-            HeartRateInfo heartRateInfo = FitbitPref.getInstance(this).getHeartdata();
             SleepInfo sleepInfo = FitbitPref.getInstance(this).getSleepData();
 
             StringBuilder newdata = new StringBuilder();
