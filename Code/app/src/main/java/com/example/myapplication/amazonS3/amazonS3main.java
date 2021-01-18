@@ -44,7 +44,7 @@ public class amazonS3main extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 
-    /*
+    /**
         method: main
         @param : context , get the Context from the health_status page as upload initiates
                 from this page (for now)
@@ -56,7 +56,9 @@ public class amazonS3main extends AppCompatActivity {
         final String bucketName = "mobilebucket";
 
         //name of the file to be uploaded
-        final String keyName = "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv";
+        final String sumKeyName = "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv";
+        final String hourKeyName = "Date_" + date + "_User_id_" + user.getUser_id() + "_hourlydata.csv";
+        final String sleepKeyName = "Date_" + date + "_User_id_" + user.getUser_id() + "_sleepdata.csv";
 
         // Initialize the Amazon Cognito credentials provider
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -65,13 +67,13 @@ public class amazonS3main extends AppCompatActivity {
                 Regions.US_EAST_2 // Region
         );
         //method call to write fitbit data to file
-        writedatatofile(bucketName, keyName, credentialsProvider, context);
-        writehourlydatatofile(bucketName, keyName, credentialsProvider, context);
-        writesleepdatatofile(bucketName, keyName, credentialsProvider, context);
+        writedatatofile(bucketName, sumKeyName, credentialsProvider, context);
+        writehourlydatatofile(bucketName, hourKeyName, credentialsProvider, context);
+        writesleepdatatofile(bucketName, sleepKeyName, credentialsProvider, context);
 
     }
 
-    /*
+    /**
         method: writedatatofile()
         @param: bucketName, type String
         @param: keyName, type String : name of the file to upload
@@ -292,10 +294,10 @@ public class amazonS3main extends AppCompatActivity {
                 keyName, //this is the path and name
                 new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv") //path to the file locally
         );
-        System.out.println("Upload Done");
+        System.out.println("Summarized Upload Done");
     }
 
-    /*
+    /**
         method: writehourlydatatofile()
         @param: bucketName, type String
         @param: keyName, type String : name of the file to upload
@@ -441,7 +443,7 @@ public class amazonS3main extends AppCompatActivity {
                 keyName, //this is the path and name
                 new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_hourlydata.csv") //path to the file locally
         );
-        System.out.println("Upload Done");
+        System.out.println("Hourly Upload Done");
     }
 
     /*
@@ -506,7 +508,7 @@ public class amazonS3main extends AppCompatActivity {
                 keyName, //this is the path and name
                 new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_sleepdata.csv") //path to the file locally
         );
-        System.out.println("Upload Done");
+        System.out.println("Sleep Upload Done");
     }
 
 }
