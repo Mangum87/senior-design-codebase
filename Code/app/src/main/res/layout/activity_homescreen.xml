@@ -600,8 +600,8 @@
 
                     <TextView
                         android:id="@+id/unitFairlyActive"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="26dp"
                         android:fontFamily="@font/quicksand_medium"

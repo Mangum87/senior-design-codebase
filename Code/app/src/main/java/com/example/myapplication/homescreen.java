@@ -1,9 +1,13 @@
  package com.example.myapplication;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -90,8 +94,9 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.nav_synFitbit:
-                    startActivity(new Intent(getApplicationContext(), health_status.class)); //todo: change this class to automate syn fitbit and upload to s3
+                    //startActivity(new Intent(getApplicationContext(), health_status.class)); //todo: change this class to automate syn fitbit and upload to s3
                     overridePendingTransition(0,0);
+                    scheduleJob();
                     return true;
                 case R.id.nav_home:
                     return true;
@@ -182,5 +187,30 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+    }
+
+
+
+    private static final String TAG = "homescreen";
+    public void scheduleJob() {
+        ComponentName componentName = new ComponentName(this, Job.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiresCharging(false) //does not require charging
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED) //requires Wi-Fi
+                .setPersisted(true) //start on system restart
+                .setPeriodic(15 * 60 * 1000) //repeat every 15 minutes (Note: Minimum time required is 15 minutes, cannot be lower than 15 minutes.)
+                .build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+    public void cancelJob() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(123);
+        Log.d(TAG, "Job cancelled ");
     }
 }

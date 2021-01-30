@@ -1,5 +1,7 @@
 package com.fitbitsample.ViewFragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
-import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.SleepData.Sleep;
+import com.fitbitsample.FitbitSharedPref.FitbitPref;
 import com.fitbitsample.GetFitbitData.CaloriesModel;
 import com.fitbitsample.GetFitbitData.DistanceModel;
 import com.fitbitsample.GetFitbitData.ElevationModel;
 import com.fitbitsample.GetFitbitData.FloorModel;
-import com.fitbitsample.GetFitbitData.GetDevicesModel;
 import com.fitbitsample.GetFitbitData.GetSleepModel;
 import com.fitbitsample.GetFitbitData.HeartModel;
 import com.fitbitsample.GetFitbitData.RefreshTokenModel;
@@ -29,22 +30,22 @@ import com.fitbitsample.PaperConstants;
 import com.fitbitsample.PaperDB;
 import com.fitbitsample.FragmentTraceManager.Trace;
 import com.fitbitsample.GetFitbitData.GetActivityModel;
-import com.fitbitsample.GetFitbitData.GetHrModel;
 import com.fitbitsample.GetFitbitData.GetUserModel;
 import com.fitbitsample.FitbitDataType.HeartRate;
 import com.fitbitsample.FitbitDataType.ActivityInfo;
 import com.fitbitsample.FitbitDataType.UserInfo;
 
 import java.util.Date;
-/*
+/**
     This fragment is for temporary data viewing purpose only.
     The data can be seen in this fragment page while clicking on
     Sync with fitbit button on Settings Panel
  */
-
 public class ViewFitbitDataFragment extends MainFragment {
 
     private FragmentDashboardBinding dashboardBinding;
+    private Context context;
+
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -97,16 +98,45 @@ public class ViewFitbitDataFragment extends MainFragment {
 
 
     /**
+     * Sync the current day of FitBit data without
+     * calling the fragment stack.
+     * @param c Context for SharedPreferences
+     */
+    public void sync(Context c)
+    {
+        FitbitPref.getInstance(c); // Make sure the structure is initialized
+
+        // Get saved OAuth response
+        OAuthResponse response = PaperDB.getInstance().get().read(PaperConstants.OAUTH_RESPONSE);
+
+        // Check if needs updating
+        if(response != null && response.isTokenExpired())
+        {
+            RefreshTokenModel refresh = new RefreshTokenModel(2);
+            refresh.run(context, null).getData().observe(this, new Observer<Integer>() {
+                @Override
+                public void onChanged(@Nullable Integer i)
+                {
+                    if(i != null && i == 0) // 0 posted on success
+                        getData(); // Token refreshed
+                }
+            });
+        }
+        else // No update needed
+            getData();
+    }
+
+
+    /**
      * Polls FitBit API for user data.
      */
     private void getData()
     {
-        ((MainActivity) context).setTitle(getString(R.string.dashboard));
+        //((MainActivity) context).setTitle(getString(R.string.dashboard));
         getUserProfile();
         getActivityInfo();
         //getHeartRate();
         getSleep();
-        getDevice();
         getIntraday();
     }
 
@@ -302,33 +332,6 @@ public class ViewFitbitDataFragment extends MainFragment {
     }
 
 
-    /**
-     * Calls FitBit to get the currently logged in user's device information.
-     */
-    private void getDevice()
-    {
-        GetDevicesModel model = new GetDevicesModel(1);
-
-        model.run(context, null).getData().observe(this, new Observer<Integer>()
-        {
-            @Override
-            public void onChanged(Integer i)
-            {
-                if(i != null && i == 0)
-                {
-                    Trace.i("Device data was sucessfully collected");
-                    updateDevice();
-                }
-                else
-                {
-                    Trace.i("Device data was not sucessfully collected");
-                    Trace.i("Device return: " + i.toString());
-                }
-            }
-        });
-    }
-
-
     private void getUserProfile() {
         GetUserModel getUserModel = new GetUserModel(1);
         getUserModel.run(context, null).getData().observe(this, new Observer<Integer>(){
@@ -344,7 +347,7 @@ public class ViewFitbitDataFragment extends MainFragment {
         });
     }
 
-    private void getHeartRate() {
+    /*private void getHeartRate() {
         GetHrModel hrModel = new GetHrModel(1);
         hrModel.run(context, FitbitDataFormat.convertDateFormat(new Date()), "1d").getData().observe(this, new Observer<Integer>(){
             @Override
@@ -357,7 +360,7 @@ public class ViewFitbitDataFragment extends MainFragment {
                 }
             }
         });
-    }
+    }*/
 
     private void getActivityInfo() {
         GetActivityModel activityModel = new GetActivityModel(1);
@@ -385,18 +388,6 @@ public class ViewFitbitDataFragment extends MainFragment {
             dashboardBinding.setSleep(sleep.toString());
         }
     }
-
-
-    private void updateDevice()
-    {
-        Device d = PaperDB.getInstance().get().read(PaperConstants.DEVICE);
-
-        if(d != null)
-        {
-            dashboardBinding.setDevice(d.toString());
-        }
-    }
-
 
     private void updateUi() {
         UserInfo userInfo = PaperDB.getInstance().get().read(PaperConstants.PROFILE, null);

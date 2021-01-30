@@ -2,8 +2,6 @@ package com.fitbitsample.FitbitSharedPref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
 import com.fitbitsample.FitbitDataType.HeartRateZone;
 import com.fitbitsample.FitbitDataType.Hourly.Dataset;
@@ -56,6 +54,7 @@ public class FitbitPref {
         editor.putString("age",fitbitUser.getAge());
         editor.apply();
     }
+
     //retrieve the fitbit user's data
     public FitbitUser getfitbitUser(){
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -74,8 +73,8 @@ public class FitbitPref {
      * Saves the fitbit summary data
      * @param fitbitSummary
      */
-    public void saveFitbitSummary(FitbitSummary fitbitSummary) {
-
+    public void saveFitbitSummary(FitbitSummary fitbitSummary)
+    {
         SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("activeScore",fitbitSummary.getActiveScore());
@@ -500,6 +499,14 @@ public class FitbitPref {
             info.addSet(set);
         }
 
+        for(int i = size; i < 96; i++)
+        {
+            Dataset set = new Dataset();
+            set.setTime("N/A");
+            set.setValue(0.0f);
+            info.addSet(set);
+        }
+
         return info;
     }
 
@@ -535,7 +542,7 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putFloat(base + i, 0.0f);
+            editor.putFloat(base + "Value" + i, 0.0f);
         }
 
         editor.apply();
@@ -783,7 +790,9 @@ public class FitbitPref {
         // 96 is from 15 min increments * 24 hours
         for(int i = size; i < 96; i++)
         {
-            editor.putFloat(base + i, 0.0f);
+            editor.putFloat(base + "Value" + i, 0.0f);
+            editor.putInt(base + "Level" + i, 0);
+            editor.putInt(base + "Mets" + i, 0);
         }
 
         editor.apply();
@@ -835,44 +844,5 @@ public class FitbitPref {
         }
 
         return list;
-    }
-
-
-    /**
-     * Save single device data to SharedPreferences.
-     * @param device
-     */
-    public void setDeviceData(Device device)
-    {
-        SharedPreferences sharedPreferences = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString("battery", device.getBattery());
-        editor.putString("deviceVersion", device.getVersion());
-        editor.putString("lastSyncTime", device.getLastSync());
-        editor.putString("id", device.getID());
-        editor.putString("type", device.getType());
-
-        editor.apply(); // Save changes made
-    }
-
-
-    /**
-     * Returns a single device of the user.
-     * @return Single device
-     */
-    public Device getDevice()
-    {
-        SharedPreferences pref = fCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        Device d = new Device();
-
-        d.setBattery(pref.getString("battery", null));
-        d.setVersion(pref.getString("deviceVersion", null));
-        d.setID(pref.getString("id", null));
-        d.setLastSync(pref.getString("lastSyncTime", null));
-        d.setType(pref.getString("type", null));
-
-
-        return d;
     }
 }

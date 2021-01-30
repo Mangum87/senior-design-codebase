@@ -308,13 +308,9 @@ public class amazonS3main extends AppCompatActivity {
     private void writehourlydatatofile(String bucketName, String keyName, CognitoCachingCredentialsProvider credentialsProvider, Context context) {
         try {
             File file = new File(context.getFilesDir(), "Date_" + date + "_User_id_" + user.getUser_id() + "_hourlydata.csv");
-
-            //OutputStream writer = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/fitdata.csv");
             FileWriter writer = new FileWriter(file.getAbsoluteFile());
-            //BufferedWriter bw = new BufferedWriter(fw);
 
-            LoginResponse loginResponse = SharedPrefManager.getInstance(this).getLoginResponse();
-            User user = SharedPrefManager.getInstance(this).getUser();
+            HeartRateInfo heart = FitbitPref.getInstance(this).getHeartdata();
             FitbitSummary fitbitSummary = FitbitPref.getInstance(this).getfitbitSummary();
 
             ArrayList<Dataset> calorieHourly = FitbitPref.getInstance(this).getCalorieData();
@@ -325,6 +321,8 @@ public class amazonS3main extends AppCompatActivity {
 
             StringBuilder newdata = new StringBuilder();
 
+            newdata.append("time");
+            newdata.append(",");
             newdata.append("calories");
             newdata.append(',');
             newdata.append("caloriesLevel");
@@ -339,6 +337,8 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append("floors");
             newdata.append(',');
             newdata.append("elevation");
+            newdata.append(',');
+            newdata.append("heartRate");
             newdata.append(',');
 
             newdata.append("minutesSedentary");
@@ -387,6 +387,8 @@ public class amazonS3main extends AppCompatActivity {
 
             for(int i = 0; i < 96; i++)
             {
+                newdata.append(calorieHourly.get(i).getTime());
+                newdata.append(",");
                 newdata.append(calorieHourly.get(i).getValue());
                 newdata.append(",");
                 newdata.append(calorieHourly.get(i).getLevel());
@@ -400,6 +402,8 @@ public class amazonS3main extends AppCompatActivity {
                 newdata.append(floorsHourly.get(i).getValue());
                 newdata.append(",");
                 newdata.append(elevationHourly.get(i).getValue());
+                newdata.append(",");
+                newdata.append(heart.getData().get(i).getValue());
 
                 if(i == 0)
                 {

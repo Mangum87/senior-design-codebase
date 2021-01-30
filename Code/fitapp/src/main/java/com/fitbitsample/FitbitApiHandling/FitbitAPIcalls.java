@@ -1,6 +1,5 @@
 package com.fitbitsample.FitbitApiHandling;
 
-import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyDistance;
@@ -87,15 +86,6 @@ public interface FitbitAPIcalls
      */
     @GET("1.2/user/{userId}/sleep/date/{date}.json")
     Call<Sleep> getSleep(@Path("userId") String id, @Path("date") String date);
-
-
-    /**
-     * Gets the user's device information.
-     * @param id User ID
-     * @return Call for device activity
-     */
-    @GET("1/user/{userId}/devices.json")
-    Call<Device> getDevices(@Path("userId") String id);
 
 
     /**
