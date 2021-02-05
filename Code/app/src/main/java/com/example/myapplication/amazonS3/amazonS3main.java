@@ -355,35 +355,6 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append("caloriesBMR");
             newdata.append('\n');
 
-            int countSedentary = 0;
-            int countLightly = 0;
-            int countFairly = 0;
-            int countVery = 0;
-
-            for(int i = 0; i < 96; i++)
-            {
-                int calLevel =calorieHourly.get(i).getLevel();
-
-                if(calLevel == 1)
-                {
-                    countSedentary++;
-                }
-
-                else if(calLevel == 2)
-                {
-                    countLightly++;
-                }
-
-                else if(calLevel == 3)
-                {
-                    countFairly++;
-                }
-
-                else if(calLevel == 4)
-                {
-                    countVery++;
-                }
-            }
 
             for(int i = 0; i < 96; i++)
             {
@@ -408,13 +379,13 @@ public class amazonS3main extends AppCompatActivity {
                 if(i == 0)
                 {
                     newdata.append(",");
-                    newdata.append(countSedentary);
+                    newdata.append(fitbitSummary.getSedentaryMinutes());
                     newdata.append(",");
-                    newdata.append(countLightly);
+                    newdata.append(fitbitSummary.getLightlyActiveMinutes());
                     newdata.append(",");
-                    newdata.append(countFairly);
+                    newdata.append(fitbitSummary.getFairlyActiveMinutes());
                     newdata.append(",");
-                    newdata.append(countVery);
+                    newdata.append(fitbitSummary.getVeryActiveMinutes());
                     newdata.append(",");
                     newdata.append(fitbitSummary.getActivityCalories());
                     newdata.append(",");
