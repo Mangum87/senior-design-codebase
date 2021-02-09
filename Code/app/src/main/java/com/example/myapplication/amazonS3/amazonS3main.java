@@ -70,7 +70,6 @@ public class amazonS3main extends AppCompatActivity {
         writedatatofile(bucketName, sumKeyName, credentialsProvider, context);
         writehourlydatatofile(bucketName, hourKeyName, credentialsProvider, context);
         writesleepdatatofile(bucketName, sleepKeyName, credentialsProvider, context);
-
     }
 
     /**
@@ -421,7 +420,8 @@ public class amazonS3main extends AppCompatActivity {
         System.out.println("Hourly Upload Done");
     }
 
-    /*
+
+    /**
         method: writesleepdatatofile()
         @param: bucketName, type String
         @param: keyName, type String : name of the file to upload

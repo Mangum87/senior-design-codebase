@@ -11,7 +11,7 @@ public class HourlySummary
 
     @SerializedName("value")
     @Expose
-    private Integer total;
+    private Float total;
 
     public String getDateTime() {
         return dateTime;
@@ -21,11 +21,11 @@ public class HourlySummary
         this.dateTime = dateTime;
     }
 
-    public Integer getValue() {
+    public Float getValue() {
         return total;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Float value) {
         this.total = value;
     }
 }

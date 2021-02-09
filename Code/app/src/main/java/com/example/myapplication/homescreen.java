@@ -94,7 +94,7 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.nav_synFitbit:
-                    //startActivity(new Intent(getApplicationContext(), health_status.class)); //todo: change this class to automate syn fitbit and upload to s3
+                    //startActivity(new Intent(getApplicationContext(), health_status.class));
                     overridePendingTransition(0,0);
                     scheduleJob();
                     return true;

@@ -3,6 +3,7 @@ package com.fitbitsample.ViewFragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -219,11 +220,11 @@ public class ViewFitbitDataFragment extends MainFragment {
             {
                 if(i != null && i == 0)
                 {
-                    Trace.i("Distance collected");
+                    Log.i("Custom", "Distance collected");
                 }
                 else
                 {
-                    Trace.i("Distance failed");
+                    Log.i("Custom", "Distance failed");
                 }
             }
         });
