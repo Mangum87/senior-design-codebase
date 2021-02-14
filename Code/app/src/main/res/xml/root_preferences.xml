@@ -1,8 +1,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:selectable="false"
+        app:title="Settings">
+    </Preference>
 
-    <PreferenceCategory app:title="Connections">
+    <PreferenceCategory
+        app:title="Connections">
 
         <SwitchPreferenceCompat
             android:id="@+id/Spotifyconnect"
@@ -24,22 +29,23 @@
             app:icon="@drawable/applelogo"
             app:key="sync"
             app:title="Connect to Apple" />
-
-
-
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="System">
+    <PreferenceCategory
+        app:title="System">
 
         <Preference
             android:id="@+id/tracking"
-            app:title="Tracking"></Preference>
+            app:title="Tracking">
+        </Preference>
         <Preference
             android:id="@+id/notification"
-            app:title="Notification"></Preference>
-
+            app:title="Notification">
+        </Preference>
     </PreferenceCategory>
-    <PreferenceCategory app:title="Account">
+
+    <PreferenceCategory
+        app:title="Account">
 
         <Preference
             android:id="@+id/viewprofile"
@@ -48,9 +54,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.example.myapplication"
-                android:targetClass="com.example.myapplication.ProfilePage"
-                />
-
+                android:targetClass="com.example.myapplication.ProfilePage" />
         </Preference>
 
         <Preference
@@ -70,10 +74,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:targetPackage="com.example.myapplication"
-                android:targetClass="com.example.myapplication.SignOut"
-                />
+                android:targetClass="com.example.myapplication.SignOut" />
         </Preference>
-
     </PreferenceCategory>
-
 </PreferenceScreen>

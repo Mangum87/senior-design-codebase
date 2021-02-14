@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background= "@color/lightGrey"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/homeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@color/registrationBackground"
+        android:fontFamily="@font/quicksand"
+        android:gravity="center_horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="All Health Data"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullTORefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeTitle"
+        android:layout_above="@+id/bottom_navigation">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/todayCard"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Today"
+                            android:textColor="@color/colorH"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <ProgressBar
+                            android:id="@+id/footStepsProgress"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginStart="40dp"
+                            android:indeterminateOnly="false"
+                            android:progressDrawable="@drawable/circle_progress"
+                            app:layout_constraintBottom_toTopOf="@+id/textFootStepsTodayCard"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0"/>
+
+                        <TextView
+                            android:id="@+id/valueFootStepTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="--"
+                            android:textColor="@color/colorG"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/footStepsProgress"
+                            app:layout_constraintEnd_toEndOf="@+id/footStepsProgress"
+                            app:layout_constraintStart_toStartOf="@+id/footStepsProgress"
+                            app:layout_constraintTop_toTopOf="@+id/footStepsProgress" />
+
+                        <TextView
+                            android:id="@+id/textFootStepsTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:drawableLeft="@drawable/ic_footsteps"
+                            android:drawablePadding="2dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Steps"
+                            android:textColor="@color/ic_footStepsTextColor"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/footStepsProgress"
+                            app:layout_constraintStart_toStartOf="@+id/footStepsProgress" />
+
+                        <ProgressBar
+                            android:id="@+id/milesProgress"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:indeterminateOnly="false"
+                            android:progressDrawable="@drawable/circle_progress"
+                            app:layout_constraintBottom_toTopOf="@+id/textMilesTodayCard"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView27"
+                            app:layout_constraintVertical_bias="1.0"/>
+
+                        <TextView
+                            android:id="@+id/valueMilesTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="--"
+                            android:textColor="@color/colorG"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/milesProgress"
+                            app:layout_constraintEnd_toEndOf="@+id/milesProgress"
+                            app:layout_constraintStart_toStartOf="@+id/milesProgress"
+                            app:layout_constraintTop_toTopOf="@+id/milesProgress" />
+
+                        <TextView
+                            android:id="@+id/textMilesTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:drawableLeft="@drawable/ic_location"
+                            android:drawablePadding="2dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Miles"
+                            android:textColor="@color/ic_locationTextColor"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/milesProgress"
+                            app:layout_constraintHorizontal_bias="0.534"
+                            app:layout_constraintStart_toStartOf="@+id/milesProgress" />
+
+                        <ProgressBar
+                            android:id="@+id/caloriesProgress"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_marginEnd="36dp"
+                            android:indeterminateOnly="false"
+                            android:progressDrawable="@drawable/circle_progress_linear_color"
+                            app:layout_constraintBottom_toTopOf="@+id/textCaloriesTodayCard"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView27"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <TextView
+                            android:id="@+id/valueCaloriesTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="--"
+                            android:textColor="@color/colorG"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toTopOf="@+id/textCaloriesTodayCard"
+                            app:layout_constraintEnd_toEndOf="@+id/caloriesProgress"
+                            app:layout_constraintStart_toStartOf="@+id/caloriesProgress"
+                            app:layout_constraintTop_toTopOf="@+id/caloriesProgress" />
+
+                        <TextView
+                            android:id="@+id/textCaloriesTodayCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:drawableLeft="@drawable/ic_calories"
+                            android:drawablePadding="2dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Calories"
+                            android:textColor="@color/ic_caloriesTextColor"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/caloriesProgress"
+                            app:layout_constraintHorizontal_bias="0.515"
+                            app:layout_constraintStart_toStartOf="@+id/caloriesProgress" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/hearRateCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/unexpandedHeartRateCardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textHeartRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_heart"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Heart Rate"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textHeartRateMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.928"
+                            app:layout_constraintStart_toEndOf="@+id/textHeartRate"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueHeartRateCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="@string/heartbeat_rate"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textHeartRate"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitHeartRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="21dp"
+                            android:layout_marginStart="4dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="BPM"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueHeartRateCard"
+                            app:layout_constraintTop_toBottomOf="@+id/textHeartRate" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/lineChartHeartRateHomeScreen"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sleepCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textSleep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_sleep"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Sleep"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textSleepMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.939"
+                            app:layout_constraintStart_toEndOf="@+id/textSleep"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueSleepCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="@string/sleep_hours"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textSleep"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitSleep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="Hrs"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueSleepCard"
+                            app:layout_constraintTop_toBottomOf="@+id/textSleep" />
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChartSleepHomeScreen"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="10dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <!---
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textWeightClicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_weight_scale"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Weight"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textWeightMoreClicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="More >"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.936"
+                            app:layout_constraintStart_toEndOf="@+id/textWeightClicked"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="36dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/heartbeat_rate"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="30sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textWeightClicked"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="26dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="lbs"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueWeight"
+                            app:layout_constraintTop_toBottomOf="@+id/textWeightClicked" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/caloriesBmrCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textCaloriesBmr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_calories"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Calories BMR"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textCaloriesBmrMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.923"
+                            app:layout_constraintStart_toEndOf="@+id/textCaloriesBmr"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueCaloriesBmr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/heartbeat_rate"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textCaloriesBmr"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitCaloriesBmr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="calories"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueCaloriesBmr"
+                            app:layout_constraintTop_toBottomOf="@+id/textCaloriesBmr" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/lightlyActiveCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textLightlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_light_active"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Lightly Active"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textLightlyActiveMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.923"
+                            app:layout_constraintStart_toEndOf="@+id/textLightlyActive"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueLightlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/heartbeat_rate"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textLightlyActive"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitLightlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="Hrs"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueLightlyActive"
+                            app:layout_constraintTop_toBottomOf="@+id/textLightlyActive" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fairlyActiveCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textFairlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_fair_active"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Fairly Active"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textFairlyActiveMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.923"
+                            app:layout_constraintStart_toEndOf="@+id/textFairlyActive"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueFairlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/heartbeat_rate"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textFairlyActive"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitFairlyActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="Hrs"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueFairlyActive"
+                            app:layout_constraintTop_toBottomOf="@+id/textFairlyActive" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/veryActiveCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="30dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textVeryActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_very_active"
+                            android:drawablePadding="10dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Very Active"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textVeryActiveMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text=">"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.923"
+                            app:layout_constraintStart_toEndOf="@+id/textVeryActive"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/valueVeryActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="52dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/heartbeat_rate"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textVeryActive"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/unitVeryActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Hrs"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueVeryActive"
+                            app:layout_constraintTop_toBottomOf="@+id/textVeryActive" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>
+
+
+
+

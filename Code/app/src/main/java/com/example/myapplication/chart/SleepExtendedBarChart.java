@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class SleepExtendedBarChart {
 
     //TODO: need to pass the data received from the server
-    public void plotSleepExtendedBarChart(BarChart b) {
+    public static void plotSleepExtendedBarChart(BarChart b) {
         BarChart barChart;
         float barWidth, barSpace, groupSpace;
         barWidth = 0.6f;
@@ -37,7 +37,7 @@ public class SleepExtendedBarChart {
         //labels for xAxis
         ArrayList<String> xVals = new ArrayList<>();
         xVals.add(""); //this is to allign the xlabels according to bar
-        xVals.add("S\n2012");
+        xVals.add("S");
         xVals.add("M");
         xVals.add("T");
         xVals.add("W");

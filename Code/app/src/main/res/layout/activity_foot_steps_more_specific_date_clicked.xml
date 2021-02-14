@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".footSteps.FootStepsMoreSpecificDateClicked">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/footStepsTitleBox"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:background="@color/registrationBackground">
+
+        <TextView
+            android:id="@+id/footStepsSpecificDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="@string/current_date"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/collapseFootStepsSpecificDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_collapse_arrow"
+            android:fontFamily="@font/quicksand_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintStart_toEndOf="@+id/footStepsSpecificDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/graphLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/footStepsTitleBox"
+        android:background="@drawable/sleep_graph_background">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="166dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="Total: "
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/footStepsSpecificDateTotalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:text="steps"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/footStepsSpecificDateTotalValue"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartFootStepsSpecificDateScreen"
+            android:layout_width="412dp"
+            android:layout_height="624dp"
+            android:layout_marginBottom="31dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent">
+        </com.github.mikephil.charting.charts.BarChart>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

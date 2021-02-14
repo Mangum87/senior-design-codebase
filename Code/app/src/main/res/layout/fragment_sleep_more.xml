@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background= "@color/lightGrey"
-    tools:context=".sleep.SleepMore">
+    android:background= "@color/lightGrey">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sleepTitleBox"
@@ -71,11 +70,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/line_chart2"
-                    android:background="@drawable/sleep_graph_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"/>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart2"
+                android:background="@drawable/sleep_graph_background"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"/>
 
         </LinearLayout>
     </ScrollView>

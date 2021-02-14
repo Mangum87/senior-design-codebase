@@ -35,11 +35,6 @@ public class health_status extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_status);
 
-        //initialize button navigation
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(navListener);
-        bottomNavigation.setSelectedItemId(R.id.nav_synFitbit);
-
         Context context = getApplicationContext();
         amazonS3main az = new amazonS3main();
         try {
@@ -49,24 +44,4 @@ public class health_status extends AppCompatActivity {
         }
 
     }
-
-    //bottom navigation listener
-    private  BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.nav_synFitbit:
-                    return true;
-                case R.id.nav_home:
-                    startActivity(new Intent(getApplicationContext(), homescreen.class));
-                    overridePendingTransition(0,0);
-                    return true;
-                case R.id.nav_you:
-                    startActivity(new Intent(getApplicationContext(), SettingsPage.class));
-                    overridePendingTransition(0,0);
-                    return true;
-            }
-            return false;
-        }
-    };
 }

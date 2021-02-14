@@ -7,32 +7,29 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
 import com.example.myapplication.Welcomescreen;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Registration extends AppCompatActivity implements View.OnClickListener {
-    private EditText editTextUsername;
-    private EditText editTextPassword;
-    private EditText editTextFname;
-    private EditText editTextLname;
-    private EditText editTextPhoneNumber;
-    private EditText editTextEmail;
-    private EditText editTextAddress;
-    private EditText editTextCity;
-    private EditText editTextState;
-    private EditText editTextZipcode;
-    private EditText editTextGender;
+
+    private TextInputLayout editTextUsername, editTextPassword, editTextFname, editTextLname, editTextPhoneNumber, editTextEmail, editTextAddress, editTextCity, editTextState, editTextZipcode, editTextGender;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
+    private ProgressBar progressBar;
+    private TextView buttonText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,93 +47,138 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         editTextCity = findViewById(R.id.registration_city);
         editTextState = findViewById(R.id.registration_state);
         editTextZipcode = findViewById(R.id.registration_zipcode);
-        //radioGroup = findViewById(R.id.radio_gender_group);
+        radioGroup = findViewById(R.id.radio_gender_group);
+        progressBar = findViewById(R.id.progressRegistrationSubmitButton);
+        buttonText = findViewById(R.id.textViewRegistrationSubmitButton);
 
         //initialize click listener for register submit button and arrow back (<)
-        findViewById(R.id.registration_arrow_back).setOnClickListener(this);
+        findViewById(R.id.registration_close).setOnClickListener(this);
         findViewById(R.id.button_registration_submit).setOnClickListener(this);
     }
 
     //shows welcome screen on arrow back (<) clicked
     private void showWelcomeScreen() {
-        Intent intent = new Intent(Registration.this, Welcomescreen.class);
-        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.no_animation, R.anim.bottom_down);
     }
 
-    // checks if all data is entered or not and processes it for submission
-    private void processRegistration() {
-        RegisterUser entered_data = new RegisterUser();
-        entered_data = saveRegistration();
+    /**
+     * checks all the input is valid and not empty
+     * @return 'true' if all input valid 'false' if any of the input in not valid
+     */
+    private Boolean checkInput(String userName, String password, String fName, String lName, String phoneNumber, String email, String address, String city, String state, String zipCode) {
+        boolean check = false;
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        int lastChildPos = radioGroup.getChildCount() - 1;
 
-        if (entered_data.get_check_entry()) {
-            submit_Registration(saveRegistration());
-        }
-    }
+        editTextUsername.setError(null);
+        editTextPassword.setError(null);
+        editTextFname.setError(null);
+        editTextLname.setError(null);
+        editTextPhoneNumber.setError(null);
+        editTextEmail.setError(null);
+        editTextAddress.setError(null);
+        editTextCity.setError(null);
+        editTextState.setError(null);
+        editTextZipcode.setError(null);
+        ((RadioButton) radioGroup.getChildAt(lastChildPos)).setError(null);
 
-
-    private RegisterUser saveRegistration() {
-
-        RegisterUser userRequest = new RegisterUser();
-        String username = editTextUsername.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String fname = editTextFname.getText().toString().trim();
-        String lname = editTextLname.getText().toString().trim();
-        String phoneNumber = editTextPhoneNumber.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-        String address = editTextAddress.getText().toString().trim();
-        String city = editTextCity.getText().toString().trim();
-        String state = editTextState.getText().toString().trim();
-        String zipcode = editTextZipcode.getText().toString().trim();
-
-        if (username.isEmpty()) {
-            editTextUsername.setError("Username is required");
+        if (userName.isEmpty()) {
+            editTextUsername.setError("Username required");
             editTextUsername.requestFocus();
+            check = false;
         }
-
         if (password.isEmpty()) {
-            editTextPassword.setError("Password is required");
+            editTextPassword.setError("Password required");
             editTextPassword.requestFocus();
+            check = false;
         }
-
-        if (fname.isEmpty()) {
-            editTextFname.setError("First Name is required");
+        if (fName.isEmpty()) {
+            editTextFname.setError("First Name required");
             editTextFname.requestFocus();
-
+            check = false;
         }
-        if (lname.isEmpty()) {
-            editTextLname.setError("Last Name is required");
+        if (lName.isEmpty()) {
+            editTextLname.setError("Last Name required");
             editTextLname.requestFocus();
+            check = false;
         }
-
         if (phoneNumber.isEmpty()) {
-            editTextPhoneNumber.setError("Phone Number is required");
+            editTextPhoneNumber.setError("Phone Number required");
             editTextPhoneNumber.requestFocus();
+            check = false;
         }
-
+        if (!phoneNumber.isEmpty() && phoneNumber.length() != 10) {
+            editTextPhoneNumber.setError("Must be 10 digits");
+            editTextPhoneNumber.requestFocus();
+            check = false;
+        }
         if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
+            editTextEmail.setError("Email required");
             editTextEmail.requestFocus();
+            check = false;
         }
-
+        if (!email.isEmpty() && !email.matches(emailPattern)) {
+            editTextEmail.setError("Invalid email");
+            editTextEmail.requestFocus();
+            check = false;
+        }
         if (address.isEmpty()) {
-            editTextAddress.setError("Address is required");
+            editTextAddress.setError("Address required");
             editTextAddress.requestFocus();
+            check = false;
         }
-
         if (city.isEmpty()) {
-            editTextCity.setError("City is required");
+            editTextCity.setError("City required");
             editTextCity.requestFocus();
+            check = false;
         }
-
         if (state.isEmpty()) {
-            editTextState.setError("State is required");
+            editTextState.setError("State required");
             editTextState.requestFocus();
+            check = false;
         }
-
-        if (zipcode.isEmpty()) {
-            editTextZipcode.setError("Zipcode is required");
+        if (zipCode.isEmpty()) {
+            editTextZipcode.setError("ZipCode required");
             editTextZipcode.requestFocus();
+            check = false;
+        }
+        if (!zipCode.isEmpty() && zipCode.length() != 5) {
+            editTextZipcode.setError("Must be 5 digit");
+            editTextZipcode.requestFocus();
+            check = false;
+        }
+        if (radioGroup.getCheckedRadioButtonId() == -1) {
+            ((RadioButton) radioGroup.getChildAt(lastChildPos)).setError("Select One");
+            check = false;
+        } else if (!userName.isEmpty() && !password.isEmpty() && !fName.isEmpty() && !lName.isEmpty() && phoneNumber.length() == 10 && !email.isEmpty() && email.matches(emailPattern) && !address.isEmpty() &&
+                !city.isEmpty() && !state.isEmpty() && zipCode.length() == 5 && radioGroup.getCheckedRadioButtonId() != -1) {
+            check = true;
+        }
+        return check;
+    }
+
+    /** checks if all data is entered or not and processes it for submission */
+    private void processRegistration() {
+        RegisterUser userRequest = new RegisterUser();
+        String username = editTextUsername.getEditText().getText().toString().trim();
+        String password = editTextPassword.getEditText().getText().toString().trim();
+        String fname = editTextFname.getEditText().getText().toString().trim();
+        String lname = editTextLname.getEditText().getText().toString().trim();
+        String phoneNumber = editTextPhoneNumber.getEditText().getText().toString().trim();
+        String email = editTextEmail.getEditText().getText().toString().trim();
+        String address = editTextAddress.getEditText().getText().toString().trim();
+        String city = editTextCity.getEditText().getText().toString().trim();
+        String state = editTextState.getEditText().getText().toString().trim();
+        String zipcode = editTextZipcode.getEditText().getText().toString().trim();
+
+        if (!checkInput(username, password, fname, lname, phoneNumber, email, address, city, state, zipcode)) {
+            return;
         } else {
+            int radioId = radioGroup.getCheckedRadioButtonId();
+            radioButton = findViewById(radioId);
+            String gender = (String) radioButton.getText();
+
             userRequest.setUname(username);
             userRequest.setPassword(password);
             userRequest.setFname(fname);
@@ -147,12 +189,15 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             userRequest.setCity(city);
             userRequest.setState(state);
             userRequest.setZipcode(zipcode);
-            userRequest.setCheck_entry(true);
+            userRequest.setGender(gender);
+            submit_Registration(userRequest);
         }
-        return userRequest;
     }
 
     private void submit_Registration(RegisterUser userRequest) {
+
+        progressBar.setVisibility(View.VISIBLE);
+        buttonText.setText("Please Wait");
 
         Call<RegistrationResponse> registerResponse = RetrofitClient.getInstance().getApi().submitRegistration(userRequest);
 
@@ -167,33 +212,33 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(Registration.this, "Successfully Registered", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Registration.this, com.example.myapplication.LoginStuff.Login.class));
                     } else {
-                        Toast.makeText(Registration.this, "User already exists", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
+                        buttonText.setText("Submit");
+                        Toast.makeText(Registration.this, "User Already Exists", Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
-            //if unable to connect to the server shows failure message to the screen
+            /** if unable to connect to the server shows failure message to the screen */
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                buttonText.setText("Submit");
                 Toast.makeText(Registration.this, "\t\t\t\t\tUnable to Register.\nFailed to Connect to the Server", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    //listens to all click on Registration screen and calls appropriate function
+    /** listens to all click on Registration screen and calls appropriate function */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_registration_submit:
                 processRegistration();
                 break;
-            case R.id.registration_arrow_back:
+            case R.id.registration_close:
                 showWelcomeScreen();
                 break;
         }
     }
 }
-
-
-
-

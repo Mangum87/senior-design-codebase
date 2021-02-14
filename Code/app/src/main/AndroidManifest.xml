@@ -16,32 +16,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".sleep.SleepMoreSpecificDateClicked"></activity>
         <activity
-            android:name=".heartRate.HeartRateMore"
+            android:name=".calories.CaloriesMoreSpecificDateClicked"
             android:theme="@style/Theme5" />
         <activity
-            android:name=".sleep.SleepMore"
+            android:name=".miles.MilesMoreSpecificDateClicked"
+            android:theme="@style/Theme5" />
+        <activity
+            android:name=".footSteps.FootStepsMoreSpecificDateClicked"
+            android:theme="@style/Theme5" />
+        <activity
+            android:name=".heartRate.HeartRateMoreSpecificDateClicked"
             android:theme="@style/Theme5" />
         <activity android:name="com.fitbitsample.FitbitActivity.MainActivity" />
         <activity android:name=".SignOut" />
         <activity android:name=".FitBitActivity" />
         <activity android:name=".health_status" />
         <activity android:name=".select_program" />
-
         <activity
             android:name=".homescreen"
             android:theme="@style/Theme3" />
         <activity
             android:name=".LoginStuff.Login"
-            android:theme="@style/Theme2" />
+            android:theme="@style/Theme6" />
         <activity
             android:name=".LoginStuff.Registration"
-            android:theme="@style/Theme2"
-            />
-        <activity
-            android:name=".SettingsPage"
-            android:label="@string/title_activity_settings_page"
-            android:theme="@style/Theme3"/>
+            android:theme="@style/Theme2" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".SplashScreen">
             <intent-filter>

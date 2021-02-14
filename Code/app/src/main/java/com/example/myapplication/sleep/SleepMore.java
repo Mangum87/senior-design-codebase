@@ -1,45 +1,66 @@
 package com.example.myapplication.sleep;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.dialog.MilesMoreHelpDialog;
+import com.example.myapplication.dialog.SleepMoreHelpDialog;
 import com.example.myapplication.homescreen;
+import com.example.myapplication.readAndSaveAllFile.MultipleFileData;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 
-public class SleepMore extends AppCompatActivity implements View.OnClickListener{
+import java.util.ArrayList;
 
+public class SleepMore extends Fragment implements View.OnClickListener{
+    private View view;
+    private BarChart barChart;
+    private RecyclerView recyclerView;
+    private ArrayList<Double> sevenDaysData = new ArrayList<>();
+    MultipleFileData multipleFileData = new MultipleFileData();
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sleep_more);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_sleep_more,container,false);
 
-        findViewById(R.id.sleep_more_arrow_back).setOnClickListener(this);
-        findViewById(R.id.sleep_more_help).setOnClickListener(this);
-        LineChart lineChart = findViewById(R.id.line_chart2);
+        view.findViewById(R.id.sleep_more_arrow_back).setOnClickListener(this);
+        view.findViewById(R.id.sleep_more_help).setOnClickListener(this);
+        //LineChart lineChart = view.findViewById(R.id.line_chart2);
 
-//        LineChartActivity lineChartActivity = new LineChartActivity();
-//        lineChartActivity.plot_lineChart(lineChart);
+        return view;
     }
 
-    private void show_homeScreen(){
-        Intent intent = new Intent(SleepMore.this, homescreen.class);
-        startActivity(intent);
+    private void show_mainScreen(){
+        //when switching between fragments old fragment is added in back stack, check the stack count
+        // to remove it from stack which helps to return to old fragment
+        if(getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStack();
+            return;
+        }
     }
 
     private void show_sleepMore_helpScreen(){
-        Toast.makeText(SleepMore.this, "Inside Sleep Help", Toast.LENGTH_LONG).show();
+        SleepMoreHelpDialog sleepMoreHelpDialog = new SleepMoreHelpDialog();
+        sleepMoreHelpDialog.show(getFragmentManager(),"Sleep Help");
     }
 
     @Override
     public void onClick (View v){
         switch (v.getId()) {
             case R.id.sleep_more_arrow_back:
-                show_homeScreen();
+                show_mainScreen();
                 break;
             case R.id.sleep_more_help:
                 show_sleepMore_helpScreen();

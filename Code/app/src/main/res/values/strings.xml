@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">StateFarm Fit</string>
     <string name="log_in">Log in</string>
     <string name="state_farm_fit">State Farm Fit</string>
     <string name="onboarding_welcome_text_1">Bet on yourself, achieve your goals, win your money back and more.</string>
@@ -26,7 +26,8 @@
     <string name="sleep_hours">--</string>
     <string name="weight_lb">--</string>
     <string name="current_date">2020/01/21</string>
-
+    <string name="messageHeartRateInfo">As per the American Heart Association (AHA), if you are an adult, your heart rate should be in the range of 60 to 100 beats per minute.
+        And if your age is between 6 and 15 years, your heart rate should be anywhere between 70 and 100 per minute.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

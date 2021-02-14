@@ -77,10 +77,9 @@
         android:layout_marginTop="150dp"
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/quicksand_medium"
-        android:text="As per the American Heart Association (AHA), if you are an adult, your heart rate should be in the range of 60 to 100 beats per minute. And if your age is between 6 and 15 years, your heart rate should be anywhere between 70 and 100 per minute."
+        android:text="@string/messageHeartRateInfo"
         android:textColor="@color/black"
         android:textSize="14sp">
     </TextView>
-
 
 </RelativeLayout>

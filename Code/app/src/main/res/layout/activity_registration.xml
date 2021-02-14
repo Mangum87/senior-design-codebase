@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background= "@drawable/signup_background"
     android:orientation="vertical"
     tools:context="LoginStuff.Registration">
 
@@ -13,22 +12,23 @@
         android:id="@+id/registerTitle"
         android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:background= "@drawable/signup_background"
         android:fontFamily="@font/quicksand"
         android:gravity="center_horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="REGISTER"
         android:textColor="@color/white"
-        android:textSize="24dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/registration_arrow_back"
+        android:id="@+id/registration_close"
         android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_arrow_back"
+        android:drawableLeft="@drawable/ic_close"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
@@ -43,201 +43,182 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="30dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:hint="Username"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_username"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:ems="10"
-                    android:hint="Username"
                     android:inputType="text"
-                    android:padding="12dp"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="Password"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_password"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="Password"
-                    android:ems="10"
                     android:inputType="textPassword"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="First Name"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_fname"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="First Name"
-                    android:ems="10"
                     android:inputType="text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_lname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="Last Name"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_lname"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="Last Name"
-                    android:ems="10"
                     android:inputType="text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="Phone Number"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_phoneNumber"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="Phone Number"
-                    android:ems="10"
                     android:inputType="number"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="Email"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_email"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="Email"
-                    android:ems="10"
                     android:inputType="textEmailAddress"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="Street Address"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_address"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="Address"
-                    android:ems="10"
+                    android:inputType="textPostalAddress"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="City"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:inputType="text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="State"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_city"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="City"
-                    android:ems="10"
                     android:inputType="text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registration_zipcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:layout_marginTop="10dp"
+                android:hint="ZipCode"
+                app:hintTextColor="@color/colorPrimaryDark"
+                app:boxStrokeColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <EditText
-                    android:id="@+id/registration_state"
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="State"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:hintTextColor="@color/red"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
-
-                <EditText
-                    android:id="@+id/registration_zipcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/register_input"
-                    android:padding="12dp"
-                    android:hint="ZipCode"
-                    android:ems="10"
                     android:inputType="number"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
+                android:id="@+id/radio_gender_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -247,40 +228,73 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gender: "
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="15dp">
                 </TextView>
 
                 <RadioButton
+                    android:id="@+id/radioMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Male"
-                    android:textColor="@color/white"
-                    android:buttonTint="@color/white"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"
                     android:textSize="15dp" />
 
                 <RadioButton
+                    android:id="@+id/radioFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="Female"
-                    android:buttonTint="@color/white"
-                    android:textColor="@color/white"
+                    android:buttonTint="@color/black"
+                    android:textColor="@color/black"
                     android:textSize="15dp" />
             </RadioGroup>
 
-            <Button
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/button_registration_submit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/button_register_submit"
-                android:text="SUBMIT"
-                android:textStyle="bold"
-                android:fontFamily="@font/quicksand"
-                android:textColor="#ffffff"
-                android:textSize="16sp">
-            </Button>
+                android:layout_height="50dp"
+                app:cardCornerRadius="6dp"
+                android:layout_marginTop="50dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorE">
+
+                    <ProgressBar
+                        android:id="@+id/progressRegistrationSubmitButton"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="15dp"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/white"
+                        android:indeterminateTintMode="src_atop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textViewRegistrationSubmitButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/textViewRegistrationSubmitButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand"
+                        android:gravity="center"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.501"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

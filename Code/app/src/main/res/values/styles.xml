@@ -17,8 +17,15 @@
         <item name="android:windowTranslucentNavigation">false</item>
     </style>
 
-    <!--for login and registration screen -->
-    <style name="Theme2" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--for registration screen -->
+    <style name="Theme2" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <!--for login screen -->
+    <style name="Theme6" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
@@ -28,7 +35,7 @@
     <style name="Theme3" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/colorF</item>
+        <item name="android:statusBarColor">@color/registrationBackground</item>
     </style>
 
     <style name="Theme4" parent="Theme.AppCompat.Light.NoActionBar">
@@ -43,4 +50,5 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@color/registrationBackground</item>
     </style>
+
 </resources>

@@ -1,186 +1,68 @@
- package com.example.myapplication;
+package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.MenuItem;
-import android.view.View;
-
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.LoginStuff.Login;
-import com.example.myapplication.amazonS3.pullBucketData;
-import com.example.myapplication.chart.HeartRateExtendedLineChart;
-import com.example.myapplication.chart.SleepExtendedBarChart;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
+import com.example.myapplication.mainScreen.MainScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class homescreen extends AppCompatActivity implements View.OnClickListener  {
-//    private TextView heartRateMore,sleepMore,weightMore;
+public class homescreen extends AppCompatActivity {
+
     private BottomNavigationView bottomNavigation;
-    BarChart barChartSleep;
-    LineChart lineChartHeart;
-    CardView cardViewHeart,cardViewSleep;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_homescreen);
 
-        //initialize chart
-        lineChartHeart = findViewById(R.id.line_chart3);
-        barChartSleep = findViewById(R.id.bar_chart3);
-
-        //initialize cardView
-        cardViewHeart = findViewById(R.id.hearRateCardView);
-        cardViewSleep = findViewById(R.id.sleepCardView);
-
-        //button navigation
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
-
-        //set home selected when user see the main screen after login
         bottomNavigation.setSelectedItemId(R.id.nav_home);
-
-
-        // initial s3 bucket object pull class
-        pullBucketData data = new pullBucketData();
-
-//        try {
-//            int []a = data.S3Bucket_object();
-//        } catch (Exception e) {
-//            Toast.makeText(homescreen.this, "try", Toast.LENGTH_LONG).show();
-//            e.printStackTrace();
-//        }
-
-        //heart rate dashboard
-        findViewById(R.id.textHeartRateClicked).setOnClickListener(this);
-        findViewById(R.id.textHeartRateMoreClicked).setOnClickListener(this);
-
-        //sleep dashboard
-        findViewById(R.id.textSleepClicked).setOnClickListener(this);
-        findViewById(R.id.textSleepMoreClicked).setOnClickListener(this);
-
-        //weight dashboard
-        findViewById(R.id.textWeightClicked).setOnClickListener(this);
-        findViewById(R.id.textWeightMoreClicked).setOnClickListener(this);
-
-        /*
-        //Takes to program page when Program button is pressed from homescreen
-        program.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(homescreen.this, select_program.class));
-            }
-        });
-
-       */
     }
 
     //bottom navigation listener
-    private  BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
+            Fragment fragment = null;
+            switch (item.getItemId()) {
                 case R.id.nav_synFitbit:
-                    startActivity(new Intent(getApplicationContext(), health_status.class)); //todo: change this class to automate syn fitbit and upload to s3
-                    overridePendingTransition(0,0);
                     return true;
                 case R.id.nav_home:
-                    return true;
+                    fragment = new MainScreen();
+                    break;
                 case R.id.nav_you:
-                    startActivity(new Intent(getApplicationContext(), SettingsPage.class));
-                    overridePendingTransition(0,0);
-                    return true;
+                    fragment = new YouScreen();
+                    break;
             }
 
-            return false;
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+            return true;
         }
     };
 
-    //extends the card view to show graph
-    private void extendHeartRateCardView(){
-        if(lineChartHeart.getVisibility()==View.GONE){
-            HeartRateExtendedLineChart chart = new HeartRateExtendedLineChart();
-            chart.plotHeartRateExtendedLineChart(lineChartHeart);
-            TransitionManager.beginDelayedTransition(cardViewSleep,new AutoTransition());
-            lineChartHeart.setVisibility(View.VISIBLE);
-        }
-        else{
-            //TransitionManager.beginDelayedTransition(cardViewSleep,new AutoTransition());
-            lineChartHeart.setVisibility(View.GONE);
-        }
-    }
 
-    //takes to screen where user can find more detail information about Heartrate Activity
-    private void showHeartRateMoreActivity(){
-        startActivity(new Intent(homescreen.this, com.example.myapplication.heartRate.HeartRateMore.class));
-    }
-
-    //this method extends the line chart for sleep card view
-    private void extendSleepCardView(){
-        if(barChartSleep.getVisibility()==View.GONE){
-            SleepExtendedBarChart chart = new SleepExtendedBarChart();
-            chart.plotSleepExtendedBarChart(barChartSleep);
-            TransitionManager.beginDelayedTransition(cardViewHeart,new AutoTransition());
-            barChartSleep.setVisibility(View.VISIBLE);
-        }
-        else{
-            //TransitionManager.beginDelayedTransition(cardViewHeart,new AutoTransition());
-            barChartSleep.setVisibility(View.GONE);
-        }
-    }
-
-    private void showSleepMoreActivity(){
-        startActivity(new Intent(homescreen.this, com.example.myapplication.sleep.SleepMore.class));
-    }
-
-    private void extendWeightCardView(){
-
-    }
-
-    private void showWeightMoreActivity(){
-
-    }
-
-    @Override
-    public void onClick (View v){
-        switch (v.getId()) {
-            case R.id.textHeartRateClicked:
-                extendHeartRateCardView();
-                break;
-            case R.id.textHeartRateMoreClicked:
-                showHeartRateMoreActivity();
-                break;
-            case R.id.textSleepClicked:
-                extendSleepCardView();
-                break;
-            case R.id.textSleepMoreClicked:
-                showSleepMoreActivity();
-                break;
-            case R.id.textWeightClicked:
-                extendWeightCardView();
-                break;
-            case R.id.textWeightMoreClicked:
-                showWeightMoreActivity();
-                break;
-        }
-    }
 // commented to go to dashboard without login
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(!SharedPrefManager.getInstance(this).isLoggedIn()){
-            Intent intent = new Intent(this, Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }
-    }
-}
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(!SharedPrefManager.getInstance(this).isLoggedIn()){
+//            Intent intent = new Intent(this, com.example.myapplication.LoginStuff.Login.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+//        }
+//    }
+} //-un comment

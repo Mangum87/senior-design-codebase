@@ -2,8 +2,8 @@ package com.example.myapplication.LoginStuff;
 
 
 public class RegisterUser {
-    private String address, bio = "this is a test", city, email, fname, gender ="male", lname, password, phone , state, username,zipcode;
-    private boolean is_admin = false, is_email_verified = false, profile_pic = true, check_entry = false;
+    private String address, bio = "this is a test", city, email, fname, gender, lname, password, phone , state, username,zipcode;
+    private boolean is_admin = false, is_email_verified = false, profile_pic = true;
 
     public void setAddress(String address) {
         this.address = address;
@@ -45,7 +45,7 @@ public class RegisterUser {
         this.phone = phoneNumber;
     }
 
-    public void setCheck_entry(boolean check_entry) { this.check_entry = check_entry; }
-
-    public boolean get_check_entry() { return check_entry; }
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }

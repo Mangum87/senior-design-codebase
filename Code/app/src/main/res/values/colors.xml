@@ -10,6 +10,8 @@
     <color name="colorD">#FF44C2CA</color>
     <color name="colorE">#286361</color>
     <color name= "colorF">#38978F</color>
+    <color name= "colorG">#4A4C4C</color>
+    <color name="colorH">#f02711</color>
     <color name="registrationBackground">#157E72</color>
     <color name="black">#131313</color>
     <color name= "red">#F44336</color>
@@ -18,5 +20,12 @@
     <color name= "signup_text_bg">#E1D3F1F4</color>
     <color name= "white">#ffffff</color>
     <color name= "lightGrey">#ced4d6</color>
-    <color name= "mycolor">#329336</color>
+    <color name= "green">#329336</color>
+    <color name= "ic_caloriesTextColor">#d9450b</color>
+    <color name= "ic_locationTextColor">#eb6b34</color>
+    <color name="ic_footStepsTextColor">#bf8b5a</color>
+    <color name= "transparent">#6BF6F5F5</color>
+    <color name="transparent2">#A6A0A5A5</color>
+    <color name="transparentRed">#CDF35246</color>
+    <color name="transparentGreen">#CB2FC535</color>
     </resources>

@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background= "@color/lightGrey"
-    tools:context=".heartRate.HeartRateMore">
+    android:background="@color/lightGrey"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/heartRateTitleBox"
+        android:id="@+id/milesTitleBox"
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:background="@color/registrationBackground">
 
         <TextView
-            android:id="@+id/heartRateScreenTitle"
+            android:id="@+id/milesMoreScreenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand"
-            android:text="Heart Rate"
+            android:text="Miles Walked"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -30,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/hr_more_arrow_back"
+            android:id="@+id/milesMoreArrowBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -39,13 +37,13 @@
             android:textColor="@color/white"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/heartRateScreenTitle"
+            app:layout_constraintEnd_toStartOf="@+id/milesMoreScreenTitle"
             app:layout_constraintHorizontal_bias="0.102"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/hr_more_help"
+            android:id="@+id/milesMoreHelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -56,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.849"
-            app:layout_constraintStart_toEndOf="@+id/heartRateScreenTitle"
+            app:layout_constraintStart_toEndOf="@+id/milesMoreScreenTitle"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -65,21 +63,37 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/heartRateTitleBox">
+        android:layout_below="@+id/milesTitleBox">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/bar_chart2"
-                android:background="@drawable/sleep_graph_background"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/graphLayout"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/sleep_graph_background">
 
-        </LinearLayout>
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChartMilesMoreScreen"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/milesMoreRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/graphLayout"
+                android:layout_marginBottom="10dp" />
+        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>

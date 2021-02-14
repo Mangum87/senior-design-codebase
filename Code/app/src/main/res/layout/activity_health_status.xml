@@ -331,8 +331,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="1dp"
-        android:background="@color/colorF"
-        app:itemBackground="@color/colorF"
+        android:background="@color/registrationBackground"
+        app:itemBackground="@color/registrationBackground"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation" />
