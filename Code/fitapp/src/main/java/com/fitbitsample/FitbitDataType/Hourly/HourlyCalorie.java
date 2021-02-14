@@ -7,7 +7,6 @@ import java.util.List;
 
 public class HourlyCalorie
 {
-
     @SerializedName("activities-calories")
     @Expose
     private List<HourlySummary> activitiesCalories = null;

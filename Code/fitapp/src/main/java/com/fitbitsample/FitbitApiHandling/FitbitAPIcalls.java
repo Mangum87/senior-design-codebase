@@ -1,8 +1,10 @@
 package com.fitbitsample.FitbitApiHandling;
 
-import com.fitbitsample.FitbitDataType.Device;
 import com.fitbitsample.FitbitDataType.HeartRate;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyCalorie;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyDistance;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyElevation;
+import com.fitbitsample.FitbitDataType.Hourly.HourlyFloor;
 import com.fitbitsample.FitbitDataType.Hourly.HourlyStep;
 import com.fitbitsample.FitbitDataType.OAuthResponse;
 import com.fitbitsample.FitbitDataType.ActivityInfo;
@@ -87,15 +89,6 @@ public interface FitbitAPIcalls
 
 
     /**
-     * Gets the user's device information.
-     * @param id User ID
-     * @return Call for device activity
-     */
-    @GET("1/user/{userId}/devices.json")
-    Call<Device> getDevices(@Path("userId") String id);
-
-
-    /**
      * Gets one day calories in 15 min increments.
      * @param id User ID
      * @param date Date to retrieve
@@ -113,4 +106,47 @@ public interface FitbitAPIcalls
      */
     @GET("1/user/{id}/activities/steps/date/{date}/1d/15min.json")
     Call<HourlyStep> getHourlyStep(@Path("id") String id, @Path("date") String date);
+
+
+    /**
+     * Gets the one day heart information in 15 min increments.
+     * @param id User ID
+     * @param date Date to request
+     * @return Call for heart activity
+     */
+    @GET("1/user/{id}/activities/heart/date/{date}/1d/15min.json")
+    Call<HeartRate> getHourlyHeart(@Path("id") String id, @Path("date") String date);
+
+
+
+    /**
+     * Gets the one day distance information in 15 min increments.
+     * @param id User ID
+     * @param date Date to request
+     * @return Call for distance activity
+     */
+    @GET("1/user/{id}/activities/distance/date/{date}/1d/15min.json")
+    Call<HourlyDistance> getHourlyDistance(@Path("id") String id, @Path("date") String date);
+
+
+
+    /**
+     * Gets the one day floors information in 15 min increments.
+     * @param id User ID
+     * @param date Date to request
+     * @return Call for floors activity
+     */
+    @GET("1/user/{id}/activities/floors/date/{date}/1d/15min.json")
+    Call<HourlyFloor> getHourlyFloor(@Path("id") String id, @Path("date") String date);
+
+
+
+    /**
+     * Gets the one day elevation information in 15 min increments.
+     * @param id User ID
+     * @param date Date to request
+     * @return Call for elevation activity
+     */
+    @GET("1/user/{id}/activities/elevation/date/{date}/1d/15min.json")
+    Call<HourlyElevation> getHourlyElevation(@Path("id") String id, @Path("date") String date);
 }

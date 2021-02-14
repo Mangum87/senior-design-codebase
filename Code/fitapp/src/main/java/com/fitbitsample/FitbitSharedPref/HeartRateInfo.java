@@ -1,5 +1,8 @@
 package com.fitbitsample.FitbitSharedPref;
 
+import com.fitbitsample.FitbitDataType.Hourly.Dataset;
+import java.util.ArrayList;
+
 /**
  * Saves the summarize data from fitbit website,
  * each time GetHrModel is triggered the data
@@ -10,33 +13,36 @@ public class HeartRateInfo
     private int restingRate;
 
     // Out of Range metrics
-    private int rangeCalorie;
+    private float rangeCalorie;
     private int rangeMin;
     private int rangeMax;
     private int rangeMinutes;
 
     // Fat Burn metrics
-    private int fatCalorie;
+    private float fatCalorie;
     private int fatMin;
     private int fatMax;
     private int fatMinutes;
 
     // Cardio metrics
-    private int cardioCalorie;
+    private float cardioCalorie;
     private int cardioMin;
     private int cardioMax;
     private int cardioMinutes;
 
     // Peak metrics
-    private int peakCalorie;
+    private float peakCalorie;
     private int peakMin;
     private int peakMax;
     private int peakMinutes;
+
+    private ArrayList<Dataset> data;
 
 
     public HeartRateInfo(int rest)
     {
         this.restingRate = rest;
+        this.data = new ArrayList<Dataset>(96);
     }
 
 
@@ -47,7 +53,7 @@ public class HeartRateInfo
      * @param max Maximum
      * @param minutes Minutes in range
      */
-    public void setRange(int cal, int min, int max, int minutes)
+    public void setRange(float cal, int min, int max, int minutes)
     {
         this.rangeCalorie = cal;
         this.rangeMin = min;
@@ -64,7 +70,7 @@ public class HeartRateInfo
      * @param max Maximum
      * @param minutes Minutes in range
      */
-    public void setFat(int cal, int min, int max, int minutes)
+    public void setFat(float cal, int min, int max, int minutes)
     {
         this.fatCalorie = cal;
         this.fatMin = min;
@@ -81,7 +87,7 @@ public class HeartRateInfo
      * @param max Maximum
      * @param minutes Minutes in range
      */
-    public void setCardio(int cal, int min, int max, int minutes)
+    public void setCardio(float cal, int min, int max, int minutes)
     {
         this.cardioCalorie = cal;
         this.cardioMin = min;
@@ -99,7 +105,7 @@ public class HeartRateInfo
      * @param max Maximum
      * @param minutes Minutes in range
      */
-    public void setPeak(int cal, int min, int max, int minutes)
+    public void setPeak(float cal, int min, int max, int minutes)
     {
         this.peakCalorie = cal;
         this.peakMin = min;
@@ -112,7 +118,7 @@ public class HeartRateInfo
         return restingRate;
     }
 
-    public int getRangeCalorie() {
+    public float getRangeCalorie() {
         return rangeCalorie;
     }
 
@@ -128,7 +134,7 @@ public class HeartRateInfo
         return rangeMinutes;
     }
 
-    public int getFatCalorie() {
+    public float getFatCalorie() {
         return fatCalorie;
     }
 
@@ -144,7 +150,7 @@ public class HeartRateInfo
         return fatMinutes;
     }
 
-    public int getCardioCalorie() {
+    public float getCardioCalorie() {
         return cardioCalorie;
     }
 
@@ -160,7 +166,7 @@ public class HeartRateInfo
         return cardioMinutes;
     }
 
-    public int getPeakCalorie() {
+    public float getPeakCalorie() {
         return peakCalorie;
     }
 
@@ -174,5 +180,19 @@ public class HeartRateInfo
 
     public int getPeakMinutes() {
         return peakMinutes;
+    }
+
+    public ArrayList<Dataset> getData() {
+        return data;
+    }
+
+
+    /**
+     * Add a set of data to the list.
+     * @param set Set of data
+     */
+    public void addSet(Dataset set)
+    {
+        this.data.add(set);
     }
 }

@@ -8,7 +8,8 @@ import java.util.List;
  * Creating a viewing adapter class for parsing gson file heart data received from Fitbit API call
  */
 
-public class Value {
+public class Value
+{
     @SerializedName("customHeartRateZones")
     @Expose
     private List<Object> customHeartRateZones = null;
@@ -17,7 +18,7 @@ public class Value {
     private List<HeartRateZone> heartRateZones = null;
     @SerializedName("restingHeartRate")
     @Expose
-    private Integer restingHeartRate;
+    private Integer restingHeartRate = 0;
 
     public List<Object> getCustomHeartRateZones() {
         return customHeartRateZones;

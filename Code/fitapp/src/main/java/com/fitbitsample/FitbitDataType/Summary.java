@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  * Creating a viewing adapter class for parsing gson file of activities summary received from Fitbit API call
  */
 
-public class Summary {
-
+public class Summary
+{
     @SerializedName("activeScore")
     @Expose
     private Integer activeScore;
