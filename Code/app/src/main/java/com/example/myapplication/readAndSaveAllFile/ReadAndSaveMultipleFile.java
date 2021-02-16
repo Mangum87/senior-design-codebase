@@ -10,6 +10,9 @@ import androidx.annotation.RequiresApi;
 import com.example.myapplication.LoginStuff.Login;
 import com.example.myapplication.LoginStuff.User;
 import com.example.myapplication.SharedPrefManager;
+import com.fitbitsample.FitbitActivity.FitbitDataFormat;
+import com.fitbitsample.FitbitActivity.PrefConstants;
+import com.fitbitsample.FitbitSharedPref.AppPreference;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,65 +42,77 @@ public class ReadAndSaveMultipleFile {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void readAllFilesName() {
 
-        //check for todays filename/////////////////////////////////////////////////////////////////////////////////
-//        //gets today's date in the pattern below
-//        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-//
-//        //initializing user object from shared preference to get the userID saved during login
-//        User user = SharedPrefManager.getInstance(context).getUser();
-//
-//        //finalize the filename to read
-//        //final String todayFileName = "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv"; **Uncomment to set it to work for current date.**
+        //check for today's filename
+        //String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        //String date = FitbitDataFormat.convertDateFormat(new Date());
+
+        //initializing user object from shared preference to get the userID saved during login
+        //User user = SharedPrefManager.getInstance(context).getUser();
+
+        //finalize the filename to read
+        //final String todayFileName = "Date_" + date + "_User_id_" + user.getUser_id() + "_fitbitdata.csv";
+
 
         ////////////////////////////////////////////////////////////////////////////////////////
 
-        File file = new File(context.getFilesDir(), "files");
-        file = new File(file.getAbsolutePath());
-        File destDir = file.getParentFile();
+
+        //File file = new File(context.getFilesDir().getAbsolutePath());
+        File file = new File(context.getFilesDir().getAbsolutePath());
+        //File destDir = file.getParentFile();
 
         /** using lambda function to filter the files according to user id */
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 //define here you filter condition for every single file
-                return name.startsWith("Date_"); //todo: add user id filter too
+//                return name.startsWith("Date_");
+                return name.contains("hourly");
             }
         };
 
-        File[] files = destDir.listFiles(filter);
+        File[] files = file.listFiles(filter);
         Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed()); /** sort in reversed date order */
 
-        if (files.length == 0) {
+        if (files.length == 0)
+        {
             Toast toast = Toast.makeText(context, "No Data Available. Please Start Using your Fitbit to see your Health Progress.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
             hasData = false;
-        } else {
-            for (int i = 0; i < files.length; i++) {
-                readOneFileData(files[i].getName());
-            }
+        }
+        else
+        {
+            for (int i = 0; i < files.length; i++)
+            { readOneFileData(files[i].getName()); }
+
             hasData = true;
         }
     }
 
-    public void readOneFileData(String filename) {
+
+    /**
+     * Read intraday data from given file name.
+     * @param filename Name of file to load
+     */
+    public void readOneFileData(String filename)
+    {
         String date = filename.substring(5, 15);
         File file = new File(context.getFilesDir(), filename);
-        file = new File(String.valueOf(file.getAbsoluteFile()));
+        //file = new File(String.valueOf(file.getAbsoluteFile()));
 
         //initialize all the arraylist
-        ArrayList<String> timeStamp = new ArrayList<>();
-        ArrayList<Double> calories = new ArrayList<>();
-        ArrayList<Double> caloriesBMR = new ArrayList<>();
-        ArrayList<Double> steps = new ArrayList<>();
-        ArrayList<Double> distance = new ArrayList<>();
-        ArrayList<Double> floors = new ArrayList<>();
-        ArrayList<Double> elevation = new ArrayList<>();
-        ArrayList<Double> minutesSedentary = new ArrayList<>();
-        ArrayList<Double> minutesLightlyActive = new ArrayList<>();
-        ArrayList<Double> minutesFairlyActive = new ArrayList<>();
-        ArrayList<Double> minutesVeryActive = new ArrayList<>();
-        ArrayList<Double> activityCalories = new ArrayList<>();
-        ArrayList<Double> heartRate = new ArrayList<>();
+        ArrayList<String> timeStamp = new ArrayList<>(96);
+        ArrayList<Double> calories = new ArrayList<>(96);
+        ArrayList<Double> caloriesBMR = new ArrayList<>(96);
+        ArrayList<Double> steps = new ArrayList<>(96);
+        ArrayList<Double> distance = new ArrayList<>(96);
+        ArrayList<Double> floors = new ArrayList<>(96);
+        ArrayList<Double> elevation = new ArrayList<>(96);
+        ArrayList<Double> minutesSedentary = new ArrayList<>(96);
+        ArrayList<Double> minutesLightlyActive = new ArrayList<>(96);
+        ArrayList<Double> minutesFairlyActive = new ArrayList<>(96);
+        ArrayList<Double> minutesVeryActive = new ArrayList<>(96);
+        ArrayList<Double> activityCalories = new ArrayList<>(96);
+        ArrayList<Double> heartRate = new ArrayList<>(96);
 
         String lineFromFile = "";
         boolean isFirstLine = true;
@@ -109,10 +124,14 @@ public class ReadAndSaveMultipleFile {
                 /** split by ',' */
                 String[] tokens = lineFromFile.split(",");
 
-                if (isFirstLine) {
+                if (isFirstLine)
+                {
                     isFirstLine = false;
-                } else {
-                    for (int i = 0; i < tokens.length; i++) {
+                }
+                else
+                {
+                    for (int i = 0; i < tokens.length; i++)
+                    {
                         if (i == 0) {
                             timeStamp.add(tokens[i]);
                         } else if (i == 1) {

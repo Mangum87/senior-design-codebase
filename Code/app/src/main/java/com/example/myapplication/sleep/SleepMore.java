@@ -18,6 +18,8 @@ import com.example.myapplication.dialog.MilesMoreHelpDialog;
 import com.example.myapplication.dialog.SleepMoreHelpDialog;
 import com.example.myapplication.homescreen;
 import com.example.myapplication.readAndSaveAllFile.MultipleFileData;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFile;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 
@@ -28,7 +30,8 @@ public class SleepMore extends Fragment implements View.OnClickListener{
     private BarChart barChart;
     private RecyclerView recyclerView;
     private ArrayList<Double> sevenDaysData = new ArrayList<>();
-    MultipleFileData multipleFileData = new MultipleFileData();
+    //MultipleFileData multipleFileData = new MultipleFileData();
+    SleepFileManager manager;
 
     @Nullable
     @Override
@@ -37,6 +40,7 @@ public class SleepMore extends Fragment implements View.OnClickListener{
 
         view.findViewById(R.id.sleep_more_arrow_back).setOnClickListener(this);
         view.findViewById(R.id.sleep_more_help).setOnClickListener(this);
+        this.manager = new SleepFileManager(getContext());
         //LineChart lineChart = view.findViewById(R.id.line_chart2);
 
         return view;
