@@ -18,8 +18,6 @@ public class MultipleFileData {
     private ArrayList<Double> activityCalories;
     private ArrayList<Double> heartRate;
 
-    public MultipleFileData(){};
-
     public MultipleFileData(String date,
                             ArrayList<String> timeStamp,
                             ArrayList<Double> calories,

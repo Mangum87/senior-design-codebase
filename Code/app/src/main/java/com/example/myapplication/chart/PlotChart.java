@@ -9,9 +9,9 @@ import android.graphics.Shader;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
-import com.example.myapplication.SignOut;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -26,19 +26,20 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 
+/** this class has all the graphing charts and its properties */
 public class PlotChart {
 
     /**
-     * @param context - to access color defined in values
+     * @param context  - to access color defined in values
      * @param callFrom - to filter the data and graphing properties
      * @param barChart - bar chart assigned in xml file
-     * @param data - value to be plotted
-     * @param xVals - labels for xAxis
+     * @param data     - value to be plotted
+     * @param xVals    - labels for xAxis
      */
-    public static void barChart(Context context, String callFrom, BarChart barChart, ArrayList<Double> data , ArrayList<String> xVals) {
+    public static void barChart(Context context, String callFrom, BarChart barChart, ArrayList<Double> data, ArrayList<String> xVals) {
 
         float barWidth = 0.6f;
-        xVals.add(0,""); //this is to align the xLabels according to bar
+        xVals.add(0, ""); //this is to align the xLabels according to bar
 
         /** set value for yAxis */
         ArrayList<BarEntry> yVals = new ArrayList();
@@ -61,9 +62,9 @@ public class PlotChart {
             @Override
             public String getFormattedValue(float value) {
 
-                if (value > 0){
-                    return super.getFormattedValue((int)value);
-                }else{
+                if (value > 0) {
+                    return super.getFormattedValue((int) value);
+                } else {
                     return "";
                 }
             }
@@ -101,27 +102,29 @@ public class PlotChart {
         leftAxis.setSpaceTop(20f);
         leftAxis.setAxisMinimum(0f);
 
-        switch (callFrom){
+        switch (callFrom) {
             case "footSteps":
             case "calories":
             case "heartRate":
-            case "sleep" :
+            case "sleep":
             case "caloriesBMR":
             case "lightlyActive":
             case "fairlyActive":
             case "veryActive":
                 leftAxis.setValueFormatter(new LargeValueFormatter()); //show 1000 labels in '1k' pattern
         }
-
-        barChart.invalidate();
     }
 
     /**
-     * @param context for accessing color
+     * @param context   to access colors defined in res->values->colors
+     * @param callFrom  to set the graphing properties according to the screen
+     * @param lineChart chart where the graph is shown
+     * @param data      values to be plotted
+     * @param xVals     xLables
      */
-    public static void lineChart(Context context, LineChart lineChart, ArrayList<Double> data, ArrayList<String> xVals){
+    public static void lineChart(Context context, String callFrom, LineChart lineChart, ArrayList<Double> data, ArrayList<String> xVals) {
 
-        xVals.add(0,""); /** this is to align the xLabel according to lines */
+        xVals.add(0, ""); /** this is to align the xLabel according to lines */
 
         /** set Values for yAxis */
         ArrayList<Entry> yVals = new ArrayList();
@@ -133,8 +136,7 @@ public class PlotChart {
             a++;
         }
 
-
-        LineDataSet lineDataSet = new LineDataSet(yVals,"Sleep");
+        LineDataSet lineDataSet = new LineDataSet(yVals, "Sleep");
         lineDataSet.setDrawCircles(false);
         lineDataSet.setDrawValues(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -145,13 +147,11 @@ public class PlotChart {
 
         /** gradient fill in chart */
         Paint paint = lineChart.getRenderer().getPaintRender();
-        int height = lineChart.getHeight();
+//        int height = lineChart.getHeight();
 
-        int red = Color.parseColor("#f06262");
-        int green = Color.parseColor("#80FF85");
         LinearGradient linGrad = new LinearGradient(0, 0, 0, 0,
-                red,
-                green,
+                ContextCompat.getColor(context, R.color.lightRed),
+                ContextCompat.getColor(context, R.color.lightGreen),
                 Shader.TileMode.REPEAT);
         paint.setShader(linGrad);
 
@@ -162,6 +162,7 @@ public class PlotChart {
         lineChart.getLegend().setEnabled(false);
 //        lineChart.setExtraRightOffset(2);
 
+
         //Customize X-axis
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setGranularity(1f);
@@ -169,7 +170,12 @@ public class PlotChart {
         xAxis.setDrawGridLines(false);
         xAxis.setAxisMinimum(0f);
         xAxis.setTextSize(12f);
-        xAxis.setTextColor(Color.WHITE);
+        /** because main screen background is white */
+        if (callFrom.equals("heartRateMain")) {
+            xAxis.setTextColor(Color.BLACK);
+        } else {
+            xAxis.setTextColor(Color.WHITE);
+        }
         xAxis.setEnabled(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new IndexAxisValueFormatter(xVals));
@@ -177,11 +183,58 @@ public class PlotChart {
         //Customize Y-axis
         lineChart.getAxisRight().setEnabled(false);
         YAxis leftAxis = lineChart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
+        /** because main screen background is white */
+        if (callFrom.equals("heartRateMain")) {
+            leftAxis.setTextColor(Color.BLACK);
+        } else {
+            leftAxis.setTextColor(Color.WHITE);
+        }
         leftAxis.setTextSize(12f);
         leftAxis.setValueFormatter(new LargeValueFormatter());
         leftAxis.setDrawGridLines(false);
         leftAxis.setSpaceTop(20f);
+
+    }
+
+    public static void pieChart(Context context, String callFrom, int index, PieChart pieChart) {
+//        ArrayList<PieEntry> yVals = new ArrayList<>();
+//        ArrayList<String> xVals = new ArrayList<>();
+//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalDeep(), "Deep"));
+//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalRem(), "Rem"));
+//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalLight(), "Light"));
+//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalWake(), "Wake"));
+//
+//        ArrayList<Integer> colors = new ArrayList<>();
+//        colors.add(ContextCompat.getColor(context, R.color.red));
+//        colors.add(ContextCompat.getColor(context, R.color.green));
+//        colors.add(ContextCompat.getColor(context, R.color.light_blue));
+//        colors.add(ContextCompat.getColor(context, R.color.endblue));
+//
+//
+////        xVals.add("Deep");
+////        xVals.add("Rem");
+////        xVals.add("Light");
+////        xVals.add("Wake");
+//
+//        pieChart.setDrawHoleEnabled(true);
+//        pieChart.setHoleColor(Color.TRANSPARENT);
+//        pieChart.setHoleRadius(7);
+//        pieChart.setTransparentCircleRadius(10);
+//
+//        pieChart.setRotation(0);
+//        pieChart.setRotationEnabled(true);
+//
+//        PieDataSet dataSet = new PieDataSet(yVals, "Sleep");
+//        dataSet.setValueTextSize(12f);
+//        dataSet.setColors(colors);
+//        dataSet.setSliceSpace(3);
+//        dataSet.setSelectionShift(5);
+//
+//        PieData pieData = new PieData(dataSet);
+//        pieData.setDrawValues(true);
+//
+//        pieChart.setData(pieData);
+//        pieChart.invalidate();
 
     }
 }

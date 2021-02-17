@@ -319,7 +319,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/valueSleepCard"
+                            android:id="@+id/valueHrsSleepCard"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="52dp"
@@ -337,16 +337,40 @@
                             android:id="@+id/unitSleep"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="2dp"
                             android:layout_marginTop="21dp"
                             android:fontFamily="@font/quicksand_bold"
-                            android:text="Hrs"
+                            android:text="hr"
                             android:textSize="10sp"
-                            app:layout_constraintStart_toEndOf="@+id/valueSleepCard"
+                            app:layout_constraintStart_toEndOf="@+id/valueHrsSleepCard"
                             app:layout_constraintTop_toBottomOf="@+id/textSleep" />
 
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/barChartSleepHomeScreen"
+                        <TextView
+                            android:id="@+id/valueMinSleepCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="40dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="@string/sleep_hours"
+                            android:textColor="@color/colorG"
+                            android:textSize="20sp"
+                            app:layout_constraintStart_toEndOf="@+id/unitSleep"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="52dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="min"
+                            android:textSize="10sp"
+                            app:layout_constraintStart_toEndOf="@+id/valueMinSleepCard"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChartSleepHomeScreen"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_marginTop="90dp"

@@ -30,12 +30,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/*
+/**
   class: amazonS3main
   Function: write the user fitbit summary data to file and then upload to S3 bucket using
             Transfer Utility library
             More info: https://aws.amazon.com/blogs/mobile/introducing-the-transfer-utility-for-the-aws-sdk-for-android/
-
  */
 public class amazonS3main extends AppCompatActivity {
 

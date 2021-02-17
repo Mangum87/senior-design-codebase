@@ -22,17 +22,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
 import com.example.myapplication.calories.CaloriesMore;
-import com.example.myapplication.chart.HeartRateExtendedLineChart;
-import com.example.myapplication.chart.SleepExtendedBarChart;
+import com.example.myapplication.chart.PlotChart;
 import com.example.myapplication.footSteps.FootStepsMore;
 import com.example.myapplication.heartRate.HeartRateMore;
 import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
-import com.example.myapplication.readAndSaveAllFile.MultipleFileData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
 import com.example.myapplication.sleep.SleepMore;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 
 public class MainScreen extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private View view;
@@ -41,9 +39,9 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private int Progress = 0;
 
     //initialize all values of homeScreen
-    private TextView valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueSleep, valueCaloriesBMR, valueLightlyActive, valueFairlyActive, valueVeryActive;
+    private TextView valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueHrsSleep,valueMinSleep, valueCaloriesBMR, valueLightlyActive, valueFairlyActive, valueVeryActive;
     LineChart lineChartHeart;
-    BarChart barChartSleep;
+    PieChart pieChartSleep;
     CardView cardViewHeart, cardViewSleep, cardViewCaloriesBMR, cardViewLightlyActive, cardViewFairlyActive, cardViewVeryActive;
     ProgressBar progressBarFootSteps, progressBarMiles, progressBarCalories;
     int indexOfTodaysData = 0; // since the most recent data is stored in index '0'
@@ -94,8 +92,9 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
          //   initialize Sleep cardView attributes                           //
          ///////////////////////////////////////////////////////////////////*/
         cardViewSleep = view.findViewById(R.id.sleepCardView);
-        valueSleep = view.findViewById(R.id.valueSleepCard);
-        barChartSleep = view.findViewById(R.id.barChartSleepHomeScreen);
+        valueHrsSleep = view.findViewById(R.id.valueHrsSleepCard);
+        valueMinSleep = view.findViewById(R.id.valueMinSleepCard);
+        pieChartSleep = view.findViewById(R.id.pieChartSleepHomeScreen);
 
         view.findViewById(R.id.textSleep).setOnClickListener(this);
         view.findViewById(R.id.textSleepMore).setOnClickListener(this);
@@ -142,13 +141,14 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         /** //////////////////////////////////////////////////////////////////*/
 
         // only load new data when user refreshes, so set a flag to track the first call which is when after login
-        if(firstCall){
+        if (firstCall) {
             getAllData();
+
             firstCall = false;
         }
 
         //when user sees homeScreen, it check if data is stored or not before setting
-        if (ReadAndSaveMultipleFile.hasData) {
+        if (ReadAndSaveMultipleFile.hasData ) {
             showTodaysData();
         }
         return view;
@@ -157,7 +157,10 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getAllData() {
         ReadAndSaveMultipleFile readAndSaveMultipleFile = new ReadAndSaveMultipleFile(view.getContext());
-        readAndSaveMultipleFile.readAllFilesName();
+        readAndSaveMultipleFile.readAllFilesList();
+    }
+
+    private void getSleepData(){
     }
 
     private void updateFootStepsProgress() {
@@ -165,44 +168,25 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         double totalMiles = CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getDistance());
         int totalCalories = (int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCalories());
 
-        if(totalSteps <= 6000){
-            int progressValue = (int) (((double) totalSteps/6000) * 100);
-            ObjectAnimator.ofInt(progressBarFootSteps, "progress", progressValue)
-                    .setDuration(900)
-                    .start();
-        }
 
-        if(totalSteps >= 6000){
-            ObjectAnimator.ofInt(progressBarFootSteps, "progress", 100)
-                    .setDuration(900)
-                    .start();
-        }
+        /** Currently setting the the foot steps goal to 6K
+         * progress bar takes value 1-100 so calculating the value to set in progress bar */
+        int progressValue = (int) (((double) totalSteps / 6000) * 100);
 
-        if(totalMiles <= 2){
-            int progressValue = (int)((totalMiles/2) * 100);
-            ObjectAnimator.ofInt(progressBarMiles, "progress", progressValue)
-                    .setDuration(900)
-                    .start();
-        }
+        ObjectAnimator.ofInt(progressBarFootSteps, "progress", progressValue)
+                .setDuration(900)
+                .start();
 
-        if(totalMiles >= 2){
-            ObjectAnimator.ofInt(progressBarMiles, "progress", 100)
-                    .setDuration(900)
-                    .start();
-        }
+        /**  Currently setting the the miles goal to 2miles */
+        progressValue = (int) ((totalMiles / 2) * 100);
+        ObjectAnimator.ofInt(progressBarMiles, "progress", progressValue)
+                .setDuration(900)
+                .start();
 
-        if(totalCalories <= 2000){
-            int progressValue = (int) (((double) totalCalories/2000) * 100);
-            ObjectAnimator.ofInt(progressBarCalories, "progress", progressValue)
-                    .setDuration(900)
-                    .start();
-        }
-
-        if(totalCalories >= 2000){
-            ObjectAnimator.ofInt(progressBarCalories, "progress", 100)
-                    .setDuration(900)
-                    .start();
-        }
+        progressValue = (int) (((double) totalCalories / 2000) * 100);
+        ObjectAnimator.ofInt(progressBarCalories, "progress", progressValue)
+                .setDuration(900)
+                .start();
     }
 
     private void showTodaysData() {
@@ -215,7 +199,11 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         valueCalories.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCalories())));
 
-        valueHeartRate.setText("89");
+        valueHeartRate.setText("83");
+
+//        valueHrsSleep.setText(String.valueOf(CalculateData.getHour(readSleepData.allSleepData.get(indexOfTodaysData).getTotal())));
+//
+//        valueMinSleep.setText(String.valueOf(CalculateData.getMin(readSleepData.allSleepData.get(indexOfTodaysData).getTotal())));
 
         valueCaloriesBMR.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCaloriesBMR())));
 
@@ -259,12 +247,10 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     /** extends and makes graph visible for heartRate cardView whose initial visibility is in state 'gone' */
     private void extendHeartRateCardView() {
         if (lineChartHeart.getVisibility() == View.GONE) {
-            //initialize extended heartRate chart class
-            HeartRateExtendedLineChart chart = new HeartRateExtendedLineChart();
-            if(ReadAndSaveMultipleFile.hasData){
-                chart.plotHeartRateExtendedLineChart(lineChartHeart, ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHeartRate()); //plots graph using most recent data
+            if (ReadAndSaveMultipleFile.hasData) {
+                PlotChart.lineChart(view.getContext(), "heartRateMain",lineChartHeart, ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHeartRate(),ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTimeStamp()); //plots graph using most recent data
             }
-            TransitionManager.beginDelayedTransition(cardViewSleep, new AutoTransition());
+            TransitionManager.beginDelayedTransition(cardViewHeart, new AutoTransition());
             lineChartHeart.setVisibility(View.VISIBLE);
         } else {
             lineChartHeart.setVisibility(View.GONE);
@@ -272,7 +258,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     }
 
 
-    /** takes to screen where user can find more detail information about HeartRate Activity */
+    /** takes to screen where user can find more detail information about HeartRate on all dates */
     private void showHeartRateMoreFragment() {
         Fragment fragment = new HeartRateMore();
         FragmentManager fragmentManager = getFragmentManager();
@@ -284,17 +270,19 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
     /** this method extends the line chart for sleep card view */
     private void extendSleepCardView() {
-        if (barChartSleep.getVisibility() == View.GONE) {
-            if(ReadAndSaveMultipleFile.hasData) {
-                SleepExtendedBarChart.plotSleepExtendedBarChart(barChartSleep);
+        if (pieChartSleep.getVisibility() == View.GONE) {
+            if (ReadAndSaveMultipleFile.hasData) {
+                // SleepExtendedBarChart.plotSleepExtendedBarChart(barChartSleep);
+                //PlotChart.pieChart(view.getContext(),"sleepMain",0,pieChartSleep);
             }
-            TransitionManager.beginDelayedTransition(cardViewHeart, new AutoTransition());
-            barChartSleep.setVisibility(View.VISIBLE);
+            TransitionManager.beginDelayedTransition(cardViewSleep, new AutoTransition());
+            pieChartSleep.setVisibility(View.VISIBLE);
         } else {
-            barChartSleep.setVisibility(View.GONE);
+            pieChartSleep.setVisibility(View.GONE);
         }
     }
 
+    /** takes to screen where user can find more detail information about Sleep on all dates */
     private void showSleepMoreFragment() {
         Fragment fragment = new SleepMore();
         FragmentManager fragmentManager = getFragmentManager();

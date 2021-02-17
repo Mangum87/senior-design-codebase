@@ -7,10 +7,6 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.myapplication.LoginStuff.Login;
-import com.example.myapplication.LoginStuff.User;
-import com.example.myapplication.SharedPrefManager;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +22,7 @@ import java.util.Locale;
 
 public class ReadAndSaveMultipleFile {
     private Context context;
-    public static Boolean hasData;
+    public static Boolean hasData = false;
     public static ArrayList<MultipleFileData> allData = new ArrayList<MultipleFileData>(); /**  this is the main arrayList that stores all data */
 
     /**
@@ -37,7 +33,7 @@ public class ReadAndSaveMultipleFile {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void readAllFilesName() {
+    public void readAllFilesList() {
 
         //check for todays filename/////////////////////////////////////////////////////////////////////////////////
 //        //gets today's date in the pattern below
@@ -59,7 +55,7 @@ public class ReadAndSaveMultipleFile {
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 //define here you filter condition for every single file
-                return name.startsWith("Date_"); //todo: add user id filter too
+                return name.contains("hourlydata"); //todo: add user id filter too
             }
         };
 
@@ -79,10 +75,10 @@ public class ReadAndSaveMultipleFile {
         }
     }
 
-    public void readOneFileData(String filename) {
+    private void readOneFileData(String filename) {
         String date = filename.substring(5, 15);
         File file = new File(context.getFilesDir(), filename);
-        file = new File(String.valueOf(file.getAbsoluteFile()));
+//        file = new File(String.valueOf(file.getAbsoluteFile()));
 
         //initialize all the arraylist
         ArrayList<String> timeStamp = new ArrayList<>();
@@ -114,7 +110,7 @@ public class ReadAndSaveMultipleFile {
                 } else {
                     for (int i = 0; i < tokens.length; i++) {
                         if (i == 0) {
-                            timeStamp.add(tokens[i]);
+                            timeStamp.add(tokens[i].substring(0,5)); //removing the seconds part because it's just '00'
                         } else if (i == 1) {
                             calories.add(Double.parseDouble(tokens[i]));
                         } else if (i == 14) {

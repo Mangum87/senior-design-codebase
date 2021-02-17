@@ -19,7 +19,7 @@ public class CaloriesMoreSpecificDateClicked extends AppCompatActivity {
     private BarChart barChart;
 
     /**set a flag to check if index is received from previous intent which is passed from 'Recycler View Adapter'
-     * without flag index is always initialized '0' and always plots data on index '0' on arrayList
+     * without flag index,it always initialize '0' and always plots data on index '0' on arrayList
      */
     private boolean hasData;
     private int index;

@@ -14,8 +14,6 @@ public class CustomMarkView extends MarkerView {
     private TextView tvContent;
     /**
      * Constructor. Sets up the MarkerView with a custom layout resource.
-     *
-     * @param context
      * @param layoutResource the layout resource to use for the MarkerView
      */
     public CustomMarkView(Context context, int layoutResource) {
@@ -25,8 +23,7 @@ public class CustomMarkView extends MarkerView {
         tvContent = (TextView) findViewById(R.id.tvContent);
     }
 
-    // callbacks everytime the MarkerView is redrawn, can be used to update the
-// content (user-interface)
+    /** callbacks everytime the MarkerView is redrawn, can be used to update the content (user-interface) */
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
@@ -45,7 +42,6 @@ public class CustomMarkView extends MarkerView {
             // center the marker horizontally and vertically
             mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
         }
-
         return mOffset;
     }
 }

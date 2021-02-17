@@ -24,7 +24,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import java.util.ArrayList;
 
 public class HeartRateMore extends Fragment implements View.OnClickListener {
-    private String callFrom = "heartRate";
+    private String callFrom = "heartRateMore";
     private View view;
     private LineChart lineChart;
     private RecyclerView recyclerView;
@@ -45,7 +45,7 @@ public class HeartRateMore extends Fragment implements View.OnClickListener {
         /** only showing the average graph if there is at least 7 days of data */
         if(ReadAndSaveMultipleFile.allData.size() >= 7){
             getThirtyDayAverageData();
-            PlotChart.lineChart(view.getContext(),lineChart,thirtyDayAverage,xLabel);
+            PlotChart.lineChart(view.getContext(),callFrom,lineChart,thirtyDayAverage,xLabel);
         }
 
         /** calls recycler view and shows all data */

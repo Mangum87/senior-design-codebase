@@ -20,8 +20,6 @@ public class SleepMoreSpecificDateClicked extends AppCompatActivity {
     private String dateValue;
     private static ArrayList<Double> data;
 
-    MultipleFileData multipleFileData = new MultipleFileData();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
