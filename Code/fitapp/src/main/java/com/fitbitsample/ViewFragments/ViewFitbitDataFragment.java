@@ -136,7 +136,6 @@ public class ViewFitbitDataFragment extends MainFragment {
         //((MainActivity) context).setTitle(getString(R.string.dashboard));
         getUserProfile();
         getActivityInfo();
-        //getHeartRate();
         getSleep();
         getIntraday();
     }

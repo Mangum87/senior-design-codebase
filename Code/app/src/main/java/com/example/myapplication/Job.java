@@ -9,6 +9,8 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import com.example.myapplication.amazonS3.amazonS3main;
 import com.fitbitsample.FitbitActivity.FitbitDataFormat;
+import com.fitbitsample.FitbitSharedPref.AppPreference;
+import com.fitbitsample.FitbitSharedPref.FitbitPref;
 import com.fitbitsample.ViewFragments.ViewFitbitDataFragment;
 
 import java.util.Date;

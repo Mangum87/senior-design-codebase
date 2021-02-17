@@ -2,7 +2,13 @@ package com.example.myapplication.readAndSaveAllFile;
 
 import java.util.ArrayList;
 
-public class MultipleFileData {
+
+/**
+ * Reads all of the intraday files locally stored
+ * and stores its data.
+ */
+public class MultipleFileData
+{
     private String date;
     private ArrayList<String> timeStamp;
     private ArrayList<Double> calories;
