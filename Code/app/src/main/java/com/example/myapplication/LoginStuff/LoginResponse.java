@@ -16,11 +16,9 @@ public class LoginResponse {
     private User user;
 
 
-    public LoginResponse(String auth_token, String message, String  status, User user) {
-        this.auth_token = auth_token;
+    public LoginResponse(String message, String  status) {
         this.message = message;
         this.status = status;
-        this.user=user;
     }
 
     public LoginResponse(String auth_token, String message, String status) {

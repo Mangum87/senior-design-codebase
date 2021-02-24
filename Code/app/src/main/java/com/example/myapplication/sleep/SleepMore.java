@@ -28,7 +28,6 @@ public class SleepMore extends Fragment implements View.OnClickListener{
     private BarChart barChart;
     private RecyclerView recyclerView;
     private ArrayList<Double> sevenDaysData = new ArrayList<>();
-    MultipleFileData multipleFileData = new MultipleFileData();
 
     @Nullable
     @Override

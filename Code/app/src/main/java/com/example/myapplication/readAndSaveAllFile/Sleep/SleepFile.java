@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class SleepFile
 {
     private final String filename;
-    private ArrayList<SleepEvent> events;
+    public static ArrayList<SleepEvent> events;
 
 
     /**

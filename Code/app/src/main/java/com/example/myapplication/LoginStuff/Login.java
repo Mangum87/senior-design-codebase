@@ -2,6 +2,7 @@ package com.example.myapplication.LoginStuff;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,8 +17,13 @@ import com.example.myapplication.Welcomescreen;
 import com.example.myapplication.homescreen;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,17 +79,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void userLogin() {
+        progressBar.setVisibility(View.VISIBLE);
+        buttonText.setText("Please Wait");
+
         String userName = editTextUserName.getEditText().getText().toString().trim();
         String password = editTextPassword.getEditText().getText().toString().trim();
 
         if (!checkInput(userName, password)) {
             return;
         } else {
-
-            progressBar.setVisibility(View.VISIBLE);
-            buttonText.setText("Please Wait");
-
-            /** Pass email and password entered by the user.Call LoginResponse that you can get from RetrofitClient  */                                      ///
+            /** Pass email and password entered by the user.Call LoginResponse that you can get from RetrofitClient  */
             Call<LoginResponse> call = RetrofitClient.getInstance().getApi().userLogin(userName, password);
 
             /** To learn about public interface Call <T>
@@ -92,11 +97,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if (response.isSuccessful()) {
+                    if(response.isSuccessful()) {
                         // body will return a loginResponse
                         LoginResponse loginResponse = response.body();
                         if (loginResponse.getStatus().equals("success")) {
-
                             progressBar.setVisibility(View.GONE);
                             //If authentication is successfull then save User and save LoginResponse
                             SharedPrefManager.getInstance(Login.this)
@@ -110,11 +114,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             //So, we need to set the flag.
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
-                        } else {
-                            progressBar.setVisibility(View.GONE);
-                            buttonText.setText("Login");
-                            Toast.makeText(Login.this, loginResponse.getMessage(), Toast.LENGTH_LONG).show();
                         }
+                    }
+                    else{
+                        //handle the error response if the user credentials doesn't match
+                        APIError message = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
+                        Toast.makeText(Login.this,message.getMessage(),Toast.LENGTH_LONG).show();
+
+                        progressBar.setVisibility(View.GONE);
+                        buttonText.setText("Login");
                     }
                 }
 

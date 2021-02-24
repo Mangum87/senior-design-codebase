@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Welcomescreen;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -209,13 +210,16 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     RegistrationResponse registrationResponse = response.body();
 
                     if (registrationResponse.getStatus().equals("success")) {
-                        Toast.makeText(Registration.this, "Successfully Registered", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Registration.this, registrationResponse.getMessage(), Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Registration.this, com.example.myapplication.LoginStuff.Login.class));
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        buttonText.setText("Submit");
-                        Toast.makeText(Registration.this, "User Already Exists", Toast.LENGTH_LONG).show();
                     }
+                }
+                else {
+                    //handle the error response if the user credentials doesn't match
+                    APIError message = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
+                    Toast.makeText(Registration.this,message.getMessage(),Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                    buttonText.setText("Submit");
                 }
             }
 

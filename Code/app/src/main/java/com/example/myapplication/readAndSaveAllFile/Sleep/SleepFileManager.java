@@ -20,7 +20,7 @@ import java.util.Comparator;
  */
 public class SleepFileManager
 {
-    private ArrayList<SleepFile> files;
+    public static ArrayList<SleepFile> files;
     private Context context;
 
 

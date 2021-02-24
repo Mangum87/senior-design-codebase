@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -58,8 +59,6 @@ public class homescreen extends AppCompatActivity {
             return true;
         }
     };
-
-
 
     private static final String TAG = "homescreen";
     public void scheduleJob() {

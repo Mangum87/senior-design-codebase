@@ -28,6 +28,7 @@ import com.example.myapplication.heartRate.HeartRateMore;
 import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 import com.example.myapplication.sleep.SleepMore;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -142,8 +143,8 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         // only load new data when user refreshes, so set a flag to track the first call which is when after login
         if (firstCall) {
+            getSleepData();
             getAllData();
-
             firstCall = false;
         }
 
@@ -157,10 +158,16 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getAllData() {
         ReadAndSaveMultipleFile readAndSaveMultipleFile = new ReadAndSaveMultipleFile(view.getContext());
-        readAndSaveMultipleFile.readAllFilesList();
+        readAndSaveMultipleFile.readAllFilesName();
     }
 
     private void getSleepData(){
+        SleepFileManager sleepFileManager = new SleepFileManager(view.getContext());
+        for(int i = 0; i<sleepFileManager.files.size(); i++){
+            for(int j = 0; j < sleepFileManager.files.get(i).getEvents().size(); j++){
+                System.out.println(sleepFileManager.files.get(i).events.get(j).getSeconds());
+            }
+        }
     }
 
     private void updateFootStepsProgress() {
@@ -179,6 +186,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         /**  Currently setting the the miles goal to 2miles */
         progressValue = (int) ((totalMiles / 2) * 100);
+
         ObjectAnimator.ofInt(progressBarMiles, "progress", progressValue)
                 .setDuration(900)
                 .start();
