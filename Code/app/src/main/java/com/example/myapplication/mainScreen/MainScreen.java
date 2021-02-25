@@ -29,6 +29,7 @@ import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
 import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
+import com.example.myapplication.readAndSaveAllFile.Summary.SummaryManager;
 import com.example.myapplication.sleep.SleepMore;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;

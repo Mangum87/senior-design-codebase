@@ -308,7 +308,6 @@ public class FitbitPref {
         {
             // Base + i is calorie column. i.e. distance0, distance1, ..., distance96
             editor.putFloat(base + "Value" + i, d.getActivitiesDistanceIntraday().getDataset().get(i).getValue());
-            Log.i("Custom", i + ": " + d.getActivitiesDistanceIntraday().getDataset().get(i).getValue());
             editor.putString(base + "Time" + i, d.getActivitiesDistanceIntraday().getDataset().get(i).getTime());
         }
 

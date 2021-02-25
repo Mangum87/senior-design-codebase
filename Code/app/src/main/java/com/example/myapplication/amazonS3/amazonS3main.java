@@ -206,6 +206,8 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(',');
             newdata.append(heartRateInfo.getRestingRate());
             newdata.append(',');
+            newdata.append("-1");
+            newdata.append(',');
             newdata.append(heartRateInfo.getRangeCalorie());
             newdata.append(',');
             newdata.append(heartRateInfo.getRangeMin());
@@ -213,6 +215,8 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(heartRateInfo.getRangeMax());
             newdata.append(',');
             newdata.append(heartRateInfo.getRangeMinutes());
+            newdata.append(',');
+            newdata.append("-1");
             newdata.append(',');
             newdata.append(heartRateInfo.getFatCalorie());
             newdata.append(',');
@@ -222,6 +226,8 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(',');
             newdata.append(heartRateInfo.getFatMinutes());
             newdata.append(',');
+            newdata.append("-1");
+            newdata.append(',');
             newdata.append(heartRateInfo.getCardioCalorie());
             newdata.append(',');
             newdata.append(heartRateInfo.getCardioMin());
@@ -229,6 +235,8 @@ public class amazonS3main extends AppCompatActivity {
             newdata.append(heartRateInfo.getCardioMax());
             newdata.append(',');
             newdata.append(heartRateInfo.getCardioMinutes());
+            newdata.append(',');
+            newdata.append("-1");
             newdata.append(',');
             newdata.append(heartRateInfo.getPeakCalorie());
             newdata.append(',');

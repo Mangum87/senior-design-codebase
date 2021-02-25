@@ -59,7 +59,7 @@ public class ReadAndSaveMultipleFile {
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 //define here you filter condition for every single file
-                return name.startsWith("Date_"); //todo: add user id filter too
+                return name.contains("hourly");
             }
         };
 
