@@ -88,8 +88,11 @@ public class SummaryManager
             if(line != null)
             {
                 String[] token = line.split(",");
-                f.setSleep(new SummarySleep(token)); // Set the sleep data
-                f.setActivity(new SummaryActivity(token)); // Set the activity data
+                if(token.length == 45)
+                {
+                    f.setSleep(new SummarySleep(token)); // Set the sleep data
+                    f.setActivity(new SummaryActivity(token)); // Set the activity data
+                }
             }
 
             reader.close(); // Close reader

@@ -31,7 +31,7 @@ public class homescreen extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
         bottomNavigation.setSelectedItemId(R.id.nav_home);
 
-        //scheduleJob(); // Schedule auto FitBit sync
+        scheduleJob(); // Schedule auto FitBit sync
     }
 
     //bottom navigation listener
