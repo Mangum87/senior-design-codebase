@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.chart.PlotChart;
 import com.example.myapplication.dialog.MilesMoreHelpDialog;
 import com.example.myapplication.dialog.SleepMoreHelpDialog;
 import com.example.myapplication.homescreen;
@@ -34,6 +35,7 @@ public class SleepMore extends Fragment implements View.OnClickListener{
     private BarChart barChart;
     private RecyclerView recyclerView;
     private ArrayList<Double> sevenDaysData = new ArrayList<>();
+    private ArrayList<String> xLabel = new ArrayList<>();
 
     @Nullable
     @Override
@@ -47,6 +49,12 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         /**initialize the chart and recycler view */
         barChart = view.findViewById(R.id.barChartSleepMoreScreen);
         recyclerView = view.findViewById(R.id.recyclerViewSleepMoreScreen);
+
+        /** only showing the bar graph if there is at least 7 days of data */
+        if(SleepFileManager.files.size() >= 7){
+            getSevenDaysData();
+            PlotChart.barChart(view.getContext(), "sleep", barChart, sevenDaysData, xLabel);
+        }
 
         getAllSleepData();
         startRecyclerView();
@@ -70,7 +78,11 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(new SpeedyLinearLayoutManager(view.getContext(), SpeedyLinearLayoutManager.VERTICAL, false));
     }
 
-    private void show_mainScreen(){
+    /**
+     * This method gets recent seven days footSteps data & date stored in 'allData'
+     * stores in ArrayList to plot the graph
+     */
+    private void showMainScreen(){
         //when switching between fragments old fragment is added in back stack, check the stack count
         // to remove it from stack which helps to return to old fragment
         if(getFragmentManager().getBackStackEntryCount() > 0){
@@ -79,7 +91,16 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void show_sleepMore_helpScreen(){
+    private void getSevenDaysData(){
+        int days = 2;
+
+        for(int i = 0; i < days; i++){
+            sevenDaysData.add((double) SleepFileManager.files.get(i).getTotalHoursSlept());
+            xLabel.add(SleepFileManager.files.get(i).getDate().substring(5));
+        }
+    }
+
+    private void showSleepMoreHelpDialog(){
         SleepMoreHelpDialog sleepMoreHelpDialog = new SleepMoreHelpDialog();
         sleepMoreHelpDialog.show(getFragmentManager(),"Sleep Help");
     }
@@ -88,10 +109,10 @@ public class SleepMore extends Fragment implements View.OnClickListener{
     public void onClick (View v){
         switch (v.getId()) {
             case R.id.sleep_more_arrow_back:
-                show_mainScreen();
+                showMainScreen();
                 break;
             case R.id.sleep_more_help:
-                show_sleepMore_helpScreen();
+                showSleepMoreHelpDialog();
                 break;
         }
     }

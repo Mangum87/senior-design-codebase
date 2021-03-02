@@ -11,23 +11,45 @@ import com.github.mikephil.charting.utils.MPPointF;
 
 public class CustomMarkView extends MarkerView {
 
-    private TextView tvContent;
+    private TextView tvContent, tvHr, tvMin;
+    private boolean forSleepPieChart = false;
     /**
      * Constructor. Sets up the MarkerView with a custom layout resource.
      * @param layoutResource the layout resource to use for the MarkerView
      */
-    public CustomMarkView(Context context, int layoutResource) {
+    public CustomMarkView(Context context, int layoutResource, boolean forSleepPieChart) {
         super(context, layoutResource);
 
-        // find your layout components
-        tvContent = (TextView) findViewById(R.id.tvContent);
+        this.forSleepPieChart = forSleepPieChart;
+
+        // sleep has hr and min so it different from other mark view
+        if(forSleepPieChart){
+            tvHr = (TextView) findViewById(R.id.tvContentHr);
+            tvMin = (TextView) findViewById(R.id.tvContentMin);
+        }
+        else{
+            // find layout components
+            tvContent = (TextView) findViewById(R.id.tvContent);
+        }
     }
 
     /** callbacks everytime the MarkerView is redrawn, can be used to update the content (user-interface) */
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText("" + (int) e.getY());
+        if(forSleepPieChart){
+            int totSec = (int) e.getY();
+
+            int hour = totSec / 60;
+            int min = hour % 60;
+            hour = hour / 60;
+
+            tvHr.setText("" + hour);
+            tvMin.setText("" + min);
+        }
+        else{
+            tvContent.setText("" + (int) e.getY());
+        }
 
         // this will perform necessary layouting
         super.refreshContent(e, highlight);
@@ -45,5 +67,6 @@ public class CustomMarkView extends MarkerView {
         return mOffset;
     }
 }
+
 
 

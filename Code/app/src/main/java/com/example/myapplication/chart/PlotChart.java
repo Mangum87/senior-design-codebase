@@ -28,8 +28,11 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /** this class has all the graphing charts and its properties */
@@ -77,7 +80,7 @@ public class PlotChart {
 
         });
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview);
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false);
         barChart.setMarker(mv);
         barChart.setData(barData);
         barChart.getBarData().setBarWidth(barWidth);
@@ -119,16 +122,18 @@ public class PlotChart {
             case "veryActive":
                 leftAxis.setValueFormatter(new LargeValueFormatter()); //show 1000 labels in '1k' pattern
         }
+        barChart.setScaleMinima(0f, 0f);
+        barChart.fitScreen();
     }
 
     /**
      * @param context   to access colors defined in res->values->colors
-     * @param callFrom  to set the graphing properties according to the screen
+     * @param callFromMainScreen  to set the graphing properties according to the screen
      * @param lineChart chart where the graph is shown
      * @param data      values to be plotted
      * @param xVals     xLables
      */
-    public static void lineChart(Context context, String callFrom, LineChart lineChart, ArrayList<Double> data, ArrayList<String> xVals) {
+    public static void lineChart(Context context, Boolean callFromMainScreen, LineChart lineChart, ArrayList<Double> data, ArrayList<String> xVals) {
 
         xVals.add(0, ""); /** this is to align the xLabel according to lines */
 
@@ -156,12 +161,12 @@ public class PlotChart {
 //        int height = lineChart.getHeight();
 
         LinearGradient linGrad = new LinearGradient(0, 0, 0, 0,
-                ContextCompat.getColor(context, R.color.lightRed),
-                ContextCompat.getColor(context, R.color.lightGreen),
+                ContextCompat.getColor(context, R.color.hrChartColor1),
+                ContextCompat.getColor(context, R.color.hrChartColor2),
                 Shader.TileMode.REPEAT);
         paint.setShader(linGrad);
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview);
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false);
         lineChart.setMarker(mv);
 
         //lineChart.getXAxis().setAxisMinimum(0);
@@ -180,7 +185,7 @@ public class PlotChart {
         xAxis.setAxisMinimum(0f);
         xAxis.setTextSize(12f);
         /** because main screen background is white */
-        if (callFrom.equals("heartRateMain")) {
+        if (callFromMainScreen) {
             xAxis.setTextColor(Color.BLACK);
         } else {
             xAxis.setTextColor(Color.WHITE);
@@ -193,7 +198,7 @@ public class PlotChart {
         lineChart.getAxisRight().setEnabled(false);
         YAxis leftAxis = lineChart.getAxisLeft();
         /** because main screen background is white */
-        if (callFrom.equals("heartRateMain")) {
+        if (callFromMainScreen) {
             leftAxis.setTextColor(Color.BLACK);
         } else {
             leftAxis.setTextColor(Color.WHITE);
@@ -202,6 +207,9 @@ public class PlotChart {
         leftAxis.setValueFormatter(new LargeValueFormatter());
         leftAxis.setDrawGridLines(false);
         leftAxis.setSpaceTop(20f);
+
+        lineChart.setScaleMinima(0f, 0f);
+        lineChart.fitScreen();
 
     }
 
@@ -219,10 +227,10 @@ public class PlotChart {
         }
 
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(ContextCompat.getColor(context, R.color.red));
-        colors.add(ContextCompat.getColor(context, R.color.green));
-        colors.add(ContextCompat.getColor(context, R.color.light_blue));
-        colors.add(ContextCompat.getColor(context, R.color.endblue));
+        colors.add(ContextCompat.getColor(context, R.color.sleepChartTransparent1));
+        colors.add(ContextCompat.getColor(context, R.color.sleepChartTransparent2));
+        colors.add(ContextCompat.getColor(context, R.color.sleepChartTransparent3));
+        colors.add(ContextCompat.getColor(context, R.color.sleepChartTransparent4));
 
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.TRANSPARENT);
@@ -235,26 +243,51 @@ public class PlotChart {
         PieDataSet dataSet = new PieDataSet(chartVal, "");
         dataSet.setValueTextSize(14f);
         dataSet.setColors(colors);
-        dataSet.setSliceSpace(1);
+
+        if(callFromMainScreen){
+            dataSet.setSliceSpace(1);
+            dataSet.setSelectionShift(5);
+        }
+        else{
+            dataSet.setSliceSpace(4);
+            dataSet.setSelectionShift(10);
+        }
+
         dataSet.setSelectionShift(5);
 
         dataSet.setValueLinePart1OffsetPercentage(10);
         dataSet.setValueLinePart1Length(1.2f);
         dataSet.setValueLinePart2Length(.2f);
         dataSet.setUsingSliceColorAsValueLineColor(true);
-        dataSet.setValueTextColors(colors);
+
+        if(callFromMainScreen){
+            dataSet.setValueTextColors(colors);
+        }
+        else{
+            dataSet.setValueTextColor(Color.WHITE);
+        }
+
         dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData pieData = new PieData(dataSet);
         pieData.setValueFormatter(new PercentFormatter(pieChart));
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview);
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_piechart_markview,true);
         pieChart.setMarker(mv);
 
         pieChart.setData(pieData);
-        pieChart.setExtraTopOffset(9f);
-        pieChart.setEntryLabelColor(Color.BLACK);
+
+        if(callFromMainScreen){
+            pieChart.setExtraTopOffset(10f);
+            pieChart.setExtraBottomOffset(10f);
+            pieChart.setEntryLabelColor(Color.BLACK);
+        }
+        else{
+            pieChart.setExtraLeftOffset(30f);
+            pieChart.setExtraRightOffset(30f);
+            pieChart.setEntryLabelColor(Color.WHITE);
+        }
 
         pieChart.setRotationEnabled(true);
         pieChart.setUsePercentValues(true);

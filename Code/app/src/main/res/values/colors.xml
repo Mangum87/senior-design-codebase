@@ -28,6 +28,14 @@
     <color name="transparent2">#A6A0A5A5</color>
     <color name="transparentRed">#CDF35246</color>
     <color name="transparentGreen">#CB2FC535</color>
-    <color name="lightRed">#f06262</color>
-    <color name="lightGreen">#80FF85</color>
-    </resources>
+
+    <!-- for heart Rate Line chart -->
+    <color name="hrChartColor1">#f06262</color>
+    <color name="hrChartColor2">#80FF85</color>
+
+    <!-- for sleep pie chart -->
+    <color name="sleepChartTransparent1">#E679BA7B</color>
+    <color name="sleepChartTransparent2">#E6D66C65</color>
+    <color name="sleepChartTransparent3">#E65DA3C3</color>
+    <color name="sleepChartTransparent4">#E67A5DAC</color>
+</resources>

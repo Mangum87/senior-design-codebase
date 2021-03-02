@@ -257,7 +257,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private void extendHeartRateCardView() {
         if (lineChartHeart.getVisibility() == View.GONE) {
             if (ReadAndSaveMultipleFile.hasData) {
-                PlotChart.lineChart(view.getContext(), "heartRateMain",lineChartHeart, ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHeartRate(),ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTimeStamp()); //plots graph using most recent data
+                PlotChart.lineChart(view.getContext(), true,lineChartHeart, ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHeartRate(),ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTimeStamp()); //plots graph using most recent data
             }
             TransitionManager.beginDelayedTransition(cardViewHeart, new AutoTransition());
             lineChartHeart.setVisibility(View.VISIBLE);
