@@ -16,15 +16,24 @@ import com.example.myapplication.R;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.MultipleFileData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     private Activity activity; // to set the animation transition
-    private Context context, mContext;
+    private Context context;
     private String callFrom;
+    private SleepFileManager sleepFileManager;
 
     public MyAdapter(Context context, String callFrom) {
         this.context = context;
         this.callFrom = callFrom;
+        this.activity = (Activity) context;
+    }
+
+    public MyAdapter(Context context,String callFrom,SleepFileManager sleepFileManager){
+        this.context = context;
+        this.callFrom = callFrom;
+        this.sleepFileManager = sleepFileManager;
         this.activity = (Activity) context;
     }
 
@@ -35,7 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
 
-
         switch (callFrom){
             case "footSteps":
                 view = inflater.inflate(R.layout.recycler_view_foot_steps_more, parent, false);
@@ -44,12 +52,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 view = inflater.inflate(R.layout.recycler_view_miles_more, parent, false);
                 break;
             case "calories":
-                view = inflater.inflate(R.layout.recycler_view_calories_more,parent,false);
+                view = inflater.inflate(R.layout.recycler_view_calories_more, parent,false);
                 break;
             case "heartRate":
                 view = inflater.inflate(R.layout.recycler_view_heart_rate_more, parent, false);
                 break;
             case "sleep":
+                view = inflater.inflate(R.layout.recycler_view_sleep_more, parent, false);
                 break;
             case "caloriesBMR":
                 break;
@@ -88,6 +97,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 holder.averageValueHR.setText(String.valueOf(avgValue));
                 break;
             case "sleep":
+                holder.dateValue.setText(SleepFileManager.files.get(position).getDate());
+                holder.totalSleepHr.setText(String.valueOf(SleepFileManager.files.get(position).getTotalHoursSlept()));
+                holder.totalSleepMin.setText(String.valueOf(SleepFileManager.files.get(position).getTotalMinuteSlept()));
                 break;
             case "caloriesBMR":
                 break;
@@ -146,7 +158,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, moreArrow, averageValueHR;
+        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, moreArrow, averageValueHR, totalSleepHr, totalSleepMin;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -173,6 +185,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                     moreArrow = itemView.findViewById(R.id.heartRateMoreRecyclerViewSelectedDate);
                     break;
                 case "sleep":
+                    dateValue = itemView.findViewById(R.id.sleepMoreRecyclerViewDate);
+                    totalSleepHr = itemView.findViewById(R.id.sleepMoreRecyclerViewHrs);
+                    totalSleepMin = itemView.findViewById(R.id.sleepMoreRecyclerViewMin);
+                    moreArrow = itemView.findViewById(R.id.sleepMoreRecyclerViewSelectedDate);
                     break;
                 case "caloriesBMR":
                     break;

@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".sleep.SleepMoreSpecificDateClicked"></activity>
+        <activity
+            android:name=".sleep.SleepMoreSpecificDateClicked"
+            android:theme="@style/Theme5" />
         <activity
             android:name=".calories.CaloriesMoreSpecificDateClicked"
             android:theme="@style/Theme5" />

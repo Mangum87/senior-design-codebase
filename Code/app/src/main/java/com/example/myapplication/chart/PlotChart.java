@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -25,6 +26,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
@@ -159,6 +161,9 @@ public class PlotChart {
                 Shader.TileMode.REPEAT);
         paint.setShader(linGrad);
 
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview);
+        lineChart.setMarker(mv);
+
         //lineChart.getXAxis().setAxisMinimum(0);
         lineChart.animateX(1200);
         lineChart.setData(lineData);
@@ -200,9 +205,15 @@ public class PlotChart {
 
     }
 
+    /**
+     * plot pie chart
+     * @param context context of application to access color resources
+     * @param callFromMainScreen boolean value to filter the color of chart according to screen
+     * @param data values for the chart
+     * @param pieChart chart for the graph
+     */
     public static void pieChart(Context context, Boolean callFromMainScreen, Map<String, Integer> data, PieChart pieChart) {
         ArrayList<PieEntry> chartVal = new ArrayList<>();
-//        ArrayList<String> xVals = new ArrayList<>();
         for(Map.Entry<String, Integer> dataSet : data.entrySet()){
             chartVal.add(new PieEntry(dataSet.getValue(),dataSet.getKey()));
         }
@@ -221,18 +232,35 @@ public class PlotChart {
         pieChart.setRotation(0);
         pieChart.setRotationEnabled(true);
 
-        PieDataSet dataSet = new PieDataSet(chartVal, "Sleep");
+        PieDataSet dataSet = new PieDataSet(chartVal, "");
         dataSet.setValueTextSize(14f);
         dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
+        dataSet.setSliceSpace(1);
         dataSet.setSelectionShift(5);
 
+        dataSet.setValueLinePart1OffsetPercentage(10);
+        dataSet.setValueLinePart1Length(1.2f);
+        dataSet.setValueLinePart2Length(.2f);
+        dataSet.setUsingSliceColorAsValueLineColor(true);
+        dataSet.setValueTextColors(colors);
+        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+
         PieData pieData = new PieData(dataSet);
-        pieData.setDrawValues(true);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
+
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview);
+        pieChart.setMarker(mv);
 
         pieChart.setData(pieData);
+        pieChart.setExtraTopOffset(9f);
+        pieChart.setEntryLabelColor(Color.BLACK);
+
         pieChart.setRotationEnabled(true);
         pieChart.setUsePercentValues(true);
+        pieChart.getLegend().setEnabled(false);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.animateY(1000, Easing.EaseInOutQuart);
     }
 }
 

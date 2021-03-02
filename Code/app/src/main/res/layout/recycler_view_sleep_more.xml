@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/caloriesSpecificDateRecyclerTab">
+    android:id="@+id/sleepSpecificDateRecyclerTab">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_height="70dp">
 
             <TextView
-                android:id="@+id/caloriesMoreRecyclerViewDate"
+                android:id="@+id/sleepMoreRecyclerViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -33,32 +33,57 @@
                 app:layout_constraintVertical_bias="0.512" />
 
             <TextView
-                android:id="@+id/caloriesMoreRecyclerViewTotalValue"
+                android:id="@+id/sleepMoreRecyclerViewHrs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="56dp"
                 android:layout_marginTop="14dp"
                 android:fontFamily="@font/quicksand_bold"
-                android:text="Total Value"
+                android:text="0"
                 android:textColor="@color/colorG"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/caloriesMoreRecyclerViewDate"
+                app:layout_constraintStart_toEndOf="@+id/sleepMoreRecyclerViewDate"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/caloriesMoreRecyclerViewAvgValueUnit"
+                android:id="@+id/hrsUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/quicksand_bold"
-                android:text="calories"
+                android:text="hr"
                 android:textSize="10sp"
-                app:layout_constraintStart_toEndOf="@+id/caloriesMoreRecyclerViewTotalValue"
+                app:layout_constraintStart_toEndOf="@+id/sleepMoreRecyclerViewHrs"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/caloriesMoreRecyclerViewSelectedDate"
+                android:id="@+id/sleepMoreRecyclerViewMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="0"
+                android:textColor="@color/colorG"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/hrsUnit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/minUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="min"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/sleepMoreRecyclerViewMin"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sleepMoreRecyclerViewSelectedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -75,11 +100,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Day Total"
+                android:text="Time Slept"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/caloriesMoreRecyclerViewTotalValue"
-                app:layout_constraintTop_toBottomOf="@+id/caloriesMoreRecyclerViewTotalValue"
+                app:layout_constraintStart_toStartOf="@+id/sleepMoreRecyclerViewHrs"
+                app:layout_constraintTop_toBottomOf="@+id/sleepMoreRecyclerViewHrs"
                 app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

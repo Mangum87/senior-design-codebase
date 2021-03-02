@@ -27,7 +27,7 @@ public class CustomMarkView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        tvContent.setText("" + e.getY());
+        tvContent.setText("" + (int) e.getY());
 
         // this will perform necessary layouting
         super.refreshContent(e, highlight);

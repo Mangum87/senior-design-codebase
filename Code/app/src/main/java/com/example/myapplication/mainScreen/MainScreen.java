@@ -29,6 +29,7 @@ import com.example.myapplication.heartRate.HeartRateMore;
 import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFile;
 import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 import com.example.myapplication.readAndSaveAllFile.Summary.SummaryManager;
 import com.example.myapplication.sleep.SleepMore;
@@ -51,8 +52,6 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     CardView cardViewHeart, cardViewSleep, cardViewCaloriesBMR, cardViewLightlyActive, cardViewFairlyActive, cardViewVeryActive;
     ProgressBar progressBarFootSteps, progressBarMiles, progressBarCalories;
     int indexOfTodaysData = 0; // since the most recent data is stored in index '0'
-
-    SleepFileManager sleepFileManager;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -169,14 +168,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     }
 
     private void getSleepData(){
-        sleepFileManager = new SleepFileManager(view.getContext(),true);
-//        for(int i = 0; i<sleepFileManager.getSleepData().size(); i++){
-//            System.out.println(sleepFileManager.getSleepData().get(i).getFilename());
-//            System.out.println(sleepFileManager.getSleepData().get(i).getTotalRem());
-//            for(int j = 0; j < sleepFileManager.getSleepData().get(i).getEvents().size(); j++){
-//                //System.out.println(sleepFileManager.getSleepData().get(i).getEvents().get(j).getSeconds());
-//            }
-//        }
+        SleepFileManager sleepFileManager = new SleepFileManager(view.getContext(),true);
     }
 
     private void updateFootStepsProgress() {
@@ -218,9 +210,9 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         valueHeartRate.setText("83");
 
-        valueHrsSleep.setText(String.valueOf(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalHoursSlept()));
+        valueHrsSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalHoursSlept()));
 
-        valueMinSleep.setText(String.valueOf(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalMinuteSlept()));
+        valueMinSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalMinuteSlept()));
 
         valueCaloriesBMR.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCaloriesBMR())));
 
@@ -289,11 +281,11 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private void extendSleepCardView() {
         if (pieChartSleep.getVisibility() == View.GONE) {
             if (ReadAndSaveMultipleFile.hasData) {
-                Map<String,Integer> sleepChartData = new HashMap<>();
-                sleepChartData.put("WAKE", new Integer(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalWake()));
-                sleepChartData.put("LIGHT", new Integer(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalLight()));
-                sleepChartData.put("DEEP",new Integer(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalDeep()));
-                sleepChartData.put("REM",new Integer(sleepFileManager.getSleepData().get(indexOfTodaysData).getTotalRem()));
+                Map<String,Integer> sleepChartData = new HashMap<>(); //store sleep pieChart Data
+                sleepChartData.put("WAKE", new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalWake()));
+                sleepChartData.put("LIGHT", new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalLight()));
+                sleepChartData.put("DEEP",new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalDeep()));
+                sleepChartData.put("REM",new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalRem()));
 
                 PlotChart.pieChart(view.getContext(),true,sleepChartData,pieChartSleep);
             }

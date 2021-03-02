@@ -27,7 +27,7 @@ import java.util.Locale;
  * Manages the sleep data files loading and makes them available.
  */
 public class SleepFileManager {
-    private ArrayList<SleepFile> files;
+    public static ArrayList<SleepFile> files;
     private Context context;
     private boolean callFromMainScreen = false;
 
@@ -38,12 +38,6 @@ public class SleepFileManager {
      *
      * @param con Context of app
      */
-//    public SleepFileManager(Context con) {
-//        this.context = con;
-//        this.callFromHome = false;
-//
-//    }
-
     public SleepFileManager(Context con, Boolean callFromMainScreen) {
         this.context = con;
         this.callFromMainScreen = callFromMainScreen;
