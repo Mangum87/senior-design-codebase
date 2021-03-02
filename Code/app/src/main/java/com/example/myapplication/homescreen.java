@@ -21,6 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class homescreen extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigation;
+    private final Fragment fragmentHome = new MainScreen();
+    private final Fragment fragmentYou = new YouScreen();
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private Fragment active = fragmentHome;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,9 +33,12 @@ public class homescreen extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navListener);
-        bottomNavigation.setSelectedItemId(R.id.nav_home);
 
-        scheduleJob(); // Schedule auto FitBit sync
+        //to avoid recreation of fragments and to reuse the fragments that is already created
+        fragmentManager.beginTransaction().add(R.id.fragment_container, fragmentYou,"2").hide(fragmentYou).commit();
+        fragmentManager.beginTransaction().add(R.id.fragment_container,fragmentHome,"1").commit();
+
+       // scheduleJob(); // Schedule auto FitBit sync
     }
 
     //bottom navigation listener
@@ -43,20 +50,15 @@ public class homescreen extends AppCompatActivity {
                 case R.id.nav_synFitbit:
                     return true;
                 case R.id.nav_home:
-                    fragment = new MainScreen();
-                    break;
+                    fragmentManager.beginTransaction().hide(active).show(fragmentHome).commit();
+                    active = fragmentHome;
+                    return true;
                 case R.id.nav_you:
-                    fragment = new YouScreen();
-                    break;
+                    fragmentManager.beginTransaction().hide(active).show(fragmentYou).commit();
+                    active = fragmentYou;
+                    return true;
             }
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-
-            return true;
+            return false;
         }
     };
 

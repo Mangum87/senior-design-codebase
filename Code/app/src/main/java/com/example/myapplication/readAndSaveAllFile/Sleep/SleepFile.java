@@ -1,6 +1,10 @@
 package com.example.myapplication.readAndSaveAllFile.Sleep;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 public class SleepFile
 {
     private final String filename;
-    public static ArrayList<SleepEvent> events;
+    private ArrayList<SleepEvent> events;
 
 
     /**
@@ -64,5 +68,107 @@ public class SleepFile
     public String getDate()
     {
         return this.filename.substring(5, 15);
+    }
+
+    /**
+     * Returns the total sleep in seconds
+     * @return total sleep time
+     */
+    public int getTotalSeconds(){
+        int total = 0;
+        for(SleepEvent list : events){
+            total += list.getSeconds();
+        }
+        return total;
+    }
+
+    /**
+     * @return sleep time in Hour
+     */
+    public int getTotalHoursSlept(){
+        int total = 0;
+
+        for(SleepEvent list : events){
+            total += list.getSeconds();
+        }
+
+        int hour = total / 60;
+        int min = hour % 60;
+        hour = hour / 60;
+
+        return hour;
+    }
+
+    /**
+     * @return sleep time in Minute
+     */
+    public int getTotalMinuteSlept(){
+        int total = 0;
+
+        for(SleepEvent list : events){
+            total += list.getSeconds();
+        }
+
+        int hour = total / 60;
+        int min = hour % 60;
+        hour = total / 60;
+
+        return min;
+    }
+
+    /**
+     * Returns the total sleep state 'Wake' in seconds
+     * @return total Wake
+     */
+    public int getTotalWake(){
+        int total = 0;
+        for(SleepEvent list : events){
+            if(list.getState().toString().equals("WAKE")){
+                total += list.getSeconds();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Returns the total sleep state 'Light' in seconds
+     * @return total Light
+     */
+    public int getTotalLight(){
+        int total = 0;
+        for(SleepEvent list : events){
+            if(list.getState().toString().equals("LIGHT")){
+                total += list.getSeconds();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Returns the total sleep state 'Deep' in seconds
+     * @return total Deep
+     */
+    public int getTotalDeep(){
+        int total = 0;
+        for(SleepEvent list : events){
+            if(list.getState().toString().equals("DEEP")){
+                total += list.getSeconds();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Returns the total sleep state 'Rem' in seconds
+     * @return total Rem
+     */
+    public int getTotalRem(){
+        int total = 0;
+        for(SleepEvent list : events){
+            if(list.getState().toString().equals("REM")){
+                total += list.getSeconds();
+            }
+        }
+        return total;
     }
 }

@@ -46,19 +46,4 @@ public  class CalculateData {
         }
         return lowValue;
     }
-    public static int getHour(int totalSeconds){
-        int hour = totalSeconds / 60;
-        int min = hour % 60;
-        hour = hour / 60;
-
-        return hour;
-    }
-
-    public static int getMin(int totalSeconds){
-        int hour = totalSeconds / 60;
-        int min = hour % 60;
-        hour = totalSeconds / 60;
-
-        return min;
-    }
 }

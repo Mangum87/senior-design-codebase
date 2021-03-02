@@ -20,11 +20,15 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /** this class has all the graphing charts and its properties */
 public class PlotChart {
@@ -196,46 +200,39 @@ public class PlotChart {
 
     }
 
-    public static void pieChart(Context context, String callFrom, int index, PieChart pieChart) {
-//        ArrayList<PieEntry> yVals = new ArrayList<>();
+    public static void pieChart(Context context, Boolean callFromMainScreen, Map<String, Integer> data, PieChart pieChart) {
+        ArrayList<PieEntry> chartVal = new ArrayList<>();
 //        ArrayList<String> xVals = new ArrayList<>();
-//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalDeep(), "Deep"));
-//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalRem(), "Rem"));
-//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalLight(), "Light"));
-//        yVals.add(new PieEntry(ReadSleepData.allSleepData.get(index).getTotalWake(), "Wake"));
-//
-//        ArrayList<Integer> colors = new ArrayList<>();
-//        colors.add(ContextCompat.getColor(context, R.color.red));
-//        colors.add(ContextCompat.getColor(context, R.color.green));
-//        colors.add(ContextCompat.getColor(context, R.color.light_blue));
-//        colors.add(ContextCompat.getColor(context, R.color.endblue));
-//
-//
-////        xVals.add("Deep");
-////        xVals.add("Rem");
-////        xVals.add("Light");
-////        xVals.add("Wake");
-//
-//        pieChart.setDrawHoleEnabled(true);
-//        pieChart.setHoleColor(Color.TRANSPARENT);
-//        pieChart.setHoleRadius(7);
-//        pieChart.setTransparentCircleRadius(10);
-//
-//        pieChart.setRotation(0);
-//        pieChart.setRotationEnabled(true);
-//
-//        PieDataSet dataSet = new PieDataSet(yVals, "Sleep");
-//        dataSet.setValueTextSize(12f);
-//        dataSet.setColors(colors);
-//        dataSet.setSliceSpace(3);
-//        dataSet.setSelectionShift(5);
-//
-//        PieData pieData = new PieData(dataSet);
-//        pieData.setDrawValues(true);
-//
-//        pieChart.setData(pieData);
-//        pieChart.invalidate();
+        for(Map.Entry<String, Integer> dataSet : data.entrySet()){
+            chartVal.add(new PieEntry(dataSet.getValue(),dataSet.getKey()));
+        }
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(ContextCompat.getColor(context, R.color.red));
+        colors.add(ContextCompat.getColor(context, R.color.green));
+        colors.add(ContextCompat.getColor(context, R.color.light_blue));
+        colors.add(ContextCompat.getColor(context, R.color.endblue));
+
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.TRANSPARENT);
+        pieChart.setHoleRadius(7);
+        pieChart.setTransparentCircleRadius(10);
+
+        pieChart.setRotation(0);
+        pieChart.setRotationEnabled(true);
+
+        PieDataSet dataSet = new PieDataSet(chartVal, "Sleep");
+        dataSet.setValueTextSize(14f);
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2);
+        dataSet.setSelectionShift(5);
+
+        PieData pieData = new PieData(dataSet);
+        pieData.setDrawValues(true);
+
+        pieChart.setData(pieData);
+        pieChart.setRotationEnabled(true);
+        pieChart.setUsePercentValues(true);
     }
 }
 
