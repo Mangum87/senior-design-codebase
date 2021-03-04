@@ -73,7 +73,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_username"
             android:layout_width="340dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="60dp"
             android:background="@drawable/register_input"
             app:hintEnabled="false"
@@ -93,7 +93,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_password"
             android:layout_width="340dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/register_input"
             app:hintEnabled="false"

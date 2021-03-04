@@ -62,8 +62,8 @@ public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
         /** check the flag for index received or not */
         if(hasData){
             date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            high.setText(String.valueOf(CalculateData.getHighValue(ReadAndSaveMultipleFile.allData.get(index).getHeartRate())));
-            low.setText(String.valueOf(CalculateData.getLowValue(ReadAndSaveMultipleFile.allData.get(index).getHeartRate())));
+            high.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getHighHeartRate()));
+            low.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getLowHeartRate()));
 
             PlotChart.lineChart(this,false,lineChart,ReadAndSaveMultipleFile.allData.get(index).getHeartRate(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
         }

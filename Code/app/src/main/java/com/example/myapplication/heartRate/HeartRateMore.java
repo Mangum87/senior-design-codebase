@@ -74,7 +74,7 @@ public class HeartRateMore extends Fragment implements View.OnClickListener {
         /** checks if there recent 30 days data or not and if not then stores average value of heartRate of one day */
         if(ReadAndSaveMultipleFile.allData.size() < 30){
             for(int i = 0; i < ReadAndSaveMultipleFile.allData.size(); i++) {
-                thirtyDayAverage.add(CalculateData.getAverage(ReadAndSaveMultipleFile.allData.get(i).getHeartRate()));
+                thirtyDayAverage.add(ReadAndSaveMultipleFile.allData.get(i).getAverageHeartRate());
                 xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5)); /** only taking month and day excluding year */
             }
         }
@@ -82,7 +82,7 @@ public class HeartRateMore extends Fragment implements View.OnClickListener {
         /** gets implemented when there is more than 30 days of data and stores average value of heartRate of recent 30 days */
         else{
             for(int i = 0; i < daysForAverage; i++) {
-                thirtyDayAverage.add(CalculateData.getAverage(ReadAndSaveMultipleFile.allData.get(i).getHeartRate()));
+                thirtyDayAverage.add(ReadAndSaveMultipleFile.allData.get(i).getAverageHeartRate());
                 xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
             }
         }

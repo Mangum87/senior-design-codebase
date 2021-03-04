@@ -64,8 +64,8 @@ public class CaloriesMoreSpecificDateClicked extends AppCompatActivity {
     private void setValues() {
 
         date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-        totalValue.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(index).getCalories())));
-        averageValue.setText(String.valueOf((int) CalculateData.getAverage(ReadAndSaveMultipleFile.allData.get(index).getCalories())));
+        totalValue.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(index).getTotalCalories()));
+        averageValue.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(index).getAverageCalories()));
 
         PlotChart.barChart(this,callFrom,barChart,ReadAndSaveMultipleFile.allData.get(index).getCalories(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
     }

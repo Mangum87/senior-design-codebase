@@ -80,7 +80,7 @@ public class PlotChart {
 
         });
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false);
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false,false);
         barChart.setMarker(mv);
         barChart.setData(barData);
         barChart.getBarData().setBarWidth(barWidth);
@@ -166,7 +166,7 @@ public class PlotChart {
                 Shader.TileMode.REPEAT);
         paint.setShader(linGrad);
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false);
+        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_chart_markview,false,false);
         lineChart.setMarker(mv);
 
         //lineChart.getXAxis().setAxisMinimum(0);
@@ -220,7 +220,7 @@ public class PlotChart {
      * @param data values for the chart
      * @param pieChart chart for the graph
      */
-    public static void pieChart(Context context, Boolean callFromMainScreen, Map<String, Integer> data, PieChart pieChart) {
+    public static void pieChart(Context context, Boolean callFromMainScreen, String dataType, Map<String, Integer> data, PieChart pieChart) {
         ArrayList<PieEntry> chartVal = new ArrayList<>();
         for(Map.Entry<String, Integer> dataSet : data.entrySet()){
             chartVal.add(new PieEntry(dataSet.getValue(),dataSet.getKey()));
@@ -273,8 +273,15 @@ public class PlotChart {
         PieData pieData = new PieData(dataSet);
         pieData.setValueFormatter(new PercentFormatter(pieChart));
 
-        CustomMarkView mv = new CustomMarkView(context, R.layout.custom_piechart_markview,true);
-        pieChart.setMarker(mv);
+        if(dataType.equals("sleep")){
+            CustomMarkView mv = new CustomMarkView(context, R.layout.custom_piechart_markview,true,false);
+            pieChart.setMarker(mv);
+        }
+        else if(dataType.equals("active")){
+            CustomMarkView mv = new CustomMarkView(context, R.layout.custom_piechart_markview,false,true);
+            pieChart.setMarker(mv);
+        }
+
 
         pieChart.setData(pieData);
 

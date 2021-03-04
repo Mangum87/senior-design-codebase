@@ -34,7 +34,7 @@ public class MilesMore extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_miles_more,container,false);
+        view = inflater.inflate(R.layout.fragment_miles_more, container, false);
 
         /**set clickListener for back arrow and help */
         view.findViewById(R.id.milesMoreArrowBack).setOnClickListener(this);
@@ -45,9 +45,9 @@ public class MilesMore extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.milesMoreRecyclerView);
 
         /** only showing the average graph if there is at least 7 days of data */
-        if(ReadAndSaveMultipleFile.allData.size() >= 7){
+        if (ReadAndSaveMultipleFile.allData.size() >= 7) {
             getSevenDaysData();
-            PlotChart.barChart(view.getContext(),callFrom,barChart, sevenDaysData, xLabel);
+            PlotChart.barChart(view.getContext(), callFrom, barChart, sevenDaysData, xLabel);
         }
 
         startRecyclerView();
@@ -57,14 +57,13 @@ public class MilesMore extends Fragment implements View.OnClickListener {
 
     private void showMilesMoreHelpDialog() {
         MilesMoreHelpDialog milesMoreHelpDialog = new MilesMoreHelpDialog();
-        milesMoreHelpDialog.show(getFragmentManager(),"Miles Help");
+        milesMoreHelpDialog.show(getFragmentManager(), "Miles Help");
     }
 
-    private void startRecyclerView(){
-        MyAdapter myAdapter = new MyAdapter(view.getContext(),callFrom);
+    private void startRecyclerView() {
+        MyAdapter myAdapter = new MyAdapter(view.getContext(), callFrom);
         /**check if line that separates each day data has been added before or not */
-        if(0 == recyclerView.getItemDecorationCount())
-        {
+        if (0 == recyclerView.getItemDecorationCount()) {
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         }
         recyclerView.setAdapter(myAdapter);
@@ -78,17 +77,9 @@ public class MilesMore extends Fragment implements View.OnClickListener {
     private void getSevenDaysData() {
         int days = 7;
 
-        if(ReadAndSaveMultipleFile.allData.size() < 7){
-            for(int i = 0; i < ReadAndSaveMultipleFile.allData.size(); i++){
-                sevenDaysData.add(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(i).getDistance()));
-                xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5)); /** only taking month and day excluding year */
-            }
-        }
-        else{
-            for(int i = 0; i < days; i++){
-                sevenDaysData.add(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(i).getDistance()));
-                xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
-            }
+        for (int i = 0; i < days; i++) {
+            sevenDaysData.add(ReadAndSaveMultipleFile.allData.get(i).getTotalDistance());
+            xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
         }
     }
 
@@ -97,7 +88,7 @@ public class MilesMore extends Fragment implements View.OnClickListener {
          * when switching between fragments old fragment is added in back stack, check the stack count
          * to remove it from stack which helps to return to old fragment
          */
-        if(getFragmentManager().getBackStackEntryCount()>0){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
             return;
         }

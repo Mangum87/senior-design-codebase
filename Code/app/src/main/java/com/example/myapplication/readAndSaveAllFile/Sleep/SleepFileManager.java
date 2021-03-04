@@ -29,53 +29,25 @@ import java.util.Locale;
 public class SleepFileManager {
     public static ArrayList<SleepFile> files;
     private Context context;
-    private boolean callFromMainScreen = false;
+    private boolean callFromMainScreen;
 
 
     /**
      * Creates the manager for reading sleep data files.
-     * All locally found files will be read immediately.
-     *
+     * All locally found files will be read immediately depending on when the call is made from.
      * @param con Context of app
+     * @param callFromMainScreen to filter the files to read
      */
     public SleepFileManager(Context con, Boolean callFromMainScreen) {
         this.context = con;
         this.callFromMainScreen = callFromMainScreen;
-        if(callFromMainScreen){
-            refreshTodaysFile();
-        }
-        else{
-            refreshAllFiles();
-        }
+        refreshAllFiles();
     }
 
-    /**
-     * Refresh the list of sleep data from locally
-     * stored file for today's date.
-     */
-    public void refreshTodaysFile() {
-        this.files = new ArrayList<SleepFile>(1);
-
-        File[] list = getFilteredFiles();
-
-        if (list.length == 0) //no files found
-        {
-            Toast toast = Toast.makeText(context, "No Data Available. Please start using your FitBit to see your health progress.", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }
-        else // Read files into objects
-        {
-            for (File file : list) {
-                SleepFile sleep = readFile(file);
-                this.files.add(sleep); //add to the list
-            }
-        }
-    }
 
     /**
-     * Refresh the list of sleep data from locally
-     * stored all files.
+     * Refresh the list of sleep data from locally stored all files.
+     * if called from mainScreen only current date file will be refreshed
      */
     public void refreshAllFiles() {
         this.files = new ArrayList<SleepFile>(); // Always new list
@@ -103,7 +75,6 @@ public class SleepFileManager {
     /**
      * Read the file and place data into
      * SleepFile objects.
-     *
      * @param file File to read
      * @return SleepFile object
      */
@@ -134,9 +105,8 @@ public class SleepFileManager {
 
 
     /**
-     * Filter files in directory to get all
-     * files with "sleep" in the name.
-     *
+     * Filter files in directory to get all files with "sleepdata" in the name.
+     * when called from 'mainScreen' it looks for the file with current date and returns only one file list
      * @return Array of files
      */
     private File[] getFilteredFiles() {
@@ -155,7 +125,7 @@ public class SleepFileManager {
 
             filter = (dir, name) -> name.matches(fileName);
         } else {
-            filter = (dir, name) -> name.contains("sleep");
+            filter = (dir, name) -> name.contains("sleepdata");
         }
 
 
@@ -164,7 +134,6 @@ public class SleepFileManager {
 
     /**
      * Returns the sleep data read by the manager.
-     *
      * @return SleepFile array
      */
     public ArrayList<SleepFile> getSleepData() {

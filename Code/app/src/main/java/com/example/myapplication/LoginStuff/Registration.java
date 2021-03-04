@@ -1,5 +1,6 @@
 package com.example.myapplication.LoginStuff;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -14,11 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.Welcomescreen;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -210,14 +216,17 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     RegistrationResponse registrationResponse = response.body();
 
                     if (registrationResponse.getStatus().equals("success")) {
-                        Toast.makeText(Registration.this, registrationResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        showCustomAlertDialog("Registration", registrationResponse.getMessage(),true,false);
+
+                        finish(); //finish the intent after succesful registration
+
                         startActivity(new Intent(Registration.this, com.example.myapplication.LoginStuff.Login.class));
                     }
                 }
                 else {
                     //handle the error response if the user credentials doesn't match
                     APIError message = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
-                    Toast.makeText(Registration.this,message.getMessage(),Toast.LENGTH_LONG).show();
+                    showCustomAlertDialog("Registration Error", message.getMessage(),false,true);
                     progressBar.setVisibility(View.GONE);
                     buttonText.setText("Submit");
                 }
@@ -228,9 +237,40 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 buttonText.setText("Submit");
-                Toast.makeText(Registration.this, "\t\t\t\t\tUnable to Register.\nFailed to Connect to the Server", Toast.LENGTH_LONG).show();
+                showCustomAlertDialog("Server Error","Unable to Register\n Failed to connect to the server",false,true);
             }
         });
+    }
+
+    private void showCustomAlertDialog(String title, String message, Boolean registrationSuccessful, Boolean registrationUnSuccessful) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_custom_alert);
+        TextView alertTitle = dialog.findViewById(R.id.alertTitle);
+        TextView alertMessage = dialog.findViewById(R.id.alertMessage);
+        ImageView imageView = dialog.findViewById(R.id.alertErrorImage);
+
+        alertTitle.setText(title);
+        alertMessage.setText(message);
+
+        if(registrationUnSuccessful){
+            imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_error));
+        }
+        else if(registrationSuccessful){
+            imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_check));
+        }
+
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.show();
+
+        //time to dismiss the dialog
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                t.cancel();
+            }
+        }, 1500);
     }
 
     /** listens to all click on Registration screen and calls appropriate function */

@@ -1,29 +1,25 @@
 package com.example.myapplication.LoginStuff;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.SharedPrefManager;
-import com.example.myapplication.Welcomescreen;
 import com.example.myapplication.homescreen;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,13 +60,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         boolean check = false;
         editTextUserName.setError(null);
         editTextPassword.setError(null);
-        if (email.isEmpty()) {
-            editTextUserName.setError("Username required");
-            editTextUserName.requestFocus();
+
+        if(email.isEmpty() && password.isEmpty()){
+           showCustomAlertDialog("Invalid Input", "Username and password is Required");
+        }
+        else if (email.isEmpty()) {
+            showCustomAlertDialog("Invalid Input", "Username is Required");
             check = false;
-        } if (password.isEmpty()) {
-            editTextPassword.setError("Password required");
-            editTextPassword.requestFocus();
+        }
+        else if (password.isEmpty()) {
+            showCustomAlertDialog("Invalid Input", "Password is Required");
             check = false;
         } else if (!email.isEmpty() && !password.isEmpty()){
             check = true;
@@ -79,15 +78,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void userLogin() {
-        progressBar.setVisibility(View.VISIBLE);
-        buttonText.setText("Please Wait");
-
         String userName = editTextUserName.getEditText().getText().toString().trim();
         String password = editTextPassword.getEditText().getText().toString().trim();
 
         if (!checkInput(userName, password)) {
             return;
         } else {
+            progressBar.setVisibility(View.VISIBLE);
+            buttonText.setText("Please Wait");
+
             /** Pass email and password entered by the user.Call LoginResponse that you can get from RetrofitClient  */
             Call<LoginResponse> call = RetrofitClient.getInstance().getApi().userLogin(userName, password);
 
@@ -119,7 +118,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     else{
                         //handle the error response if the user credentials doesn't match
                         APIError message = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
-                        Toast.makeText(Login.this,message.getMessage(),Toast.LENGTH_LONG).show();
+                        showCustomAlertDialog("Login Error", message.getMessage());
 
                         progressBar.setVisibility(View.GONE);
                         buttonText.setText("Login");
@@ -130,10 +129,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 public void onFailure(Call<LoginResponse> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
                     buttonText.setText("Login");
-                    Toast.makeText(Login.this, "\t\t\t\t\tUnable to Login.\nFailed to Connect to the Server", Toast.LENGTH_LONG).show();
+                    showCustomAlertDialog("Server Error","Unable to Login\n Failed to connect to the server");
                 }
             });
         }
+    }
+
+    private void showCustomAlertDialog(String title, String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_custom_alert);
+        TextView alertTitle = dialog.findViewById(R.id.alertTitle);
+        TextView alertMessage = dialog.findViewById(R.id.alertMessage);
+        ImageView imageView = dialog.findViewById(R.id.alertErrorImage);
+
+        alertTitle.setText(title);
+        alertMessage.setText(message);
+        imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_error));
+
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.show();
+
+        //time to dismiss the dialog
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                t.cancel();
+            }
+        }, 1500);
     }
 
     //listens to all click on login screen and calls appropriate function

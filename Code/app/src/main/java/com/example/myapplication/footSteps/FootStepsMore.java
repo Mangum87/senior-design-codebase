@@ -79,7 +79,7 @@ public class FootStepsMore extends Fragment implements View.OnClickListener {
         int days = 7;
 
         for (int i = 0; i < days; i++) {
-            sevenDaysData.add(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(i).getSteps()));
+            sevenDaysData.add(ReadAndSaveMultipleFile.allData.get(i).getTotalSteps());
             xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
         }
     }

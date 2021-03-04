@@ -62,7 +62,7 @@ public class FootStepsMoreSpecificDateClicked extends AppCompatActivity {
         /** check the flag for index received or not */
         if(hasData){
             date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            totalValue.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(index).getSteps())));
+            totalValue.setText(String.valueOf((int)(ReadAndSaveMultipleFile.allData.get(index).getTotalSteps())));
 
             PlotChart.barChart(this,callFrom,barChart,ReadAndSaveMultipleFile.allData.get(index).getSteps(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
         }

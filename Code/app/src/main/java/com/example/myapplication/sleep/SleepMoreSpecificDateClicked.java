@@ -78,7 +78,7 @@ public class SleepMoreSpecificDateClicked extends AppCompatActivity {
             sleepChartData.put("DEEP",new Integer(SleepFileManager.files.get(index).getTotalDeep()));
             sleepChartData.put("REM",new Integer(SleepFileManager.files.get(index).getTotalRem()));
 
-            PlotChart.pieChart(this,false,sleepChartData,pieChart);
+            PlotChart.pieChart(this,false,"sleep",sleepChartData,pieChart);
         }
     }
 }

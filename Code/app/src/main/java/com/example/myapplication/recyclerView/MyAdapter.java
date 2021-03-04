@@ -60,13 +60,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             case "sleep":
                 view = inflater.inflate(R.layout.recycler_view_sleep_more, parent, false);
                 break;
-            case "caloriesBMR":
-                break;
-            case "lightlyActive":
-                break;
-            case "fairlyActive":
-                break;
-            case "veryActive":
+            case "active":
                 break;
         }
 
@@ -75,39 +69,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-        int totValue = 0;
         switch (callFrom){
             case "footSteps":
                 holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                totValue= (int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(position).getSteps()); //casted to int to remove the decimal part from the average value
-                holder.totalValueFootSteps.setText(String.valueOf(totValue));
+                holder.totalValueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getTotalSteps())); //casted to int to remove the decimal part from the average value
                 break;
             case "miles":
                 holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.totalValueMiles.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(position).getDistance())));
+                holder.totalValueMiles.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getTotalDistance()));
                 break;
             case "calories":
                 holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                totValue = (int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(position).getCalories());
-                holder.totalValueCalories.setText(String.valueOf(totValue));
+                holder.totalValueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getTotalCalories()));
                 break;
             case "heartRate":
                 holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                int avgValue = (int) CalculateData.getAverage(ReadAndSaveMultipleFile.allData.get(position).getHeartRate());
-                holder.averageValueHR.setText(String.valueOf(avgValue));
+                holder.averageValueHR.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getAverageHeartRate()));
                 break;
             case "sleep":
                 holder.dateValue.setText(SleepFileManager.files.get(position).getDate());
                 holder.totalSleepHr.setText(String.valueOf(SleepFileManager.files.get(position).getTotalHoursSlept()));
                 holder.totalSleepMin.setText(String.valueOf(SleepFileManager.files.get(position).getTotalMinuteSlept()));
                 break;
-            case "caloriesBMR":
-                break;
-            case "lightlyActive":
-                break;
-            case "fairlyActive":
-                break;
-            case "veryActive":
+            case "active":
                 break;
         }
 
@@ -136,13 +120,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                         intent = new Intent(context,com.example.myapplication.sleep.SleepMoreSpecificDateClicked.class);
                         intent.putExtra("index", position);
                         break;
-                    case "caloriesBMR":
-                        break;
-                    case "lightlyActive":
-                        break;
-                    case "fairlyActive":
-                        break;
-                    case "veryActive":
+                    case "active":
                         break;
                 }
                 context.startActivity(intent);
@@ -190,13 +168,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                     totalSleepMin = itemView.findViewById(R.id.sleepMoreRecyclerViewMin);
                     moreArrow = itemView.findViewById(R.id.sleepMoreRecyclerViewSelectedDate);
                     break;
-                case "caloriesBMR":
-                    break;
-                case "lightlyActive":
-                    break;
-                case "fairlyActive":
-                    break;
-                case "veryActive":
+                case "active":
                     break;
             }
         }

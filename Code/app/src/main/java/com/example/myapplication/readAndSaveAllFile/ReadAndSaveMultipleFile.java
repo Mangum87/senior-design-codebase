@@ -114,7 +114,7 @@ public class ReadAndSaveMultipleFile {
                 } else {
                     for (int i = 0; i < tokens.length; i++) {
                         if (i == 0) {
-                            timeStamp.add(tokens[i]);
+                            timeStamp.add(tokens[i].substring(0,5));
                         } else if (i == 1) {
                             calories.add(Double.parseDouble(tokens[i]));
                         } else if (i == 14) {

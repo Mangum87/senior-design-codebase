@@ -53,7 +53,7 @@ public class MilesMoreSpecificDateClicked extends AppCompatActivity {
             hasData = true;
         }
         else{
-            Toast.makeText(this,"No Data Availble",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"No Data Available",Toast.LENGTH_SHORT).show();
             hasData = false;
         }
     }
@@ -62,7 +62,7 @@ public class MilesMoreSpecificDateClicked extends AppCompatActivity {
         /** check the flag for index received or not */
         if(hasData){
             date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            totalValue.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(index).getDistance())));
+            totalValue.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getTotalDistance()));
 
             PlotChart.barChart(this, callFrom,barChart,ReadAndSaveMultipleFile.allData.get(index).getDistance(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
         }

@@ -28,6 +28,7 @@
     <color name="transparent2">#A6A0A5A5</color>
     <color name="transparentRed">#CDF35246</color>
     <color name="transparentGreen">#CB2FC535</color>
+    <color name="customAlertTitleBgColor">#CC585956</color>
 
     <!-- for heart Rate Line chart -->
     <color name="hrChartColor1">#f06262</color>

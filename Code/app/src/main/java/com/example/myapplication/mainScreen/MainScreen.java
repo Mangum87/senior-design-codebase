@@ -46,10 +46,10 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private int Progress = 0;
 
     //initialize all values of homeScreen
-    private TextView valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueHrsSleep,valueMinSleep, valueCaloriesBMR, valueLightlyActive, valueFairlyActive, valueVeryActive;
+    private TextView valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueHrsSleep,valueMinSleep, valueHrActive, valueMinActive;
     LineChart lineChartHeart;
-    PieChart pieChartSleep;
-    CardView cardViewHeart, cardViewSleep, cardViewCaloriesBMR, cardViewLightlyActive, cardViewFairlyActive, cardViewVeryActive;
+    PieChart pieChartSleep, pieChartActive;
+    CardView cardViewHeart, cardViewSleep, cardViewActive;
     ProgressBar progressBarFootSteps, progressBarMiles, progressBarCalories;
     int indexOfTodaysData = 0; // since the most recent data is stored in index '0'
 
@@ -107,45 +107,20 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         view.findViewById(R.id.textSleepMore).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
-        /** ///////////////////////////////////////////////////////////////////
-         //   initialize Calories BMR cardView attributes                    //
-         ///////////////////////////////////////////////////////////////////*/
-        cardViewCaloriesBMR = view.findViewById(R.id.caloriesBmrCardView);
-        valueCaloriesBMR = view.findViewById(R.id.valueCaloriesBmr);
-
-        view.findViewById(R.id.textCaloriesBmr).setOnClickListener(this);
-        view.findViewById(R.id.textCaloriesBmrMore).setOnClickListener(this);
-        /** //////////////////////////////////////////////////////////////////*/
 
         /** ///////////////////////////////////////////////////////////////////
          //   initialize Lightly Active cardView attributes                  //
          ///////////////////////////////////////////////////////////////////*/
-        cardViewLightlyActive = view.findViewById(R.id.lightlyActiveCardView);
-        valueLightlyActive = view.findViewById(R.id.valueLightlyActive);
+        cardViewActive = view.findViewById(R.id.ActiveCardView);
+        valueHrActive = view.findViewById(R.id.valueHrActiveCard);
+        valueMinActive = view.findViewById(R.id.valueMinActiveCard);
+        pieChartActive = view.findViewById(R.id.pieChartActiveCard);
 
-        view.findViewById(R.id.textLightlyActive).setOnClickListener(this);
-        view.findViewById(R.id.textLightlyActiveMore).setOnClickListener(this);
+        view.findViewById(R.id.textActive).setOnClickListener(this);
+        view.findViewById(R.id.textActiveMore).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
-        /** ///////////////////////////////////////////////////////////////////
-         //   initialize Fairly Active cardView attributes                   //
-         ///////////////////////////////////////////////////////////////////*/
-        cardViewFairlyActive = view.findViewById(R.id.fairlyActiveCardView);
-        valueFairlyActive = view.findViewById(R.id.valueFairlyActive);
 
-        view.findViewById(R.id.textFairlyActive).setOnClickListener(this);
-        view.findViewById(R.id.textFairlyActiveMore).setOnClickListener(this);
-        /** //////////////////////////////////////////////////////////////////*/
-
-        /** ///////////////////////////////////////////////////////////////////
-         //   initialize Very Active cardView attributes                     //
-         ///////////////////////////////////////////////////////////////////*/
-        cardViewVeryActive = view.findViewById(R.id.veryActiveCardView);
-        valueVeryActive = view.findViewById(R.id.valueVeryActive);
-
-        view.findViewById(R.id.textVeryActive).setOnClickListener(this);
-        view.findViewById(R.id.textVeryActiveMore).setOnClickListener(this);
-        /** //////////////////////////////////////////////////////////////////*/
 
         // only load new data when user refreshes, so set a flag to track the first call which is when after login
         if (firstCall) {
@@ -202,11 +177,11 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         updateFootStepsProgress();
 
-        valueFootSteps.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getSteps())));
+        valueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalSteps()));
 
-        valueMiles.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getDistance())));
+        valueMiles.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalDistance()));
 
-        valueCalories.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCalories())));
+        valueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalCalories()));
 
         valueHeartRate.setText("83");
 
@@ -214,13 +189,10 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         valueMinSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalMinuteSlept()));
 
-        valueCaloriesBMR.setText(String.valueOf((int) CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getCaloriesBMR())));
+        valueHrActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHrActive()));
 
-        valueLightlyActive.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinutesLightlyActive())));
+        valueMinActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinActive()));
 
-        valueFairlyActive.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinutesFairlyActive())));
-
-        valueVeryActive.setText(String.valueOf(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinutesVeryActive())));
     }
 
     /** takes to screen where user can find more detail information about FootSteps till date */
@@ -277,17 +249,17 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
     }
 
-    /** this method extends the line chart for sleep card view */
+    /** this method extends the pie chart for sleep card view */
     private void extendSleepCardView() {
         if (pieChartSleep.getVisibility() == View.GONE) {
             if (ReadAndSaveMultipleFile.hasData) {
                 Map<String,Integer> sleepChartData = new HashMap<>(); //store sleep pieChart Data
-                sleepChartData.put("WAKE", new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalWake()));
-                sleepChartData.put("LIGHT", new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalLight()));
-                sleepChartData.put("DEEP",new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalDeep()));
-                sleepChartData.put("REM",new Integer(SleepFileManager.files.get(indexOfTodaysData).getTotalRem()));
+                sleepChartData.put("WAKE", SleepFileManager.files.get(indexOfTodaysData).getTotalWake());
+                sleepChartData.put("LIGHT", SleepFileManager.files.get(indexOfTodaysData).getTotalLight());
+                sleepChartData.put("DEEP", SleepFileManager.files.get(indexOfTodaysData).getTotalDeep());
+                sleepChartData.put("REM", SleepFileManager.files.get(indexOfTodaysData).getTotalRem());
 
-                PlotChart.pieChart(view.getContext(),true,sleepChartData,pieChartSleep);
+                PlotChart.pieChart(view.getContext(),true,"sleep",sleepChartData,pieChartSleep);
             }
             TransitionManager.beginDelayedTransition(cardViewSleep, new AutoTransition());
             pieChartSleep.setVisibility(View.VISIBLE);
@@ -303,6 +275,30 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
+
+    /** this method extends the pie chart for Active card view */
+    private void extentActiveCard(){
+        if(pieChartActive.getVisibility() == View.GONE){
+            if(ReadAndSaveMultipleFile.hasData){
+                Map<String,Integer> activeChartData = new HashMap<>(); //store active pieChart Data
+                activeChartData.put("Sedentary", (int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalMinutesSedentary());
+                activeChartData.put("Lightly Active", (int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalMinutesLightlyActive());
+                activeChartData.put("Fairly Active", (int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalMinutesFairlyActive());
+                activeChartData.put("Very Active", (int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalMinutesVeryActive());
+
+                PlotChart.pieChart(view.getContext(),true, "active",activeChartData, pieChartActive);
+            }
+            TransitionManager.beginDelayedTransition(cardViewActive, new AutoTransition());
+            pieChartActive.setVisibility(View.VISIBLE);
+        }
+        else {
+            pieChartActive.setVisibility(View.GONE);
+        }
+    }
+
+    private void showActiveMoreFragment(){
+
     }
 
     @Override
@@ -332,6 +328,12 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
                 break;
             case R.id.textSleepMore:
                 showSleepMoreFragment();
+                break;
+            case R.id.textActive:
+                extentActiveCard();
+                break;
+            case R.id.textActiveMore:
+                showActiveMoreFragment();
                 break;
         }
     }

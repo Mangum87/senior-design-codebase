@@ -46,4 +46,5 @@ public  class CalculateData {
         }
         return lowValue;
     }
+
 }

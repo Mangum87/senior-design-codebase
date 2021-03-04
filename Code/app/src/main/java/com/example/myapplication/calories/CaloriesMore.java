@@ -34,7 +34,7 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_calories_more,container,false);
+        view = inflater.inflate(R.layout.fragment_calories_more, container, false);
 
         /**set clickListener for back arrow and help */
         view.findViewById(R.id.caloriesMoreArrowBack).setOnClickListener(this);
@@ -45,9 +45,9 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.caloriesMoreRecyclerView);
 
         /** only showing the average graph if there is at least 7 days of data */
-        if(ReadAndSaveMultipleFile.allData.size() >= 7){
+        if (ReadAndSaveMultipleFile.allData.size() >= 7) {
             getSevenDaysData();
-            PlotChart.barChart(view.getContext(),callFrom,barChart, sevenDaysData, xLabel);
+            PlotChart.barChart(view.getContext(), callFrom, barChart, sevenDaysData, xLabel);
         }
 
         startRecyclerView();
@@ -57,13 +57,13 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
 
     private void showHelpDialog() {
         CaloriesMoreHelpDialog caloriesMoreHelpDialog = new CaloriesMoreHelpDialog();
-        caloriesMoreHelpDialog.show(getFragmentManager(),"Calories Help");
+        caloriesMoreHelpDialog.show(getFragmentManager(), "Calories Help");
     }
 
     private void startRecyclerView() {
-        MyAdapter myAdapter = new MyAdapter(view.getContext(),"calories");
+        MyAdapter myAdapter = new MyAdapter(view.getContext(), "calories");
         /**check if line that separates each day data has been added before or not */
-        if(0 == recyclerView.getItemDecorationCount()){
+        if (0 == recyclerView.getItemDecorationCount()) {
             recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
         }
         recyclerView.setAdapter(myAdapter);
@@ -73,18 +73,11 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
     private void getSevenDaysData() {
         int days = 7;
 
-        if(ReadAndSaveMultipleFile.allData.size() < 7){
-            for(int i = 0; i < ReadAndSaveMultipleFile.allData.size(); i++){
-                sevenDaysData.add(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(i).getCalories()));
-                xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5)); // only taking month and day excluding year
-            }
+        for (int i = 0; i < days; i++) {
+            sevenDaysData.add(ReadAndSaveMultipleFile.allData.get(i).getTotalCalories());
+            xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
         }
-        else{
-            for(int i = 0; i < days; i++){
-                sevenDaysData.add(CalculateData.getTotal(ReadAndSaveMultipleFile.allData.get(i).getCalories()));
-                xLabel.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
-            }
-        }
+
     }
 
     private void showMainScreen() {
@@ -92,7 +85,7 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
          * when switching between fragments old fragment is added in back stack,
          * check the stack count to remove it from stack which helps to return to old fragment
          */
-        if(getFragmentManager().getBackStackEntryCount() > 0){
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
             return;
         }
@@ -100,7 +93,7 @@ public class CaloriesMore extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.caloriesMoreArrowBack:
                 showMainScreen();
                 break;
