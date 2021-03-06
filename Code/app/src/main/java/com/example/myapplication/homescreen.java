@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.Utility.HealthScore;
 import com.example.myapplication.mainScreen.MainScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,7 +39,8 @@ public class homescreen extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragment_container, fragmentYou,"2").hide(fragmentYou).commit();
         fragmentManager.beginTransaction().add(R.id.fragment_container,fragmentHome,"1").commit();
 
-       // scheduleJob(); // Schedule auto FitBit sync
+        scheduleJob(); // Schedule auto FitBit sync
+        HealthScore.getScore(getApplicationContext()); // Poll server for health score
     }
 
     //bottom navigation listener

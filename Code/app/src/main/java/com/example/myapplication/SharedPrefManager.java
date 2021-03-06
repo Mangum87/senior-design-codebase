@@ -71,8 +71,33 @@ public class SharedPrefManager {
         return sharedPreferences.getInt("user_id", -1) != -1;
     }
 
-    /*
-    Get the user
+
+    /**
+     * Save the user's health score.
+     * @param score Score to save
+     */
+    public void saveScore(int score)
+    {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("healthScore", score);
+        editor.apply();
+    }
+
+
+    /**
+     * Returns the user's health score.
+     * @return Score or -1 if read failed
+     */
+    public int getScore()
+    {
+        SharedPreferences pref = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getInt("healthScore", -1);
+    }
+
+    /**
+     * Get the user
      */
     public User getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
