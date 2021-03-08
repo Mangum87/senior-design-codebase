@@ -50,13 +50,14 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         barChart = view.findViewById(R.id.barChartSleepMoreScreen);
         recyclerView = view.findViewById(R.id.recyclerViewSleepMoreScreen);
 
+        getAllSleepData();
+
         /** only showing the bar graph if there is at least 7 days of data */
         if(SleepFileManager.files.size() >= 7){
             getSevenDaysData();
             PlotChart.barChart(view.getContext(), "sleep", barChart, sevenDaysData, xLabel);
         }
 
-        getAllSleepData();
         startRecyclerView();
 
         return view;
@@ -78,10 +79,7 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(new SpeedyLinearLayoutManager(view.getContext(), SpeedyLinearLayoutManager.VERTICAL, false));
     }
 
-    /**
-     * This method gets recent seven days footSteps data & date stored in 'allData'
-     * stores in ArrayList to plot the graph
-     */
+
     private void showMainScreen(){
         //when switching between fragments old fragment is added in back stack, check the stack count
         // to remove it from stack which helps to return to old fragment
@@ -91,8 +89,12 @@ public class SleepMore extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     * This method gets recent seven days sleep data & date stored in 'files'
+     * stores in ArrayList to plot the graph
+     */
     private void getSevenDaysData(){
-        int days = 2;
+        int days = 7;
 
         for(int i = 0; i < days; i++){
             sevenDaysData.add((double) SleepFileManager.files.get(i).getTotalHoursSlept());

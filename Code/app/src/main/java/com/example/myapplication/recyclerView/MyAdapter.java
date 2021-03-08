@@ -22,21 +22,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     private Activity activity; // to set the animation transition
     private Context context;
     private String callFrom;
-    private SleepFileManager sleepFileManager;
 
     public MyAdapter(Context context, String callFrom) {
         this.context = context;
         this.callFrom = callFrom;
         this.activity = (Activity) context;
     }
-
-    public MyAdapter(Context context,String callFrom,SleepFileManager sleepFileManager){
-        this.context = context;
-        this.callFrom = callFrom;
-        this.sleepFileManager = sleepFileManager;
-        this.activity = (Activity) context;
-    }
-
 
     @NonNull
     @Override
@@ -61,6 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 view = inflater.inflate(R.layout.recycler_view_sleep_more, parent, false);
                 break;
             case "active":
+                view = inflater.inflate(R.layout.recycler_view_active_more, parent, false);
                 break;
         }
 
@@ -92,6 +84,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 holder.totalSleepMin.setText(String.valueOf(SleepFileManager.files.get(position).getTotalMinuteSlept()));
                 break;
             case "active":
+                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
+                holder.totalActiveHr.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getHrActive()));
+                holder.totalActiveMin.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getMinActive()));
                 break;
         }
 
@@ -121,6 +116,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                         intent.putExtra("index", position);
                         break;
                     case "active":
+                        intent = new Intent(context,com.example.myapplication.active.ActiveMoreSpecificDateClicked.class);
+                        intent.putExtra("index", position);
                         break;
                 }
                 context.startActivity(intent);
@@ -136,7 +133,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, moreArrow, averageValueHR, totalSleepHr, totalSleepMin;
+        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, moreArrow, averageValueHR, totalSleepHr, totalSleepMin, totalActiveHr, totalActiveMin;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -169,6 +166,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                     moreArrow = itemView.findViewById(R.id.sleepMoreRecyclerViewSelectedDate);
                     break;
                 case "active":
+                    dateValue = itemView.findViewById(R.id.activeMoreRecyclerViewDate);
+                    totalActiveHr = itemView.findViewById(R.id.activeMoreRecyclerViewHrs);
+                    totalActiveMin = itemView.findViewById(R.id.activeMoreRecyclerViewMin);
+                    moreArrow = itemView.findViewById(R.id.activeMoreRecyclerViewSelectedDate);
                     break;
             }
         }

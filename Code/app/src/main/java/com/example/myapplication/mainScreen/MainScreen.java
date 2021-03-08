@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
+import com.example.myapplication.active.ActiveMore;
 import com.example.myapplication.calories.CaloriesMore;
 import com.example.myapplication.chart.PlotChart;
 import com.example.myapplication.footSteps.FootStepsMore;
@@ -297,8 +298,13 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         }
     }
 
+    /** takes to screen where user can find more detail information about Active on all dates */
     private void showActiveMoreFragment(){
-
+        Fragment fragment = new ActiveMore();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
     @Override
