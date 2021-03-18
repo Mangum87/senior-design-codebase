@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +29,10 @@ import com.example.myapplication.heartRate.HeartRateMore;
 import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
-import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFile;
 import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
-import com.example.myapplication.readAndSaveAllFile.Summary.SummaryManager;
 import com.example.myapplication.sleep.SleepMore;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -174,26 +170,33 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
                 .start();
     }
 
-    private void showTodaysData() {
+    private void showTodaysData()
+    {
+        // Don't pull data if it doesn't exist
+        if(ReadAndSaveMultipleFile.allData.size() > 0)
+        {
+            updateFootStepsProgress();
 
-        updateFootStepsProgress();
+            valueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalSteps()));
 
-        valueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalSteps()));
+            valueMiles.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalDistance()));
 
-        valueMiles.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalDistance()));
+            valueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalCalories()));
 
-        valueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalCalories()));
+            valueHeartRate.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getAverageHeartRate()));
+        }
 
-        valueHeartRate.setText("83");
+        // Don't pull data if it doesn't exist
+        if(SleepFileManager.files.size() > 0) {
 
-        valueHrsSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalHoursSlept()));
+            valueHrsSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalHoursSlept()));
 
-        valueMinSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalMinuteSlept()));
+            valueMinSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalMinuteSlept()));
 
-        valueHrActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHrActive()));
+            valueHrActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHrActive()));
 
-        valueMinActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinActive()));
-
+            valueMinActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinActive()));
+        }
     }
 
     /** takes to screen where user can find more detail information about FootSteps till date */

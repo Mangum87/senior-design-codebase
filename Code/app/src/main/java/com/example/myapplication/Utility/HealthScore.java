@@ -40,11 +40,13 @@ public class HealthScore
         call.enqueue(new Callback<Score>(){
             @Override
             public void onResponse(Call<Score> call, Response<Score> response) {
+                Log.i("Custom", "Health score: " + response.body().getScore());
                 SharedPrefManager.getInstance(c).saveScore(response.body().getScore());
             }
 
             @Override
             public void onFailure(Call<Score> call, Throwable t) {
+                Log.e("Custom", "Score call failed");
                 SharedPrefManager.getInstance(c).saveScore(0);
             }
         });

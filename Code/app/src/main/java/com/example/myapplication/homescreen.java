@@ -39,14 +39,14 @@ public class homescreen extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragment_container, fragmentYou,"2").hide(fragmentYou).commit();
         fragmentManager.beginTransaction().add(R.id.fragment_container,fragmentHome,"1").commit();
 
-        //scheduleJob(); // Schedule auto FitBit sync
-        //HealthScore.getScore(getApplicationContext()); // Poll server for health score
+        scheduleJob(); // Schedule auto FitBit sync
     }
 
     //bottom navigation listener
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.nav_synFitbit:
                     return true;

@@ -18,7 +18,7 @@ public class RetrofitClient
      * The base url for all calls to be added to for AWS.
      */
     public static final String BASE_URL = "http://3.19.30.128:5000/"; // for EC2 server
-    //private static final String BASE_URL = "http://192.168.1.234:5000/"; // for local server
+    //public static final String BASE_URL = "http://192.168.1.105:5000/"; // for local server
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
     //create private constructor and initialize the Retrofit object

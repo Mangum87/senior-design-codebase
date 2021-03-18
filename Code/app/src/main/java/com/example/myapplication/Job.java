@@ -7,8 +7,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
+
+import com.example.myapplication.Utility.HealthScore;
 import com.example.myapplication.amazonS3.amazonS3main;
 import com.fitbitsample.FitbitActivity.FitbitDataFormat;
+import com.fitbitsample.FitbitActivity.PrefConstants;
 import com.fitbitsample.FitbitSharedPref.AppPreference;
 import com.fitbitsample.FitbitSharedPref.FitbitPref;
 import com.fitbitsample.ViewFragments.ViewFitbitDataFragment;
@@ -46,14 +49,20 @@ public class Job extends JobService
                     @Override
                     public void run() {
                         Context context = getApplicationContext();
-                        ViewFitbitDataFragment sync = new ViewFitbitDataFragment();
-                        sync.sync(context);
+                        HealthScore.getScore(context); // Poll server for health score
 
-                        amazonS3main az = new amazonS3main();
-                        try {
-                            az.main(context);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        String ID = AppPreference.getInstance().getString(PrefConstants.USER_ID); // Get FitBit user ID
+                        if(ID != null) // Defaults to null if not previously set
+                        {
+                            ViewFitbitDataFragment sync = new ViewFitbitDataFragment();
+                            sync.sync(context); // Make FitBit calls
+
+                            amazonS3main az = new amazonS3main(); // Send to file
+                            try {
+                                az.main(context);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
