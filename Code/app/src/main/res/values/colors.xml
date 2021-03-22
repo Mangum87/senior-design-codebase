@@ -12,11 +12,14 @@
     <color name= "colorF">#38978F</color>
     <color name= "colorG">#4A4C4C</color>
     <color name="colorH">#f02711</color>
-    <color name="registrationBackground">#157E72</color>
+    <color name="colorI">#fc5353</color>
+    <color name="colorJ">#C92020</color>
+    <color name="registrationBackground">#fc2929</color>
     <color name="black">#131313</color>
     <color name= "red">#F44336</color>
     <color name= "light_blue">#ff44caac</color>
     <color name= "light_green">#53B3AB</color>
+    <color name= "light_red">#fd7e7e</color>
     <color name= "signup_text_bg">#E1D3F1F4</color>
     <color name= "white">#ffffff</color>
     <color name= "lightGrey">#ced4d6</color>

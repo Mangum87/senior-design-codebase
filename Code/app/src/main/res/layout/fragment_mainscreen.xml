@@ -64,6 +64,56 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"/>
 
+                        <ProgressBar
+                            android:id="@+id/scoreProgress"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:indeterminateOnly="false"
+                            android:progressDrawable="@drawable/circle_progress"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/scoreTitle"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/valueScoreCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="--"
+                            android:textColor="@color/colorG"
+                            android:textSize="40sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/scoreProgress"
+                            app:layout_constraintEnd_toEndOf="@+id/scoreProgress"
+                            app:layout_constraintStart_toStartOf="@+id/scoreProgress"
+                            app:layout_constraintTop_toTopOf="@+id/scoreProgress" />
+
+                        <TextView
+                            android:id="@+id/learnMoreCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="56dp"
+                            android:fontFamily="@font/quicksand_bold"
+                            android:text="If you want to learn more about life\ninsurance with StateFarm, click below\nfor more information!"
+                            android:textColor="@color/colorG"
+                            android:textSize="10sp"
+                            app:layout_constraintLeft_toRightOf="@+id/scoreProgress"
+                            app:layout_constraintTop_toBottomOf="@+id/scoreTitle" />
+
+                        <ImageButton
+                            android:id="@+id/websiteButton"
+                            android:layout_width="176dp"
+                            android:layout_height="28dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/state_farm_logo_2"
+                            android:text="Visit Website"
+                            app:layout_constraintLeft_toRightOf="@+id/scoreProgress"
+                            app:layout_constraintTop_toBottomOf="@+id/learnMoreCard" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -535,7 +585,3 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
-
-
-
-

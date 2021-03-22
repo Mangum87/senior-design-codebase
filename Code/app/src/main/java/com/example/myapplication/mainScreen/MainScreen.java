@@ -1,6 +1,9 @@
 package com.example.myapplication.mainScreen;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.AutoTransition;
@@ -8,6 +11,7 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
+import com.example.myapplication.SharedPrefManager;
 import com.example.myapplication.active.ActiveMore;
 import com.example.myapplication.calories.CaloriesMore;
 import com.example.myapplication.chart.PlotChart;
@@ -31,6 +36,7 @@ import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
 import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 import com.example.myapplication.sleep.SleepMore;
+import com.example.myapplication.Utility.HealthScore;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import java.util.HashMap;
@@ -43,11 +49,12 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private int Progress = 0;
 
     //initialize all values of homeScreen
-    private TextView valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueHrsSleep,valueMinSleep, valueHrActive, valueMinActive;
+    private TextView valueScore, valueFootSteps, valueMiles, valueCalories, valueHeartRate, valueHrsSleep,valueMinSleep, valueHrActive, valueMinActive;
     LineChart lineChartHeart;
     PieChart pieChartSleep, pieChartActive;
     CardView cardViewHeart, cardViewSleep, cardViewActive;
-    ProgressBar progressBarFootSteps, progressBarMiles, progressBarCalories;
+    ProgressBar progressBarScore, progressBarFootSteps, progressBarMiles, progressBarCalories;
+    ImageButton websiteButton;
     int indexOfTodaysData = 0; // since the most recent data is stored in index '0'
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -62,6 +69,13 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         refresh = view.findViewById(R.id.pullTORefreshLayout);
         refresh.setOnRefreshListener(this);
         /** //////////////////////////////////////////////////////////////////*/
+
+        /** ///////////////////////////////////////////////////////////////////
+         //   initialize health score cardView attributes                    //
+         ///////////////////////////////////////////////////////////////////*/
+        valueScore = view.findViewById(R.id.valueScoreCard);
+        progressBarScore = view.findViewById(R.id.scoreProgress);
+        websiteButton = view.findViewById(R.id.websiteButton);
 
         /** ///////////////////////////////////////////////////////////////////
          //   initialize today cardView attributes                           //
@@ -117,7 +131,16 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         view.findViewById(R.id.textActiveMore).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
-
+        // When the button is clicked, opens the website.
+        websiteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://www.statefarm.com/insurance/life"));
+                startActivity(intent);
+            }
+        });
 
         // only load new data when user refreshes, so set a flag to track the first call which is when after login
         if (firstCall) {
@@ -141,6 +164,14 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
     private void getSleepData(){
         SleepFileManager sleepFileManager = new SleepFileManager(view.getContext(),true);
+    }
+
+    private void updateHealthScoreProgress() {
+        int healthScore = SharedPrefManager.getInstance(getContext()).getScore();
+
+        ObjectAnimator.ofInt(progressBarScore, "progress", healthScore)
+                .setDuration(900)
+                .start();
     }
 
     private void updateFootStepsProgress() {
@@ -175,7 +206,11 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         // Don't pull data if it doesn't exist
         if(ReadAndSaveMultipleFile.allData.size() > 0)
         {
+            updateHealthScoreProgress();
+
             updateFootStepsProgress();
+
+            valueScore.setText(String.valueOf(SharedPrefManager.getInstance(getContext()).getScore()));
 
             valueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalSteps()));
 

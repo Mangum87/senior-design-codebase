@@ -116,7 +116,8 @@ public class SleepFileManager {
 
             //gets today's date in the pattern below
             String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-            date = "2021-02-24";
+            //date = "2021-02-24";
+            date = "2021-03-06";
 
             //initializing user object from shared preference to get the userID saved during login
             User user = SharedPrefManager.getInstance(context).getUser();

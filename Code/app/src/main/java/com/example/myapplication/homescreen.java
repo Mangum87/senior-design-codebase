@@ -39,7 +39,7 @@ public class homescreen extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragment_container, fragmentYou,"2").hide(fragmentYou).commit();
         fragmentManager.beginTransaction().add(R.id.fragment_container,fragmentHome,"1").commit();
 
-        scheduleJob(); // Schedule auto FitBit sync
+        //scheduleJob(); // Schedule auto FitBit sync
     }
 
     //bottom navigation listener
