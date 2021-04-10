@@ -35,20 +35,14 @@
     <style name="Theme3" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/registrationBackground</item>
-    </style>
-
-    <style name="Theme4" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/colorE</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
     <!--to match with sleep more screen graph color -->
     <style name="Theme5" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/registrationBackground</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
 </resources>

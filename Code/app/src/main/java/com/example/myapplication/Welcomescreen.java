@@ -37,7 +37,8 @@ public class Welcomescreen extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Welcomescreen.this, com.example.myapplication.LoginStuff.Login.class));
+//                startActivity(new Intent(Welcomescreen.this, com.example.myapplication.LoginStuff.Login.class));
+                startActivity(new Intent(Welcomescreen.this, com.example.myapplication.homescreen.class));
                 overridePendingTransition(R.anim.bottom_up,R.anim.no_animation);
             }
         });

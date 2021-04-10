@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public class ReadAndSaveMultipleFile {
     private Context context;
-    public static Boolean hasData;
+    public static Boolean hasData = false;
     public static ArrayList<MultipleFileData> allData = new ArrayList<MultipleFileData>(); /**  this is the main arrayList that stores all data */
 
     /**

@@ -10,12 +10,12 @@ public class AppConstants
     /**
      * Dev account ID.
      */
-    public static final String CLIENT_ID = "22BXSX";
+    public static final String CLIENT_ID = "22C2J2";
 
     /**
      * Dev secret value.
      */
-    public static final String CLIENT_SECRET = "02030a9c3bb7fb2b978504442eff2902";
+    public static final String CLIENT_SECRET = "aea53919e7de0f0ded7e30ea9fa2180b";
 
     /**
      * Callback URL.

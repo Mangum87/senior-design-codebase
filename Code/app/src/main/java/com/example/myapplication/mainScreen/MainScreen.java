@@ -76,6 +76,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         valueScore = view.findViewById(R.id.valueScoreCard);
         progressBarScore = view.findViewById(R.id.scoreProgress);
         websiteButton = view.findViewById(R.id.websiteButton);
+        /** //////////////////////////////////////////////////////////////////*/
 
         /** ///////////////////////////////////////////////////////////////////
          //   initialize today cardView attributes                           //
@@ -142,12 +143,12 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
             }
         });
 
-        // only load new data when user refreshes, so set a flag to track the first call which is when after login
-        if (firstCall) {
-            getSleepData();
-            getAllData();
-            firstCall = false;
-        }
+//        // only load new data when user refreshes, so set a flag to track the first call which is when after login
+//        if (firstCall) {
+//            getSleepData();
+//            getAllData();
+//            firstCall = false;
+//        }
 
         //when user sees homeScreen, it check if data is stored or not before setting
         if (ReadAndSaveMultipleFile.hasData ) {
@@ -167,8 +168,14 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     }
 
     private void updateHealthScoreProgress() {
-        int healthScore = SharedPrefManager.getInstance(getContext()).getScore();
+//        int healthScore = SharedPrefManager.getInstance(getContext()).getScore();
 
+        int healthScore = 4;
+
+
+
+        int progressValue = ( ((6 - healthScore) / 5 ) * 100);
+        System.out.println();
         ObjectAnimator.ofInt(progressBarScore, "progress", healthScore)
                 .setDuration(900)
                 .start();
@@ -210,7 +217,8 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
             updateFootStepsProgress();
 
-            valueScore.setText(String.valueOf(SharedPrefManager.getInstance(getContext()).getScore()));
+//            valueScore.setText(String.valueOf(SharedPrefManager.getInstance(getContext()).getScore()));
+            valueScore.setText("4");
 
             valueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalSteps()));
 
@@ -219,6 +227,10 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
             valueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getTotalCalories()));
 
             valueHeartRate.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getAverageHeartRate()));
+
+            valueHrActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHrActive()));
+
+            valueMinActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinActive()));
         }
 
         // Don't pull data if it doesn't exist
@@ -227,10 +239,6 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
             valueHrsSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalHoursSlept()));
 
             valueMinSleep.setText(String.valueOf(SleepFileManager.files.get(indexOfTodaysData).getTotalMinuteSlept()));
-
-            valueHrActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getHrActive()));
-
-            valueMinActive.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(indexOfTodaysData).getMinActive()));
         }
     }
 
@@ -291,7 +299,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     /** this method extends the pie chart for sleep card view */
     private void extendSleepCardView() {
         if (pieChartSleep.getVisibility() == View.GONE) {
-            if (ReadAndSaveMultipleFile.hasData) {
+            if (SleepFileManager.files.size() > 0) {
                 Map<String,Integer> sleepChartData = new HashMap<>(); //store sleep pieChart Data
                 sleepChartData.put("WAKE", SleepFileManager.files.get(indexOfTodaysData).getTotalWake());
                 sleepChartData.put("LIGHT", SleepFileManager.files.get(indexOfTodaysData).getTotalLight());
