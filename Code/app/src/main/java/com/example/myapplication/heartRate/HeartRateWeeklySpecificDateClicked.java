@@ -1,21 +1,28 @@
 package com.example.myapplication.heartRate;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
 import com.example.myapplication.chart.PlotChart;
-import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
 import com.github.mikephil.charting.charts.LineChart;
 
-public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class HeartRateWeeklySpecificDateClicked extends AppCompatActivity {
     TextView date,high,low,collapseScreen;
     LineChart lineChart;
+
+    private ArrayList<String> dayDates = new ArrayList<>();
+    private ArrayList<String> weekDates = new ArrayList<>();
+    private ArrayList<String> dateLabels = new ArrayList<>();
+    private ArrayList<Double> weekHeartRates = new ArrayList<>();
 
     /**set a flag to check if index is received from previous intent which is passed from 'Recycler View Adapter'
      * without flag index is always initialized '0' and always plots data on index '0' on arrayList
@@ -35,6 +42,7 @@ public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
         lineChart = findViewById(R.id.lineChartHeartRateSpecificDateScreen);
 
         getData();
+        getWeeklyData();
         setValues();
 
         collapseScreen.setOnClickListener(new View.OnClickListener() {
@@ -58,14 +66,36 @@ public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
         }
     }
 
+    private void getWeeklyData() {
+
+        /** subtracts the remainder if the number of files is not a multiple of 7 */
+        int daysForAverage = ReadAndSaveMultipleFile.allData.size() - ReadAndSaveMultipleFile.allData.size()%7;
+
+        for(int i = 0; i < daysForAverage; i++) {
+            dayDates.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5)); /** only taking month and day excluding year */
+        }
+
+        /** gets the dates for the week, then adds it to the array list before moving onto the next week */
+        for(int i = 0; i < dayDates.size(); i=i+7) {
+            weekDates.add(dayDates.get(i+6)+" to "+dayDates.get(i));
+        }
+
+        /** gets the days in the week as well as the average heart rates of that day that the index is currently on */
+        for(int i = index*7; i < index*7+6; i++) {
+            dateLabels.add(ReadAndSaveMultipleFile.allData.get(i).getDate().substring(5));
+            weekHeartRates.add(ReadAndSaveMultipleFile.allData.get(i).getAverageHeartRate());
+        }
+    }
+
     private void setValues(){
         /** check the flag for index received or not */
         if(hasData){
-            date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            high.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getHighHeartRate()));
-            low.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getLowHeartRate()));
+            date.setText(weekDates.get(index));
+            high.setText(String.valueOf(Collections.max(weekHeartRates).intValue()));
+            low.setText(String.valueOf(Collections.min(weekHeartRates).intValue()));
 
-            PlotChart.lineChart(this,false,lineChart,ReadAndSaveMultipleFile.allData.get(index).getHeartRate(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
+            PlotChart.lineChart(this,false,lineChart,weekHeartRates,dateLabels);
+            lineChart.getAxisLeft().setAxisMinValue(0);
         }
     }
 }

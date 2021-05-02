@@ -303,12 +303,27 @@
                             android:layout_marginTop="8dp"
                             android:clickable="true"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text=">"
+                            android:text="Daily >"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.928"
                             app:layout_constraintStart_toEndOf="@+id/textHeartRate"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textHeartRateWeekly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="44dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Weekly >"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.934"
+                            app:layout_constraintStart_toEndOf="@+id/unitHeartRate"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -331,8 +346,8 @@
                             android:id="@+id/unitHeartRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="21dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginTop="21dp"
                             android:fontFamily="@font/quicksand_bold"
                             android:text="BPM"
                             android:textSize="10sp"
@@ -341,11 +356,11 @@
 
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/lineChartHeartRateHomeScreen"
-                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_marginTop="90dp"
                             android:layout_marginBottom="10dp"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
@@ -390,12 +405,27 @@
                             android:layout_marginTop="8dp"
                             android:clickable="true"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text=">"
+                            android:text="Daily >"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.939"
                             app:layout_constraintStart_toEndOf="@+id/textSleep"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textSleepWeekly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Weekly >"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.939"
+                            app:layout_constraintStart_toEndOf="@+id/unitSleep"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -503,12 +533,27 @@
                             android:layout_marginTop="8dp"
                             android:clickable="true"
                             android:fontFamily="@font/quicksand_medium"
-                            android:text=">"
+                            android:text="Daily >"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.923"
                             app:layout_constraintStart_toEndOf="@+id/textActive"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textActiveWeekly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:clickable="true"
+                            android:fontFamily="@font/quicksand_medium"
+                            android:text="Weekly >"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.939"
+                            app:layout_constraintStart_toEndOf="@+id/unitHrActive"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView

@@ -27,16 +27,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.myapplication.R;
 import com.example.myapplication.SharedPrefManager;
 import com.example.myapplication.active.ActiveMore;
+import com.example.myapplication.active.ActiveWeekly;
 import com.example.myapplication.calories.CaloriesMore;
 import com.example.myapplication.chart.PlotChart;
 import com.example.myapplication.footSteps.FootStepsMore;
 import com.example.myapplication.heartRate.HeartRateMore;
+import com.example.myapplication.heartRate.HeartRateWeekly;
 import com.example.myapplication.miles.MilesMore;
 import com.example.myapplication.readAndSaveAllFile.CalculateData;
 import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
 import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
 import com.example.myapplication.sleep.SleepMore;
 import com.example.myapplication.Utility.HealthScore;
+import com.example.myapplication.sleep.SleepWeekly;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import java.util.HashMap;
@@ -104,6 +107,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         view.findViewById(R.id.textHeartRate).setOnClickListener(this);
         view.findViewById(R.id.textHeartRateMore).setOnClickListener(this);
+        view.findViewById(R.id.textHeartRateWeekly).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
         /** ///////////////////////////////////////////////////////////////////
@@ -116,6 +120,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         view.findViewById(R.id.textSleep).setOnClickListener(this);
         view.findViewById(R.id.textSleepMore).setOnClickListener(this);
+        view.findViewById(R.id.textSleepWeekly).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
 
@@ -129,6 +134,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
 
         view.findViewById(R.id.textActive).setOnClickListener(this);
         view.findViewById(R.id.textActiveMore).setOnClickListener(this);
+        view.findViewById(R.id.textActiveWeekly).setOnClickListener(this);
         /** //////////////////////////////////////////////////////////////////*/
 
         // When the button is clicked, opens the website.
@@ -169,7 +175,7 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     private void updateHealthScoreProgress() {
         int healthScore = SharedPrefManager.getInstance(getContext()).getScore();
 
-        ObjectAnimator.ofInt(progressBarScore, "progress", healthScore)
+        ObjectAnimator.ofInt(progressBarScore, "progress", healthScore*20)
                 .setDuration(900)
                 .start();
     }
@@ -285,7 +291,14 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
 
+    private void showHeartRateWeeklyFragment() {
+        Fragment fragment = new HeartRateWeekly();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
     /** this method extends the pie chart for sleep card view */
@@ -316,6 +329,15 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
         fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
 
+    /** takes to screen where user can find more detail information about Sleep on all dates */
+    private void showSleepWeeklyFragment() {
+        Fragment fragment = new SleepWeekly();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
+
     /** this method extends the pie chart for Active card view */
     private void extentActiveCard(){
         if(pieChartActive.getVisibility() == View.GONE){
@@ -339,6 +361,14 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
     /** takes to screen where user can find more detail information about Active on all dates */
     private void showActiveMoreFragment(){
         Fragment fragment = new ActiveMore();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        fragmentTransaction.replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+    }
+
+    private void showActiveWeeklyFragment(){
+        Fragment fragment = new ActiveWeekly();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
@@ -378,6 +408,15 @@ public class MainScreen extends Fragment implements View.OnClickListener, SwipeR
                 break;
             case R.id.textActiveMore:
                 showActiveMoreFragment();
+                break;
+            case R.id.textHeartRateWeekly:
+                showHeartRateWeeklyFragment();
+                break;
+            case R.id.textSleepWeekly:
+                showSleepWeeklyFragment();
+                break;
+            case R.id.textActiveWeekly:
+                showActiveWeeklyFragment();
                 break;
         }
     }

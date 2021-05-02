@@ -21,7 +21,13 @@
             android:name=".active.ActiveMoreSpecificDateClicked"
             android:theme="@style/Theme5"/>
         <activity
+            android:name=".active.ActiveWeeklySpecificDateClicked"
+            android:theme="@style/Theme5"/>
+        <activity
             android:name=".sleep.SleepMoreSpecificDateClicked"
+            android:theme="@style/Theme5" />
+        <activity
+            android:name=".sleep.SleepWeeklySpecificDateClicked"
             android:theme="@style/Theme5" />
         <activity
             android:name=".calories.CaloriesMoreSpecificDateClicked"
@@ -34,6 +40,9 @@
             android:theme="@style/Theme5" />
         <activity
             android:name=".heartRate.HeartRateMoreSpecificDateClicked"
+            android:theme="@style/Theme5" />
+        <activity
+            android:name=".heartRate.HeartRateWeeklySpecificDateClicked"
             android:theme="@style/Theme5" />
         <activity android:name="com.fitbitsample.FitbitActivity.MainActivity" />
         <activity android:name=".SignOut" />
