@@ -229,7 +229,7 @@
                             android:layout_height="75dp"
                             android:layout_marginEnd="36dp"
                             android:indeterminateOnly="false"
-                            android:progressDrawable="@drawable/circle_progress_linear_color"
+                            android:progressDrawable="@drawable/circle_progress"
                             app:layout_constraintBottom_toTopOf="@+id/textCaloriesTodayCard"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView27"

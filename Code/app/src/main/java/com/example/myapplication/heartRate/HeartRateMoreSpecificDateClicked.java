@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.chart.PlotChart;
-import com.example.myapplication.readAndSaveAllFile.CalculateData;
-import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.recyclerView.MyAdapter;
 import com.github.mikephil.charting.charts.LineChart;
 
 public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
@@ -61,11 +60,11 @@ public class HeartRateMoreSpecificDateClicked extends AppCompatActivity {
     private void setValues(){
         /** check the flag for index received or not */
         if(hasData){
-            date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            high.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getHighHeartRate()));
-            low.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getLowHeartRate()));
+            date.setText(MyAdapter.HourlyData.get(index).getDate());
+            high.setText(String.valueOf(MyAdapter.HourlyData.get(index).getHigh()));
+            low.setText(String.valueOf(MyAdapter.HourlyData.get(index).getLow()));
 
-            PlotChart.lineChart(this,false,lineChart,ReadAndSaveMultipleFile.allData.get(index).getHeartRate(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
+            PlotChart.lineChart(this,false, lineChart, MyAdapter.HourlyData.get(index).getData(), MyAdapter.HourlyData.get(index).getTimeStamp());
         }
     }
 }

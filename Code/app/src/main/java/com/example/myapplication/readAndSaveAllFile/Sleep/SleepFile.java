@@ -1,8 +1,14 @@
 package com.example.myapplication.readAndSaveAllFile.Sleep;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static android.content.ContentValues.TAG;
 
@@ -11,8 +17,7 @@ import static android.content.ContentValues.TAG;
  * Retrieve all of the sleep data stored locally
  * for a single day.
  */
-public class SleepFile
-{
+public class SleepFile{
     private final String filename;
     private ArrayList<SleepEvent> events;
 
@@ -26,7 +31,6 @@ public class SleepFile
         this.filename = filename;
         this.events = new ArrayList<SleepEvent>(30);
     }
-
 
     /**
      * Add sleep event details.

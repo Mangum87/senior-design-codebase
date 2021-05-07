@@ -1,56 +1,39 @@
-package com.example.myapplication.readAndSaveAllFile;
+package com.example.myapplication.readAndSaveAllFile.Hourly;
 
 import java.util.ArrayList;
 
-
-/**
- * Reads all of the intraday files locally stored
- * and stores its data.
- */
-public class MultipleFileData
-{
+//used for storing today's data
+public class HourlyAllDataSets {
     private String date;
     private ArrayList<String> timeStamp;
     private ArrayList<Double> calories;
-    private ArrayList<Double> caloriesBMR;
     private ArrayList<Double> steps;
-    private ArrayList<Double> distance;
-    private ArrayList<Double> floors;
-    private ArrayList<Double> elevation;
+    private ArrayList<Double> miles;
     private ArrayList<Double> minutesSedentary;
     private ArrayList<Double> minutesLightlyActive;
     private ArrayList<Double> minutesFairlyActive;
     private ArrayList<Double> minutesVeryActive;
-    private ArrayList<Double> activityCalories;
     private ArrayList<Double> heartRate;
 
-    public MultipleFileData(String date,
-                            ArrayList<String> timeStamp,
-                            ArrayList<Double> calories,
-                            ArrayList<Double> caloriesBMR,
-                            ArrayList<Double> steps,
-                            ArrayList<Double> distance,
-                            ArrayList<Double> floors,
-                            ArrayList<Double> elevation,
-                            ArrayList<Double> minutesSedentary,
-                            ArrayList<Double> minutesLightlyActive,
-                            ArrayList<Double> minutesFairlyActive,
-                            ArrayList<Double> minutesVeryActive,
-                            ArrayList<Double> activityCalories,
-                            ArrayList<Double> heartRate) {
+    public HourlyAllDataSets(String date,
+                                  ArrayList<String> timeStamp,
+                                  ArrayList<Double> calories,
+                                  ArrayList<Double> steps,
+                                  ArrayList<Double> miles,
+                                  ArrayList<Double> minutesSedentary,
+                                  ArrayList<Double> minutesLightlyActive,
+                                  ArrayList<Double> minutesFairlyActive,
+                                  ArrayList<Double> minutesVeryActive,
+                                  ArrayList<Double> heartRate) {
         this.date = date;
         this.timeStamp = timeStamp;
         this.calories = calories;
-        this.caloriesBMR = caloriesBMR;
         this.steps = steps;
-        this.distance = distance;
-        this.floors = floors;
-        this.elevation = elevation;
+        this.miles = miles;
         this.minutesSedentary = minutesSedentary;
         this.minutesLightlyActive = minutesLightlyActive;
         this.minutesFairlyActive = minutesFairlyActive;
         this.minutesVeryActive = minutesVeryActive;
-        this.activityCalories = activityCalories;
         this.heartRate = heartRate;
     }
 
@@ -66,24 +49,13 @@ public class MultipleFileData
         return calories;
     }
 
-    public ArrayList<Double> getCaloriesBMR() {
-        return caloriesBMR;
-    }
 
     public ArrayList<Double> getSteps() {
         return steps;
     }
 
-    public ArrayList<Double> getDistance() {
-        return distance;
-    }
-
-    public ArrayList<Double> getFloors() {
-        return floors;
-    }
-
-    public ArrayList<Double> getElevation() {
-        return elevation;
+    public ArrayList<Double> getMiles() {
+        return miles;
     }
 
     public ArrayList<Double> getMinutesSedentary() {
@@ -100,10 +72,6 @@ public class MultipleFileData
 
     public ArrayList<Double> getMinutesVeryActive() {
         return minutesVeryActive;
-    }
-
-    public ArrayList<Double> getActivityCalories() {
-        return activityCalories;
     }
 
     public ArrayList<Double> getHeartRate() {
@@ -125,22 +93,6 @@ public class MultipleFileData
         return average;
     }
 
-    public double getTotalCaloriesBMR(){
-        double total = 0;
-        for(double val: caloriesBMR){
-            total += val;
-        }
-        return total;
-    }
-
-    public double getTotalActivityCalories(){
-        double total = 0;
-        for(double val: activityCalories){
-            total += val;
-        }
-        return total;
-    }
-
     public double getTotalSteps(){
         double total = 0;
         for(double val: steps){
@@ -151,28 +103,12 @@ public class MultipleFileData
 
     public double getTotalDistance(){
         double total = 0;
-        for(double val: distance){
+        for(double val: miles){
             total += val;
         }
         // to make the decimal pattern "#.##'
         total = Math.floor(total *100)/100;
 
-        return total;
-    }
-
-    public double getTotalFloors(){
-        double total = 0;
-        for(double val: floors){
-            total += val;
-        }
-        return total;
-    }
-
-    public double getTotalElevation(){
-        double total = 0;
-        for(double val: elevation){
-            total += val;
-        }
         return total;
     }
 
@@ -206,7 +142,7 @@ public class MultipleFileData
         for(int i = 1; i < heartRate.size(); i++){
             if(lowValue > heartRate.get(i)){
                 if(heartRate.get(i).intValue() != 0){
-                   lowValue = heartRate.get(i).intValue();
+                    lowValue = heartRate.get(i).intValue();
                 }
             }
         }

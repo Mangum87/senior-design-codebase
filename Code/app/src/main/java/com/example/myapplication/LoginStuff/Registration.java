@@ -211,7 +211,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         registerResponse.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
-
                 if (response.isSuccessful()) {
                     RegistrationResponse registrationResponse = response.body();
 
@@ -270,7 +269,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 dialog.dismiss();
                 t.cancel();
             }
-        }, 1500);
+        }, 2000);
     }
 
     /** listens to all click on Registration screen and calls appropriate function */

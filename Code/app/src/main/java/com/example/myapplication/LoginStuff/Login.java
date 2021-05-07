@@ -2,6 +2,7 @@ package com.example.myapplication.LoginStuff;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,10 +85,65 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (!checkInput(userName, password)) {
             return;
         } else {
+
+            new MyTask().execute(userName, password);
+
+        }
+    }
+
+    private void showCustomAlertDialog(String title, String message) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_custom_alert);
+        TextView alertTitle = dialog.findViewById(R.id.alertTitle);
+        TextView alertMessage = dialog.findViewById(R.id.alertMessage);
+        ImageView imageView = dialog.findViewById(R.id.alertErrorImage);
+
+        alertTitle.setText(title);
+        alertMessage.setText(message);
+        imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_error));
+
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.show();
+
+        //time to dismiss the dialog
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                t.cancel();
+            }
+        }, 1500);
+    }
+
+    //listens to all click on login screen and calls appropriate function
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_log_in:
+                userLogin();
+                break;
+            case R.id.login_close:
+                showWelcomeScreen();
+                break;
+        }
+    }
+
+    class MyTask extends AsyncTask{
+
+        @Override
+        protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             buttonText.setText("Please Wait");
+        }
 
+        @Override
+        protected Object doInBackground(Object[] objects) {
             /** Pass email and password entered by the user.Call LoginResponse that you can get from RetrofitClient  */
+
+            String userName = (String) objects[0];
+            String password = (String) objects[1];
+
             Call<LoginResponse> call = RetrofitClient.getInstance().getApi().userLogin(userName, password);
 
             /** To learn about public interface Call <T>
@@ -132,44 +188,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     showCustomAlertDialog("Server Error","Unable to Login\n Failed to connect to the server");
                 }
             });
-        }
-    }
 
-    private void showCustomAlertDialog(String title, String message) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_custom_alert);
-        TextView alertTitle = dialog.findViewById(R.id.alertTitle);
-        TextView alertMessage = dialog.findViewById(R.id.alertMessage);
-        ImageView imageView = dialog.findViewById(R.id.alertErrorImage);
-
-        alertTitle.setText(title);
-        alertMessage.setText(message);
-        imageView.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_error));
-
-        dialog.setCanceledOnTouchOutside(true);
-
-        dialog.show();
-
-        //time to dismiss the dialog
-        final Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                dialog.dismiss();
-                t.cancel();
-            }
-        }, 1500);
-    }
-
-    //listens to all click on login screen and calls appropriate function
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_log_in:
-                userLogin();
-                break;
-            case R.id.login_close:
-                showWelcomeScreen();
-                break;
+            return null;
         }
     }
 }

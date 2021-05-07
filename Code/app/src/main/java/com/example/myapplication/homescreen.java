@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,9 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.Utility.HealthScore;
 import com.example.myapplication.mainScreen.MainScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

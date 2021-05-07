@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.chart.PlotChart;
-import com.example.myapplication.readAndSaveAllFile.CalculateData;
-import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.recyclerView.MyAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 
 public class CaloriesMoreSpecificDateClicked extends AppCompatActivity {
@@ -63,10 +62,10 @@ public class CaloriesMoreSpecificDateClicked extends AppCompatActivity {
 
     private void setValues() {
 
-        date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-        totalValue.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(index).getTotalCalories()));
-        averageValue.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(index).getAverageCalories()));
+        date.setText(MyAdapter.HourlyData.get(index).getDate());
+        totalValue.setText(String.valueOf((int) MyAdapter.HourlyData.get(index).getTotal()));
+        averageValue.setText(String.valueOf((int) MyAdapter.HourlyData.get(index).getAverage()));
 
-        PlotChart.barChart(this,callFrom,barChart,ReadAndSaveMultipleFile.allData.get(index).getCalories(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
+        PlotChart.barChart(this, callFrom, barChart, MyAdapter.HourlyData.get(index).getData(), MyAdapter.HourlyData.get(index).getTimeStamp());
     }
 }
