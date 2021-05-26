@@ -6,26 +6,48 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.readAndSaveAllFile.CalculateData;
-import com.example.myapplication.readAndSaveAllFile.MultipleFileData;
-import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
-import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFileManager;
+import com.example.myapplication.readAndSaveAllFile.Hourly.HourlyActiveDataSets;
+import com.example.myapplication.readAndSaveAllFile.Hourly.HourlyIndividualDataSets;
+import com.example.myapplication.readAndSaveAllFile.Sleep.SleepFile;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+import java.util.ArrayList;
+
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Activity activity; // to set the animation transition
     private Context context;
     private String callFrom;
 
-    public MyAdapter(Context context, String callFrom) {
+    public static ArrayList<HourlyActiveDataSets> HourlyAllActiveData = new ArrayList<>();
+    public static ArrayList<SleepFile> SleepData = new ArrayList<>();
+    public static ArrayList<HourlyIndividualDataSets> HourlyData =  new ArrayList<>();;
+
+    //active
+    public MyAdapter(ArrayList<HourlyActiveDataSets> HourlyAllActiveData, Context context, String callFrom) {
+        this.HourlyAllActiveData = HourlyAllActiveData;
         this.context = context;
         this.callFrom = callFrom;
+        this.activity = (Activity) context;
+    }
+
+    //sleep
+    public MyAdapter(Context context, String callFrom, ArrayList<SleepFile> SleepData) {
+        this.context = context;
+        this.callFrom = callFrom;
+        this.SleepData = SleepData;
+        this.activity = (Activity) context;
+    }
+
+    //hourly except active
+    public MyAdapter(String callFrom, Context context, ArrayList<HourlyIndividualDataSets> HourlyData ) {
+        this.context = context;
+        this.callFrom = callFrom;
+        this.HourlyData = HourlyData;
         this.activity = (Activity) context;
     }
 
@@ -35,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = null;
 
-        switch (callFrom){
+        switch (callFrom) {
             case "footSteps":
                 view = inflater.inflate(R.layout.recycler_view_foot_steps_more, parent, false);
                 break;
@@ -43,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                 view = inflater.inflate(R.layout.recycler_view_miles_more, parent, false);
                 break;
             case "calories":
-                view = inflater.inflate(R.layout.recycler_view_calories_more, parent,false);
+                view = inflater.inflate(R.layout.recycler_view_calories_more, parent, false);
                 break;
             case "heartRate":
                 view = inflater.inflate(R.layout.recycler_view_heart_rate_more, parent, false);
@@ -61,40 +83,40 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-        switch (callFrom){
+        switch (callFrom) {
             case "footSteps":
-                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.totalValueFootSteps.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getTotalSteps())); //casted to int to remove the decimal part from the average value
+                holder.dateValue.setText(HourlyData.get(position).getDate());
+                holder.totalValueFootSteps.setText(String.valueOf((int) HourlyData.get(position).getTotal())); //casted to int to remove the decimal part from the average value
                 break;
             case "miles":
-                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.totalValueMiles.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getTotalDistance()));
+                holder.dateValue.setText(HourlyData.get(position).getDate());
+                holder.totalValueMiles.setText(String.valueOf(HourlyData.get(position).getTotal()));
                 break;
             case "calories":
-                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.totalValueCalories.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getTotalCalories()));
+                holder.dateValue.setText(HourlyData.get(position).getDate());
+                holder.totalValueCalories.setText(String.valueOf((int) HourlyData.get(position).getTotal()));
                 break;
             case "heartRate":
-                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.averageValueHR.setText(String.valueOf((int) ReadAndSaveMultipleFile.allData.get(position).getAverageHeartRate()));
+                holder.dateValue.setText(HourlyData.get(position).getDate());
+                holder.averageValueHR.setText(String.valueOf((int) HourlyData.get(position).getAverage()));
                 break;
             case "sleep":
-                holder.dateValue.setText(SleepFileManager.files.get(position).getDate());
-                holder.totalSleepHr.setText(String.valueOf(SleepFileManager.files.get(position).getTotalHoursSlept()));
-                holder.totalSleepMin.setText(String.valueOf(SleepFileManager.files.get(position).getTotalMinuteSlept()));
+                holder.dateValue.setText(SleepData.get(position).getDate());
+                holder.totalSleepHr.setText(String.valueOf(SleepData.get(position).getTotalHoursSlept()));
+                holder.totalSleepMin.setText(String.valueOf(SleepData.get(position).getTotalMinuteSlept()));
                 break;
             case "active":
-                holder.dateValue.setText(ReadAndSaveMultipleFile.allData.get(position).getDate());
-                holder.totalActiveHr.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getHrActive()));
-                holder.totalActiveMin.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(position).getMinActive()));
+                holder.dateValue.setText(HourlyAllActiveData.get(position).getDate());
+                holder.totalActiveHr.setText(String.valueOf(HourlyAllActiveData.get(position).getHrActive()));
+                holder.totalActiveMin.setText(String.valueOf(HourlyAllActiveData.get(position).getMinActive()));
                 break;
         }
 
-        holder.moreArrow.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = null;
-                switch (callFrom){
+                switch (callFrom) {
                     case "footSteps":
                         intent = new Intent(context, com.example.myapplication.footSteps.FootStepsMoreSpecificDateClicked.class);
                         intent.putExtra("index", position);
@@ -112,64 +134,66 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
                         intent.putExtra("index", position);
                         break;
                     case "sleep":
-                        intent = new Intent(context,com.example.myapplication.sleep.SleepMoreSpecificDateClicked.class);
+                        intent = new Intent(context, com.example.myapplication.sleep.SleepMoreSpecificDateClicked.class);
                         intent.putExtra("index", position);
                         break;
                     case "active":
-                        intent = new Intent(context,com.example.myapplication.active.ActiveMoreSpecificDateClicked.class);
+                        intent = new Intent(context, com.example.myapplication.active.ActiveMoreSpecificDateClicked.class);
                         intent.putExtra("index", position);
                         break;
                 }
                 context.startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return ReadAndSaveMultipleFile.allData.size();
+        if(callFrom == "sleep"){
+            return SleepData.size();
+        }
+        else if(callFrom == "active"){
+            return HourlyAllActiveData.size();
+        }
+        else{
+            return HourlyData.size();
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, moreArrow, averageValueHR, totalSleepHr, totalSleepMin, totalActiveHr, totalActiveMin;
+        TextView dateValue, totalValueFootSteps, totalValueMiles, totalValueCalories, averageValueHR, totalSleepHr, totalSleepMin, totalActiveHr, totalActiveMin;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            switch (callFrom){
+            switch (callFrom) {
                 case "footSteps":
                     dateValue = itemView.findViewById(R.id.footStepsMoreRecyclerViewDate);
                     totalValueFootSteps = itemView.findViewById(R.id.footStepsMoreRecyclerViewTotalValue);
-                    moreArrow = itemView.findViewById(R.id.footStepsMoreRecyclerViewSelectedDate);
                     break;
                 case "miles":
                     dateValue = itemView.findViewById(R.id.milesMoreRecyclerViewDate);
                     totalValueMiles = itemView.findViewById(R.id.milesMoreRecyclerViewTotalValue);
-                    moreArrow = itemView.findViewById(R.id.milesMoreRecyclerViewSelectedDate);
                     break;
                 case "calories":
                     dateValue = itemView.findViewById(R.id.caloriesMoreRecyclerViewDate);
                     totalValueCalories = itemView.findViewById(R.id.caloriesMoreRecyclerViewTotalValue);
-                    moreArrow = itemView.findViewById(R.id.caloriesMoreRecyclerViewSelectedDate);
                     break;
                 case "heartRate":
                     dateValue = itemView.findViewById(R.id.heartRateMoreRecyclerViewDate);
                     averageValueHR = itemView.findViewById(R.id.heartRateMoreRecyclerViewAvgValue);
-                    moreArrow = itemView.findViewById(R.id.heartRateMoreRecyclerViewSelectedDate);
                     break;
                 case "sleep":
                     dateValue = itemView.findViewById(R.id.sleepMoreRecyclerViewDate);
                     totalSleepHr = itemView.findViewById(R.id.sleepMoreRecyclerViewHrs);
                     totalSleepMin = itemView.findViewById(R.id.sleepMoreRecyclerViewMin);
-                    moreArrow = itemView.findViewById(R.id.sleepMoreRecyclerViewSelectedDate);
                     break;
                 case "active":
                     dateValue = itemView.findViewById(R.id.activeMoreRecyclerViewDate);
                     totalActiveHr = itemView.findViewById(R.id.activeMoreRecyclerViewHrs);
                     totalActiveMin = itemView.findViewById(R.id.activeMoreRecyclerViewMin);
-                    moreArrow = itemView.findViewById(R.id.activeMoreRecyclerViewSelectedDate);
                     break;
             }
         }

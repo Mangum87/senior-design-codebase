@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.chart.PlotChart;
-import com.example.myapplication.readAndSaveAllFile.CalculateData;
-import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.recyclerView.MyAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 
 public class MilesMoreSpecificDateClicked extends AppCompatActivity {
@@ -61,10 +60,10 @@ public class MilesMoreSpecificDateClicked extends AppCompatActivity {
     private void setValues() {
         /** check the flag for index received or not */
         if(hasData){
-            date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            totalValue.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getTotalDistance()));
+            date.setText(MyAdapter.HourlyData.get(index).getDate());
+            totalValue.setText(String.valueOf(MyAdapter.HourlyData.get(index).getTotal()));
 
-            PlotChart.barChart(this, callFrom,barChart,ReadAndSaveMultipleFile.allData.get(index).getDistance(),ReadAndSaveMultipleFile.allData.get(index).getTimeStamp());
+            PlotChart.barChart(this, callFrom, barChart, MyAdapter.HourlyData.get(index).getData(), MyAdapter.HourlyData.get(index).getTimeStamp());
         }
     }
 }

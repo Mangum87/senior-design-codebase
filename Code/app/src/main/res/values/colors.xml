@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#fc2929</color>
+    <color name="colorPrimaryDark">#F40E0E</color>
     <color name="colorAccent">#D81B60</color>
     <color name="splashBackground">#6231de</color>
     <color name="colorA">#9C27B0</color>
@@ -12,11 +12,14 @@
     <color name= "colorF">#38978F</color>
     <color name= "colorG">#4A4C4C</color>
     <color name="colorH">#f02711</color>
-    <color name="registrationBackground">#157E72</color>
+    <color name="colorI">#fc5353</color>
+    <color name="colorJ">#C92020</color>
+    <color name="registrationBackground">#fc2929</color>
     <color name="black">#131313</color>
     <color name= "red">#F44336</color>
     <color name= "light_blue">#ff44caac</color>
     <color name= "light_green">#53B3AB</color>
+    <color name= "light_red">#fd7e7e</color>
     <color name= "signup_text_bg">#E1D3F1F4</color>
     <color name= "white">#ffffff</color>
     <color name= "lightGrey">#ced4d6</color>
@@ -24,11 +27,13 @@
     <color name= "ic_caloriesTextColor">#d9450b</color>
     <color name= "ic_locationTextColor">#eb6b34</color>
     <color name="ic_footStepsTextColor">#bf8b5a</color>
-    <color name= "transparent">#6BF6F5F5</color>
     <color name="transparent2">#A6A0A5A5</color>
     <color name="transparentRed">#CDF35246</color>
     <color name="transparentGreen">#CB2FC535</color>
     <color name="customAlertTitleBgColor">#CC585956</color>
+
+    <!-- for all bar chart -->
+    <color name= "transparent">#6BF6F5F5</color>
 
     <!-- for heart Rate Line chart -->
     <color name="hrChartColor1">#f06262</color>

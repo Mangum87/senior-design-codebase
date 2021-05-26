@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background= "@color/lightGrey">
+    android:background="@color/lightGrey"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/heartRateTitleBox"
@@ -60,57 +59,50 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/heartRateTitleBox">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heartRateTitleBox"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/graphLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@drawable/sleep_graph_background">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/graphLayout"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/infoTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/sleep_graph_background">
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/quicksand_medium"
+                android:text="Past 30 Days Average"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/infoTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/quicksand_medium"
-                    android:text="Past 30 Days Average"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChartHeartRateMoreScreen"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_below="@+id/infoTitle"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/infoTitle" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/heartRateMoreRecyclerView"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChartHeartRateMoreScreen"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/graphLayout"
-                android:layout_marginBottom="10dp"/>
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_height="200dp"
+                android:layout_below="@+id/infoTitle"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/heartRateMoreRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/graphLayout" />
+    </RelativeLayout>
 
 </RelativeLayout>

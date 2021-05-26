@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.chart.PlotChart;
-import com.example.myapplication.readAndSaveAllFile.ReadAndSaveMultipleFile;
+import com.example.myapplication.recyclerView.MyAdapter;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.HashMap;
@@ -62,16 +62,16 @@ public class ActiveMoreSpecificDateClicked extends AppCompatActivity {
 
     private void setValues() {
         if(hasData){
-            date.setText(ReadAndSaveMultipleFile.allData.get(index).getDate());
-            hour.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getHrActive()));
-            minute.setText(String.valueOf(ReadAndSaveMultipleFile.allData.get(index).getMinActive()));
+            date.setText(MyAdapter.HourlyAllActiveData.get(index).getDate());
+            hour.setText(String.valueOf(MyAdapter.HourlyAllActiveData.get(index).getHrActive()));
+            minute.setText(String.valueOf(MyAdapter.HourlyAllActiveData.get(index).getMinActive()));
 
             //store active pieChart Data in map to plot
             Map<String,Integer> activeChartData = new HashMap<>(); //store active pieChart Data
-            activeChartData.put("Sedentary", (int) ReadAndSaveMultipleFile.allData.get(index).getTotalMinutesSedentary());
-            activeChartData.put("Lightly Active", (int) ReadAndSaveMultipleFile.allData.get(index).getTotalMinutesLightlyActive());
-            activeChartData.put("Fairly Active", (int) ReadAndSaveMultipleFile.allData.get(index).getTotalMinutesFairlyActive());
-            activeChartData.put("Very Active", (int) ReadAndSaveMultipleFile.allData.get(index).getTotalMinutesVeryActive());
+            activeChartData.put("Sedentary", (int) MyAdapter.HourlyAllActiveData.get(index).getTotalMinutesSedentary());
+            activeChartData.put("Lightly Active", (int) MyAdapter.HourlyAllActiveData.get(index).getTotalMinutesLightlyActive());
+            activeChartData.put("Fairly Active", (int) MyAdapter.HourlyAllActiveData.get(index).getTotalMinutesFairlyActive());
+            activeChartData.put("Very Active", (int) MyAdapter.HourlyAllActiveData.get(index).getTotalMinutesVeryActive());
 
             PlotChart.pieChart(this,false, "active", activeChartData, pieChart);
         }

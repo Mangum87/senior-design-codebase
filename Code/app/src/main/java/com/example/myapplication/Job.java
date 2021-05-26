@@ -2,21 +2,15 @@ package com.example.myapplication;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
 
-import com.example.myapplication.Utility.HealthScore;
 import com.example.myapplication.amazonS3.amazonS3main;
-import com.fitbitsample.FitbitActivity.FitbitDataFormat;
 import com.fitbitsample.FitbitActivity.PrefConstants;
 import com.fitbitsample.FitbitSharedPref.AppPreference;
-import com.fitbitsample.FitbitSharedPref.FitbitPref;
 import com.fitbitsample.ViewFragments.ViewFitbitDataFragment;
-
-import java.util.Date;
 
 /**
  This class schedules a job to the android system to run a thread periodically to sync data from fit bit into the app and store it into s3 bucket.
@@ -49,7 +43,6 @@ public class Job extends JobService
                     @Override
                     public void run() {
                         Context context = getApplicationContext();
-                        HealthScore.getScore(context); // Poll server for health score
 
                         String ID = AppPreference.getInstance().getString(PrefConstants.USER_ID); // Get FitBit user ID
                         if(ID != null) // Defaults to null if not previously set
